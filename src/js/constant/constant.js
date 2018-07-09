@@ -27,4 +27,3 @@ export const bulletStyle = {
 
 export const bulletLife = 500;
 
-export const bulletSpeed = 0.05 * canvas.width;
