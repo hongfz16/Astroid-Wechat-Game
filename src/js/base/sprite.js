@@ -30,6 +30,10 @@ export default class Sprite{
     return this.circle.center.y;
   }
 
+  getRadius() {
+    return this.circle.radius;
+  }
+
   setX(x) {
     this.circle.center.x = x;
   }
@@ -37,5 +41,4 @@ export default class Sprite{
   setY(y) {
     this.circle.center.y = y;
   }
-
 }
