@@ -1,29 +1,38 @@
+//game world constants
+export const gameCor ={
+  width: canvas.width + astroidSize * 4,
+  height: canvas.height + astroidSize * 4
+};
+
+//astroid constants
 export const astroidSize = {
-  small: 0.1 * canvas.width,
-  medium: 0.2 * canvas.width,
-  large: 0.3 *canvas.width
+  small: 0.1 * canvas.height,
+  medium: 0.2 * canvas.height,
+  large: 0.3 * canvas.height
 };
-
 export const astroidSpeed = {
-  small: 0.03 * canvas.width,
-  medium: 0.02 * canvas.width,
-  large: 0.01 * canvas.width
+  small: 0.03 * canvas.height,
+  medium: 0.02 * canvas.height,
+  large: 0.01 * canvas.height
 };
-
-export const bulletSpeed = 0.05 * canvas.width;
-export const bulletRadius = 0.03 * canvas.width;
-
 export const astroidStyle = {
   strokeSize: 3,
   strokeColor: '#ffffff'
 };
-
 export const astroidSplitAngle = Math.PI / 36;
 
+//bullet constants
 export const bulletStyle = {
   strokeSize: 1,
   strokeColor: '#ffffff'
-}
-
+};
 export const bulletLife = 500;
+export const bulletSpeed = 0.05 * canvas.height;
+export const bulletRadius = 0.03 * canvas.height;
 
+//enemy constants
+export const enemySize = {
+  small: 0.05 * canvas.height,
+  medium: 0.15 * canvas.height,
+  large: 0.25 * canvas.height
+};
