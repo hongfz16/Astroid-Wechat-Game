@@ -1,6 +1,6 @@
-import './js/libs/weapp-adapter'
-import './js/libs/symbol'
+import './js_backup/libs/weapp-adapter'
+import './js_backup/libs/symbol'
 
-import Main from './js/main'
+import Main from './js_backup/main'
 
 new Main()
