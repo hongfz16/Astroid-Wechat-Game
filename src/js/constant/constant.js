@@ -9,3 +9,5 @@ export const astroidSpeed = {
   medium: 0.02 * canvas.width,
   large: 0.01 * canvas.width
 };
+
+export const bulletSpeed = 0.05 * canvas.width;

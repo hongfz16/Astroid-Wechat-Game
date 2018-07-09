@@ -28,7 +28,11 @@ export class Vector2d{
   }
   normalize(len = 1){
     const l = this.length();
-    this.x = Math.floor(this.x/l*len);
-    this.y = Math.floor(this.y/l*len);
+    this.x = (this.x/l*len);
+    this.y = (this.y/l*len);
+  }
+  rotate(angle = 0){
+    [this.x, this.y] = [this.x*Math.cos(angle)-this.y*Math.sin(angle),
+                        this.x*Math.sin(angle)+this.y*Math.cos(angle)];
   }
 }
