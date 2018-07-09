@@ -9,3 +9,8 @@ export const astroidSpeed = {
   medium: 0.02 * canvas.width,
   large: 0.01 * canvas.width
 };
+
+export const astroidStyle = {
+  strokeSize: 3,
+  strokeColor: '#ffffff'
+}
