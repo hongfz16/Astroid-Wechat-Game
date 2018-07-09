@@ -21,4 +21,21 @@ export default class Sprite{
     this.vel.x = x;
     this.vel.y = y;
   }
+
+  getX() {
+    return this.circle.center.x;
+  }
+
+  getY() {
+    return this.circle.center.y;
+  }
+
+  setX(x) {
+    this.circle.center.x = x;
+  }
+
+  setY(y) {
+    this.circle.center.y = y;
+  }
+
 }

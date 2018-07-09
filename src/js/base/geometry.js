@@ -1,4 +1,4 @@
-export default class Point{
+export class Point{
   constructor(x = 0, y = 0){
     this.x = x;
     this.y = y;
@@ -8,7 +8,7 @@ export default class Point{
   }
 }
 
-export default class Circle{
+export class Circle{
   constructor(x = 0, y = 0, r = 1){
     this.center = new Point(x, y);
     this.radius = r;
@@ -18,7 +18,7 @@ export default class Circle{
   }
 }
 
-export default class Vector2d{
+export class Vector2d{
   constructor(x = 0, y = 0) {
     this.x = x;
     this.y = y;
