@@ -13,4 +13,6 @@ export const astroidSpeed = {
 export const astroidStyle = {
   strokeSize: 3,
   strokeColor: '#ffffff'
-}
+};
+
+export const bulletSpeed = 0.05 * canvas.width;
