@@ -39,8 +39,7 @@ export default class Main {
     window.cancelAnimationFrame(this.aniId);
 
     this.aniId = window.requestAnimationFrame(
-      this.bindLoop,
-      canvas
+      this.bindLoop
     )
   }
 
