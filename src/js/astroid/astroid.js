@@ -1,8 +1,9 @@
-import Vector from '../base/geometry'
+import Vector2d from '../base/geometry'
 import Sprite from '../base/sprite';
 import astroidSize from '../constant/constant';
 import astroidSpeed from '../constant/constant';
 import astroidStyle from '../constant/constant';
+import astroidSplitAngle from '../constant/constant'
 
 export class Astroid extends Sprite {
   constructor(x = 0, y = 0, velx = 0, vely = 0, type = 'large') {
@@ -24,8 +25,13 @@ export class Astroid extends Sprite {
     if(this.type === 'small') return childlist;
     if(this.type === 'large') childstyle = 'medium';
     if(this.type === 'medium') childstyle = 'small';
-    let child1 = new Astroid(this.getX(), this.getY());
-    let child2 = new Astroid(this.getX(), this.getY());
+    this.vel.rotate(astroidSplitAngle);
+    let child1 = new Astroid(this.getX(), this.getY(), this.vel.x, this.vel.y, childstyle);
+    this.vel.rotate(-2 * astroidSplitAngle);
+    let child2 = new Astroid(this.getX(), this.getY(), this.vel.x, this.vel.y, childstyle);
+    childList.push(child1);
+    childList.push(child2);
+    return childList;
   }
 
   drawtoCanvas(ctx) {
