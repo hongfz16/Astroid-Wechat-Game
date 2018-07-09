@@ -1,6 +1,7 @@
 import Sprite from '../base/sprite';
 import bulletStyle from '../constant/constant'
 import bulletLife from '../constant/constant'
+import gameCor from '../constant/constant'
 
 export class Bullet extends Sprite {
   constructor(x = 0, y = 0, r = 0, velx = 0, vely = 0) {
@@ -12,6 +13,8 @@ export class Bullet extends Sprite {
   update() {
     this.circle.center.x += this.vel.x;
     this.circle.center.y += this.vel.y;
+    this.circle.center.x %= gameCor.width;
+    this.circle.center.y %= gameCor.height;
     this.life -= 1;
   }
 

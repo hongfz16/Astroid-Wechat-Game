@@ -3,7 +3,8 @@ import Sprite from '../base/sprite';
 import astroidSize from '../constant/constant';
 import astroidSpeed from '../constant/constant';
 import astroidStyle from '../constant/constant';
-import astroidSplitAngle from '../constant/constant'
+import astroidSplitAngle from '../constant/constant';
+import gameCor from '../constant/constant';
 
 export class Astroid extends Sprite {
   constructor(x = 0, y = 0, velx = 0, vely = 0, type = 'large') {
@@ -17,6 +18,8 @@ export class Astroid extends Sprite {
   update() {
     this.circle.center.x += this.vel.x;
     this.circle.center.y += this.vel.y;
+    this.circle.center.x %= gameCor.width;
+    this.circle.center.y %= gameCor.height;
   }
 
   splite() {
