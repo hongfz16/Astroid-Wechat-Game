@@ -11,3 +11,4 @@ export const astroidSpeed = {
 };
 
 export const bulletSpeed = 0.05 * canvas.width;
+export const bulletRadius = 0.03 * canvas.width;
