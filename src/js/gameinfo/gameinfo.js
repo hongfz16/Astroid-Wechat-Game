@@ -15,7 +15,22 @@ export class gameInfo{
   }
 
   initEvent(){
-    
+
   }
   
+  checkinLeft(x, y){
+
+  }
+
+  checkinRight(x, y){
+
+  }
+
+  checkinShoot(x, y){
+
+  }
+
+  checkinAcc(x, y){
+    
+  }
 }

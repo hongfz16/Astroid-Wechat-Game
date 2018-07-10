@@ -40,8 +40,7 @@ export default class Main {
     this.astroidCount = 1000;
     //this.bulletCount = 0;
     this.shootCount = 0;
-    this.initEvent();
-
+    this.gameInfo = new gameInfo(this);
 
     this.gameStatus = "playing";
 
@@ -192,11 +191,6 @@ export default class Main {
     checkCollisionwithPlayer(this.enemy, this.player);
     //astroid and player
     checkCollisionwithPlayer(this.astroid, this.player);
-  }
-
-  //init touch event
-  initEvent(){
-    canvas.addEventListener("touchstart");
   }
 
   render(){
