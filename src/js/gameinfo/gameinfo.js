@@ -7,9 +7,10 @@ import Main from '../main'
 
 
 export default class gameInfo{
-  constructor(mainclass){
+  constructor(constant, mainclass){
     this.main = mainclass;
     this.score = 0;
+    this.constant = constant;
   }
 
   scorepp(){
@@ -24,24 +25,24 @@ export default class gameInfo{
       ctx.lineTo(x + r * Math.cos(theta + i * delta), y + r * Math.sin(theta + i * delta));
     }
     ctx.closePath();
-    ctx.strokeStyle = buttonStyle.strokeColor;
-    ctx.lineWidth = buttonStyle.strokeSize;
+    ctx.strokeStyle = this.constant.buttonStyle.strokeColor;
+    ctx.lineWidth = this.constant.buttonStyle.strokeSize;
     ctx.stroke();
   }
 
   drawCircle(ctx, x, y, r) {
     ctx.beginPath();
     ctx.arc(x, y, r, 0, Math.PI * 2);
-    ctx.strokeStyle = buttonStyle.strokeColor;
-    ctx.lineWidth = buttonStyle.strokeSize;
+    ctx.strokeStyle = this.constant.buttonStyle.strokeColor;
+    ctx.lineWidth = this.constant.buttonStyle.strokeSize;
     ctx.stroke();
   }
 
   drawtoCanvas(ctx){
-    this.drawTri(ctx, leftButtonPos.x, leftButtonPos.y, leftButtonPos.r, Math.PI / 3);
-    this.drawTri(ctx, rightButtonPos.x, rightButtonPos.y, rightButtonPos.r, 0);
-    this.drawCircle(ctx, accButtonPos.x, accButtonPos.y, accButtonPos.r);
-    this.drawCircle(ctx, shootButtonPos.x, shootButtonPos.y, shootButtonPos.r);
+    this.drawTri(ctx, this.constant.leftButtonPos.x, this.constant.leftButtonPos.y, this.constant.leftButtonPos.r, Math.PI / 3);
+    this.drawTri(ctx, this.constant.rightButtonPos.x, this.constant.rightButtonPos.y, this.constant.rightButtonPos.r, 0);
+    this.drawCircle(ctx, this.constant.accButtonPos.x, this.constant.accButtonPos.y, this.constant.accButtonPos.r);
+    this.drawCircle(ctx, this.constant.shootButtonPos.x, this.constant.shootButtonPos.y, this.constant.shootButtonPos.r);
   }
 
   initEvent(){
@@ -71,18 +72,18 @@ export default class gameInfo{
   }
 
   checkinLeft(x, y){
-    return this.checkinCircle(x, y, leftButtonPos.x, leftButtonPos.y, leftButtonPos.r);
+    return this.checkinCircle(x, y, this.constant.leftButtonPos.x, this.constant.leftButtonPos.y, this.constant.leftButtonPos.r);
   }
 
   checkinRight(x, y){
-    return this.checkinCircle(x, y, rightButtonPos.x, rightButtonPos.y, rightButtonPos.r);
+    return this.checkinCircle(x, y, this.constant.rightButtonPos.x, this.constant.rightButtonPos.y, this.constant.rightButtonPos.r);
   }
 
   checkinShoot(x, y){
-    return this.checkinCircle(x, y, shootButtonPos.x, shootButtonPos.y, shootButtonPos.r);
+    return this.checkinCircle(x, y, this.constant.shootButtonPos.x, this.constant.shootButtonPos.y, this.constant.shootButtonPos.r);
   }
 
   checkinAcc(x, y){
-    return this.checkinCircle(x, y, accButtonPos.x, accButtonPos.y, accButtonPos.r);
+    return this.checkinCircle(x, y, this.constant.accButtonPos.x, this.constant.accButtonPos.y, this.constant.accButtonPos.r);
   }
 }

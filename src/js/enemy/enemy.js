@@ -1,31 +1,32 @@
 import Sprite from '../base/sprite';
-import gameCor from '../constant/constant';
-import enemySize from '../constant/constant';
+// import gameCor from '../constant/constant';
+// import enemySize from '../constant/constant';
 import Bullet from '../bullet/bullet.js';
-import enemyShootFrame from '../constant/constant';
-import enemyStyle from '../constant/constant';
-import bulletSpeed from '../constant/constant';
-import bulletRadius from '../constant/constant';
+// import enemyShootFrame from '../constant/constant';
+// import enemyStyle from '../constant/constant';
+// import bulletSpeed from '../constant/constant';
+// import bulletRadius from '../constant/constant';
 
 export default class Enemy extends Sprite {
-  constructor(x = 0, y = 0, type = 'large') {
-    let size = enemySize[type];
+  constructor(constant, x = 0, y = 0, type = 'large') {
+    let size = constant.enemySize[type];
     super(x, y, size);
-    this.shootTimer = enemyShootFrame;
+    this.shootTimer = this.constant.enemyShootFrame;
+    this.constant = constant;
   }
 
   update() {
     this.circle.center.x += this.vel.x;
     this.circle.center.y += this.vel.y;
-    this.circle.center.x %= gameCor.width;
-    this.circle.center.y %= gameCor.height;
+    this.circle.center.x %= this.constant.gameCor.width;
+    this.circle.center.y %= this.constant.gameCor.height;
     if(this.shootTimer > 0) {
       this.shootTimer -= 1;
     }
   }
 
   resetShootTimer() {
-    this.shootTimer = enemyShootFrame;
+    this.shootTimer = this.constant.enemyShootFrame;
   }
 
   drawEnemy(ctx, x, y, r) {
@@ -33,8 +34,8 @@ export default class Enemy extends Sprite {
     ctx.moveTo(x - 2 * r, y + r);
     ctx.arc(x, y + r, 2 * r, Math.PI, Math.PI * 2);
     ctx.closePath();
-    ctx.strokeStyle = enemyStyle.strokeColor;
-    ctx.lineWidth = enemyStyle.strokeSize;
+    ctx.strokeStyle = this.constant.enemyStyle.strokeColor;
+    ctx.lineWidth = this.constant.enemyStyle.strokeSize;
     ctx.stroke();
   }
 
@@ -63,9 +64,9 @@ export default class Enemy extends Sprite {
     let deltax = x - cx;
     let deltay = y - cy;
     let dist = Math.sqrt(Math.pow(deltax, 2) + Math.sqrt(Math.pow(deltay, 2)));
-    let velx = deltax * bulletSpeed / dist;
-    let vely = deltay * bulletSpeed / dist;
-    let bullet = new Bullet(cx, cy, bulletRadius, velx, vely);
+    let velx = deltax * this.constant.bulletSpeed / dist;
+    let vely = deltay * this.constant.bulletSpeed / dist;
+    let bullet = new Bullet(cx, cy, this.constant.bulletRadius, velx, vely);
     return bullet;
   }
 }
