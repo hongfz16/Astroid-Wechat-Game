@@ -8,7 +8,7 @@ import gameInfo from "./gameinfo/gameinfo"
 import Enemy from "./enemy/enemy"
 import Constant from "./constant/constant"
 
-//get canvas context
+//get canvas contextthis.constant.gameCor
 let ctx = canvas.getContext('2d');
 //create canvas buffer and get context
 let firstCanvasBuffer = wx.createCanvas();
@@ -38,6 +38,8 @@ export default class Main {
     console.log(canvas.width, canvas.height);
     console.log(firstCanvasBuffer.width, firstCanvasBuffer.height);
     console.log(secondCanvasBuffer.width, secondCanvasBuffer.height);
+
+    this.printed = false;
   }
 
   //start game entry
@@ -157,6 +159,7 @@ export default class Main {
     /*       enemy shoot       */
     itr = this.enemys.head;
     while (itr !== null) {
+      // console.log(itr.data.shootTimer);
       if (itr.data.shootTimer === 0) {
         let bul = itr.data.shoot(this.player.getX(), this.player.getY());
         this.enemysBullet.push(bul);
@@ -239,10 +242,10 @@ export default class Main {
     secondBufferContext.clearRect(0, 0, secondCanvasBuffer.width, secondCanvasBuffer.height);
 
     //draw first buffer context
-    firstBufferContext.fillStyle = '#ffffff';
-    firstBufferContext.fillRect(0, 0, this.constant.gameCor.x, this.constant.gameCor.y);
+    // firstBufferContext.fillStyle = '#ffffff';
+    // firstBufferContext.fillRect(0, 0, this.constant.gameCor.x, this.constant.gameCor.y);
     firstBufferContext.fillStyle = this.constant.gameStyle.background;
-    firstBufferContext.fillRect(10, 10, this.constant.gameCor.x - 10, this.constant.gameCor.y - 10);
+    firstBufferContext.fillRect(0, 0, this.constant.gameCor.x, this.constant.gameCor.y);
     this.drawList(this.enemys, firstBufferContext);
     this.drawList(this.bullets, firstBufferContext);
     this.drawList(this.enemysBullet, firstBufferContext);
@@ -250,19 +253,41 @@ export default class Main {
     this.player.drawtoCanvas(firstBufferContext);
 
     //copy to second buffer context
-    secondBufferContext.drawImage(firstCanvasBuffer, this.constant.gameCor.width, this.constant.gameCor.height)
-    for(let i = 0; i < 2; i += 1) {
-      for(let j = 0; j < 2; j += 1) {
+    // secondBufferContext.drawImage(firstCanvasBuffer, this.constant.gameCor.width, this.constant.gameCor.height)
+    for(let i = 0; i < 3; i += 1) {
+      for(let j = 0; j < 3; j += 1) {
         secondBufferContext.drawImage(firstCanvasBuffer, 0, 0, this.constant.gameCor.width, this.constant.gameCor.height, this.constant.gameCor.width * i, this.constant.gameCor.height * j, this.constant.gameCor.width, this.constant.gameCor.height);
       }
     }
 
     //clip to screen context
     // console.log(this.player.getX(), this.player.getY());
-    let gameCorx = this.player.getX() + this.constant.gameCor.width - canvas.width;
-    let gameCory = this.player.getY() + this.constant.gameCor.height - canvas.height;
+    let gameCorx = this.player.getX() + this.constant.gameCor.width - canvas.width / 2;
+    let gameCory = this.player.getY() + this.constant.gameCor.height - canvas.height / 2;
     ctx.drawImage(secondCanvasBuffer, gameCorx, gameCory, canvas.width, canvas.height, 0, 0, canvas.width, canvas.height);
     this.gameInfo.drawtoCanvas(ctx);
+
+    // let gx = this.constant.gameCor.width;
+    // let gy = this.constant.gameCor.height;
+    // ctx.drawImage(secondCanvasBuffer, 0, 0, gx * 3, gy * 3, 0, 0, canvas.width, canvas.height);
+
+    // if(!this.printed) {
+    //   console.log(secondCanvasBuffer.toTempFilePath({
+    //     x: 0,
+    //     y: 0,
+    //     width: this.constant.gameCor.width * 3,
+    //     height: this.constant.gameCor.height * 3,
+    //     destWidth: this.constant.gameCor.width * 3,
+    //     destHeight: this.constant.gameCor.height * 3,
+    //     success: (res) => {
+    //       wx.shareAppMessage({
+    //         imageUrl: res.tempFilePath
+    //       })
+    //     }
+    //   }));
+    //   this.printed = true;
+    // }
+
   }
 
   drawList(list, ctx){

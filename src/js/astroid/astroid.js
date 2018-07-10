@@ -69,5 +69,7 @@ export default class Astroid extends Sprite {
     if(y > this.constant.gameCor.height - r) {y2 = y - this.constant.gameCor.height;}
     this.drawAstroid(ctx, x, y, r);
     this.drawAstroid(ctx, x2, y2, r);
+    this.drawAstroid(ctx, x, y2, r);
+    this.drawAstroid(ctx, x2, y, r);
   }
 }
