@@ -3,6 +3,7 @@ import Vector2D from "./base/geometry.js"
 import Player from "./player/player.js"
 import Astroid from "./astroid/astroid.js"
 import Bullet from "./bullet/bullet.js"
+import LinkedList from "./list/linkerlist.js"
 
 //get canvas context
 let ctx = canvas.getContext('2d');
@@ -22,9 +23,9 @@ export default class Main {
   start() {
     //init some other data
     this.player = new Player();
-    this.bullets = new LinkedList;
-    this.enemys = new LinkedList;
-    this.astroids = new LinkedList;
+    this.bullets = new LinkedList();
+    this.enemys = new LinkedList();
+    this.astroids = new LinkedList();
     for (let i = 0; i < 2; ++i){
       let enemy = initEnemy();
       this.enemys.push(enemy);
@@ -92,7 +93,6 @@ export default class Main {
   update(){
     checkTimer();
     checkCollision();
-    
   }
 
   checkTimer(){
@@ -162,7 +162,7 @@ export default class Main {
     //enemy and player
     checkCollisionwithPlayer(this.enemy, this.player);
     //astroid and player
-    checkCollisionwithPlayer(this., this.player);
+    checkCollisionwithPlayer(this.astroid, this.player);
   }
 
   drawCanvas(){
@@ -170,7 +170,7 @@ export default class Main {
   }
 
   GameOver(){
-    
+    this.gameStatus = "over";
   }
 
 }
