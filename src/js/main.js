@@ -55,6 +55,10 @@ export default class Main {
   //game main loop
   loop() {
     //other things to do in a loop, e.g. update and render
+    if (this.gameStatus === 'playing') {
+      update();
+      render();
+    }
 
     //set the callback of next frame
     this.aniId = window.requestAnimationFrame(
@@ -81,13 +85,6 @@ export default class Main {
     let vel = new Vector2D(Math.random() * 2 - 1, Math.random() * 2 - 1);
     let ret = new Astroid(posx, posy, vel.x, vel.y, "large");
     return ret;
-  }
-
-  loop(){
-    if (this.gameStatus === 'playing'){
-      update();
-      drawCanvas();
-    }
   }
 
   update(){
@@ -165,7 +162,7 @@ export default class Main {
     checkCollisionwithPlayer(this.astroid, this.player);
   }
 
-  drawCanvas(){
+  render(){
 
   }
 
