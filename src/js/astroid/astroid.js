@@ -37,15 +37,12 @@ export class Astroid extends Sprite {
     return childList;
   }
 
-  drawtoCanvas(ctx) {
-    let r = this.getRadius();
-    let x = this.getX();
-    let y = this.getY();
+  drawAstroid(ctx, x, y, r) {
     ctx.beginPath();
     ctx.moveTo(x + r, y);
     let theta = Math.PI / 6;
     let delta = Math.PI / 6;
-    for(let i = 1; i < 12; i += 1) {
+    for (let i = 1; i < 12; i += 1) {
       ctx.lineTo(x + r * Math.cos(theta), y + r * Math.sin(theta));
       theta += delta;
     }
@@ -53,5 +50,23 @@ export class Astroid extends Sprite {
     ctx.strokeStyle = astroidStyle.strokeColor;
     ctx.lineWidth = astroidStyle.strokeSize;
     ctx.stroke();
+  }
+
+  drawtoCanvas(ctx) {
+    let r = this.getRadius();
+    let x = this.getX();
+    let y = this.getY();
+    if(x >= r && x <= canvas.width - r && y >= r && y <= canvas.height - r) {
+      this.drawAstroid(ctx, x, y, r);
+      return;
+    }
+    let x2 = x;
+    let y2 = y;
+    if(x < r) {x2 = x + canvas.width;}
+    if(x > canvas.width - r) {x2 = x - canvas.width;}
+    if(y < r) {y2 = y + canvas.height;}
+    if(y > canvas.height - r) {y2 = y - canvas.height;}
+    this.drawAstroid(ctx, x, y, r);
+    this.drawAstroid(ctx, x2, y2, r);
   }
 }

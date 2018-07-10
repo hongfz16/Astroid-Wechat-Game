@@ -36,3 +36,8 @@ export const enemySize = {
   medium: 0.15 * canvas.height,
   large: 0.25 * canvas.height
 };
+export const enemyShootFrames = 100;
+export const enemyStyle = {
+  strokeSize: 2,
+  strokeColor: '#ffffff'
+};

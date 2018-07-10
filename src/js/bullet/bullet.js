@@ -15,7 +15,9 @@ export class Bullet extends Sprite {
     this.circle.center.y += this.vel.y;
     this.circle.center.x %= gameCor.width;
     this.circle.center.y %= gameCor.height;
-    this.life -= 1;
+    if(this.life > 0) {
+      this.life -= 1;
+    }
   }
 
   drawtoCanvas(ctx) {
