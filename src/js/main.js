@@ -27,10 +27,12 @@ export default class Main {
     wx.setPreferredFramesPerSecond(fps);
     this.gameStatus = undefined;
     //some other init works
+    console.log(Player);
     firstCanvasBuffer.width = gameCor.width;
     firstCanvasBuffer.height = gameCor.height;
     secondCanvasBuffer.width = gameCor.width * 3;
     secondCanvasBuffer.height = gameCor.height * 3;
+    this.start();
   }
 
   //start game entry
