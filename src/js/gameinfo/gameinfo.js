@@ -1,12 +1,12 @@
 import Main from '../main'
-import leftButtonPos from '../constant/constant'
-import rightButtonPos from '../constant/constant'
-import accButtonPos from '../constant/constant'
-import shootButtonPos from '../constant/constant'
-import buttonStyle from '../constant/constant'
+// import leftButtonPos from '../constant/constant'
+// import rightButtonPos from '../constant/constant'
+// import accButtonPos from '../constant/constant'
+// import shootButtonPos from '../constant/constant'
+// import buttonStyle from '../constant/constant'
 
 
-export class gameInfo{
+export default class gameInfo{
   constructor(mainclass){
     this.main = mainclass;
     this.score = 0;

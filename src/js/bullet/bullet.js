@@ -3,7 +3,7 @@ import bulletStyle from '../constant/constant'
 import bulletLife from '../constant/constant'
 import gameCor from '../constant/constant'
 
-export class Bullet extends Sprite {
+export default class Bullet extends Sprite {
   constructor(x = 0, y = 0, r = 0, velx = 0, vely = 0) {
     super(x, y, r);
     this.setVelocity(velx, vely);

@@ -1,15 +1,14 @@
 import Sprite from "../base/sprite";
-import Circle from "../base/geometry.js"
-import Vector2d from "../base/geometry.js";
-import bulletRadius from "../constant/constant.js";
-import bulletSpeed from "../constant/constant.js"
-import turnAngle from "../constant/constant.js"
-import gameCor from "../constant/constant.js"
-import playerStyle from "../constant/constant.js"
-import Point from "../constant/constant.js"
+import Constant from "../constant/constant.js"
+// import this.constant.bulletRadius from "../constant/constant.js";
+// import bulletSpeed from "../constant/constant.js"
+// import this.constant.turnAngle from "../constant/constant.js"
+// import this.constant.gameCor from "../constant/constant.js"
+// import this.constant.playerStyle from "../constant/constant.js"
+import { Point, Circle, Vector2d } from "../base/geometry.js"
 
 export class Player extends Sprite{
-  constructor(x = 0, y = 0, r = 5, angle = 0, life = 1){
+  constructor(constant, x = 0, y = 0, r = 5, angle = 0, life = 1){
     super(x, y, r);
     this.acc = new Vector2d();
     this.angle = angle;
@@ -17,15 +16,14 @@ export class Player extends Sprite{
     this.immortalCount = 120;
     this.life = life;
     this.isboosting = false;
+    this.constant = constant;
   }
 
   drawtoCanvas(ctx){
-    //const width = gameCor.width;
-    //const height = gameCor.height;
     if (this.immortalCount === 0 || (this.immortalCount%30)<20){
       let cor = getCor();
-      ctx.strokeStyle = playerStyle.strokeColor;
-      ctx.lineWidth = playerStyle.strokeSize;
+      ctx.strokeStyle = this.constant.playerStyle.strokeColor;
+      ctx.lineWidth = this.constant.playerStyle.strokeSize;
       ctx.beingPath();
       ctx.moveTo(cor.p[5].x, cor.p[5].y);
       ctx.lineTo(cor.p[2].x, cor.p[2].y);
@@ -45,19 +43,19 @@ export class Player extends Sprite{
   getCor(){
     let ret = new Object();
     ret.r0 = this.circle.radius;
-    ret.r1 = ret.r0 * (1 - Math.sin(playerStyle.theta)) / (1 + Math.sin(playerStyle.theta));
+    ret.r1 = ret.r0 * (1 - Math.sin(this.constant.playerStyle.theta)) / (1 + Math.sin(this.constant.playerStyle.theta));
     ret.x0 = 0;
     ret.y0 = 0;
     ret.x1 = ret.r0+ret.r1;
     ret.y1 = 0;
-    ret.x2 = r0/(Math.sin(playerStyle.theta));
+    ret.x2 = r0/(Math.sin(this.constant.playerStyle.theta));
     ret.y2 = 0;
     ret.x3 = -ret.r0;
-    ret.y3 = (ret.x2+ret.r0)*Math.tan(playerStyle.theta);
+    ret.y3 = (ret.x2+ret.r0)*Math.tan(this.constant.playerStyle.theta);
     ret.x4 = ret.x3;
     ret.y4 = -ret.y3;
-    ret.x5 = ret.x3-ret.r1*Math.cos(playerStyle.theta);
-    ret.y5 = ret.y3-ret.r1*Math.sin(playerStyle.theta);
+    ret.x5 = ret.x3-ret.r1*Math.cos(this.constant.playerStyle.theta);
+    ret.y5 = ret.y3-ret.r1*Math.sin(this.constant.playerStyle.theta);
     ret.x6 = ret.x5;
     ret.y6 = -ret.y5;
     ret.x7 = ret.x5;
@@ -88,8 +86,8 @@ export class Player extends Sprite{
     let bullet_vel = new Velocity();
     bullet_vel.x = Math.cos(this.angle);
     bullet_vel.y = Math.sin(this.angle);
-    bullet_vel.normalize(bulletSpeed);
-    const b = new Bullet(this.getX(), this.getY(), bulletRadius, bullet_vel.x, bullet_vel.y);
+    bullet_vel.normalize(this.constant.bulletSpeed);
+    const b = new Bullet(this.getX(), this.getY(), this.constant.bulletRadius, bullet_vel.x, bullet_vel.y);
     return b;
   }
 
@@ -113,11 +111,11 @@ export class Player extends Sprite{
   }
 
   turnleft(){
-    this.angleDelta = turnAngle; 
+    this.angleDelta = this.constant.turnAngle; 
   }
 
   turnright(){
-    this.angleDelta = turnAngle;
+    this.angleDelta = this.constant.turnAngle;
   }
 
   accelerate(){
@@ -129,6 +127,6 @@ export class Player extends Sprite{
 
   loseonelife(){
     this.life -= 1;
-    this.circle = new Circle(gameCor.width / 2, gameCor.height / 2, playerStyle.r0);
+    this.circle = new Circle(this.constant.gameCor.width / 2, this.constant.gameCor.height / 2, this.constant.playerStyle.r0);
   }
 }

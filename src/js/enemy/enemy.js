@@ -7,7 +7,7 @@ import enemyStyle from '../constant/constant';
 import bulletSpeed from '../constant/constant';
 import bulletRadius from '../constant/constant';
 
-export class Enemy extends Sprite {
+export default class Enemy extends Sprite {
   constructor(x = 0, y = 0, type = 'large') {
     let size = enemySize[type];
     super(x, y, size);
