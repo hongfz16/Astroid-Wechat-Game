@@ -24,10 +24,10 @@ export default class Main {
     this.aniId = 0;
     wx.setPreferredFramesPerSecond(fps);
     this.gameStatus = undefined;
-    this.constant = new Constant();
-    console.log(this.constant.gameCor);
+    this.constant = new Constant(canvas);
+    // console.log(this.constant.gameCor);
     //some other init works
-    console.log(Player);
+    // console.log(Player);
     firstCanvasBuffer.width = this.constant.gameCor.width;
     firstCanvasBuffer.height = this.constant.gameCor.height;
     secondCanvasBuffer.width = this.constant.gameCor.width * 3;
