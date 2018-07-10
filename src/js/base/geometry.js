@@ -6,6 +6,14 @@ export class Point{
   distance(pos){
     return Math.sqrt((x-pos.x)*(x-pos.x) + (y-pos.y)*(y-pos.y));
   }
+  rotate(angle = 0) {
+    [this.x, this.y] = [this.x * Math.cos(angle) - this.y * Math.sin(angle),
+                        this.x * Math.sin(angle) + this.y * Math.cos(angle)];
+  }
+  add(xdelta, ydelta) {
+    this.x += xdelta;
+    this.y += ydelta;
+  }
 }
 
 export class Circle{

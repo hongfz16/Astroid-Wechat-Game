@@ -5,6 +5,9 @@ import Astroid from "./astroid/astroid.js"
 import Bullet from "./bullet/bullet.js"
 import LinkedList from "./list/linkerlist.js"
 import gameInfo from "./gameinfo/gameinfo.js"
+import Enemy from "./enemy/enemy.js"
+import gameCor from "./constant/constant.js"
+import playerStyle from "./constant/constant.js";
 
 //get canvas context
 let ctx = canvas.getContext('2d');
@@ -23,7 +26,7 @@ export default class Main {
   //start game entry
   start() {
     //init some other data
-    this.player = new Player();
+    this.player = new Player(gameCor.width / 2, gameCor.height / 2, playerStyle.r0);
     this.bullets = new LinkedList();
     this.enemys = new LinkedList();
     this.enemysBullet = new LinkedList();
@@ -75,10 +78,10 @@ export default class Main {
     const posx = Math.random() * canvas.width;
     const posy = Math.random() * canvas.height;
     if (Math.random() < 0.5) {
-      let ret = new enemy(posx, posy, "large");
+      let ret = new Enemy(posx, posy, "large");
     }
     else {
-      let ret = new enemy(posx, posy, "small");
+      let ret = new Enemy(posx, posy, "small");
     }
     return ret;
   }
@@ -96,7 +99,7 @@ export default class Main {
     checkCollision();
     this.player.update();
     updateList(this.bullet);
-    updateList(this.enemyBullet);
+    updateList(this.enemysBullet);
     updateList(this.enemys);
     updaetList(this.astroids);
   }
@@ -105,7 +108,7 @@ export default class Main {
     let itr = list.head;
     while (itr !== null) {
       itr.data.update();
-      itr = null;
+      itr = itr.next;
     }
   }
 
@@ -113,7 +116,7 @@ export default class Main {
     if (this.shootCount > 0)
       this.shootCount -= 1;
     /* check bullet's life span */
-    let itr = this.enemys;
+    let itr = this.enemys.head;
     while (itr !== null) {
       if (itr.data.life === 0) {
         let tmp = itr;
@@ -125,12 +128,22 @@ export default class Main {
       }
     }
     /*-------------------------*/
-    /*    random add ennemy    */
+    /*    random add enemy    */
     this.enemyCount -= 1;
     if (this.enemyCount === 0){
       let enemy = initEnemy();
       this.enemys.push(enemy);
       this.enemyCount = 1000;
+    }
+    /*-------------------------*/
+    /*       enemy shoot       */
+    itr = this.enemys.head;
+    while (itr !== null) {
+      if (itr.data.shootTimer === 0) {
+        let bul = itr.data.shoot(this.player.getX(), this.player.getY());
+        this.enemysBullet.push(bul);
+      }
+      itr = itr.next;
     }
     /*-------------------------*/
     /*    random add astroid   */
@@ -143,7 +156,7 @@ export default class Main {
     /*-------------------------*/
   }
 
-  checkCollisioninLists(list1, list2){
+  checkCollisioninLists(list1, list2, flag = false){
     let itr1 = list1.head;
     while (itr1 !== null) {
       let itr2 = list2.head;
@@ -161,17 +174,25 @@ export default class Main {
       }
       if (hasCollision === false) {
         itr1 = itr1.next;
+      } else
+      {
+        this.gameInfo.scorepp();
       }
     }
   }
 
   checkCollisionwithPlayer(list, player){
+    if (player.immortalCount > 0)
+      return;
     let itr = list.head;
     while (itr !== null) {
       if (itr.circle.checkCollision(player.circle)){
-        list.delete(itr);
-        GameOver();
-        break;
+        this.player.loseonelife();
+        if (this.player.life === 0){
+          list.delete(itr);
+          this.GameOver();
+          break;
+        }
       }
       itr = itr.next;
     }
@@ -179,16 +200,16 @@ export default class Main {
 
   checkCollision(){
     //bullet and astroid
-    checkCollisioninLists(this.bullet, this.astroid);
+    checkCollisioninLists(this.bullet, this.astroid, true);
     checkCollisioninLists(this.enemysBullet, this.astroid);
     //bullet and enemy
-    checkCollisioninLists(this.bullet, this.enemy);
+    checkCollisioninLists(this.bullet, this.enemy, true);
     checkCollisioninLists(this.enemysBullet, this.enemy);
     //bullet and player
     //checkCollisionwithPlayer(this.bullet, this.player);
     checkCollisionwithPlayer(this.enemysBullet, this.player);
     //enemy and player
-    checkCollisionwithPlayer(this.enemy, this.player);
+    checkCollisionwithPlayer(this.enemys, this.player);
     //astroid and player
     checkCollisionwithPlayer(this.astroid, this.player);
   }
@@ -199,6 +220,7 @@ export default class Main {
 
   GameOver(){
     this.gameStatus = "over";
+    window.cancelAnimationFrame(this.aniId);
   }
 
 }

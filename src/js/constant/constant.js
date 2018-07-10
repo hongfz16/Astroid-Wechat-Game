@@ -41,3 +41,15 @@ export const enemyStyle = {
   strokeSize: 2,
   strokeColor: '#ffffff'
 };
+
+//turning angle per frame
+export const turnAngle = Math.PI/180;
+
+//player constants
+//export const playerRadius = 0.15 * canvas.height;
+export const playerStyle = {
+  r0: 0.15 * canvas.height,
+  theta: Math.PI*15/180,
+  strokeSize: 2,
+  strokeColor: '#ffffff'
+};
