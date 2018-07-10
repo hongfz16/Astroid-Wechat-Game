@@ -1,14 +1,12 @@
 //import bunch of things
-import Vector2D from "./base/geometry.js"
-import Player from "./player/player.js"
-import Astroid from "./astroid/astroid.js"
-import Bullet from "./bullet/bullet.js"
-import LinkedList from "./list/linkerlist.js"
-import gameInfo from "./gameinfo/gameinfo.js"
-import Enemy from "./enemy/enemy.js"
-import gameCor from "./constant/constant.js"
-import playerStyle from "./constant/constant.js";
-import gameStyle from './constant/constant'
+import Vector2D from "./base/geometry"
+import Player from "./player/player"
+import Astroid from "./astroid/astroid"
+import Bullet from "./bullet/bullet"
+import LinkedList from "./list/linkerlist"
+import gameInfo from "./gameinfo/gameinfo"
+import Enemy from "./enemy/enemy"
+import {gameCor, playerStyle, gameStyle} from "./constant/constant"
 
 //get canvas context
 let ctx = canvas.getContext('2d');
@@ -26,11 +24,13 @@ export default class Main {
     this.aniId = 0;
     wx.setPreferredFramesPerSecond(fps);
     this.gameStatus = undefined;
+    console.log(gameCor);
     //some other init works
     firstCanvasBuffer.width = gameCor.width;
     firstCanvasBuffer.height = gameCor.height;
     secondCanvasBuffer.width = gameCor.width * 3;
     secondCanvasBuffer.height = gameCor.height * 3;
+    this.start();
   }
 
   //start game entry

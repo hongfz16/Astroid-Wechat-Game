@@ -1,6 +1,6 @@
 import listElement from "./listElement"
 
-export class LinkedList{
+export default class LinkedList{
   constructor(){
     head = null;
   }

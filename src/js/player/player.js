@@ -8,7 +8,7 @@ import gameCor from "../constant/constant.js"
 import playerStyle from "../constant/constant.js"
 import Point from "../constant/constant.js"
 
-export class Player extends Sprite{
+export default class Player extends Sprite{
   constructor(x = 0, y = 0, r = 5, angle = 0, life = 1){
     super(x, y, r);
     this.acc = new Vector2d();

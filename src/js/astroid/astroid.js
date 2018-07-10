@@ -6,7 +6,7 @@ import astroidStyle from '../constant/constant';
 import astroidSplitAngle from '../constant/constant';
 import gameCor from '../constant/constant';
 
-export class Astroid extends Sprite {
+export default class Astroid extends Sprite {
   constructor(x = 0, y = 0, velx = 0, vely = 0, type = 'large') {
     let size = astroidSize[type];
     if(size === undefined) {throw 'illegal parameter: type';}

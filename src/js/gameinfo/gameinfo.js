@@ -6,7 +6,7 @@ import shootButtonPos from '../constant/constant'
 import buttonStyle from '../constant/constant'
 
 
-export class gameInfo{
+export default class gameInfo{
   constructor(mainclass){
     this.main = mainclass;
     this.score = 0;
