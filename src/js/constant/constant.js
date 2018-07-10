@@ -1,8 +1,11 @@
 //game world constants
-export const gameCor ={
+export const gameCor = {
   width: canvas.width + astroidSize * 4,
   height: canvas.height + astroidSize * 4
 };
+export const gameStyle = {
+  background: '#000000'
+}
 
 //astroid constants
 export const astroidSize = {
@@ -51,5 +54,35 @@ export const playerStyle = {
   r0: 0.15 * canvas.height,
   theta: Math.PI*15/180,
   strokeSize: 2,
+  strokeColor: '#ffffff'
+};
+
+//gameinfo constants
+export const scorePos = {
+  x: canvas.width * 0.02,
+  y: canvas.height * 0.02
+};
+export const leftButtonPos = {
+  x: canvas.width * 0.2,
+  y: canvas.height * 0.8,
+  r: canvas.width * 0.08
+};
+export const rightButtonPos = {
+  x: canvas.width * 0.3,
+  y: canvas.height * 0.8,
+  r: canvas.width * 0.08
+};
+export const accButtonPos = {
+  x: canvas.width * 0.6,
+  y: canvas.height * 0.8,
+  r: canvas.width * 0.15
+};
+export const shootButtonPos = {
+  x: canvas.width * 0.8,
+  y: canvas.height * 0.8,
+  r: canvas.width * 0.15
+};
+export const buttonStyle = {
+  strokeSize: 3,
   strokeColor: '#ffffff'
 };
