@@ -25,6 +25,7 @@ export default class Main {
     this.player = new Player();
     this.bullets = new LinkedList();
     this.enemys = new LinkedList();
+    this.enemysBullet = new LinkedList();
     this.astroids = new LinkedList();
     for (let i = 0; i < 2; ++i){
       let enemy = initEnemy();
@@ -36,7 +37,11 @@ export default class Main {
     }
     this.enemyCount = 1000;
     this.astroidCount = 1000;
-    this.bulletCount = 0;
+    //this.bulletCount = 0;
+    this.shootCount = 0;
+    this.score = 0;
+    this.initEvent();
+
 
     this.gameStatus = "playing";
 
@@ -90,29 +95,53 @@ export default class Main {
   update(){
     checkTimer();
     checkCollision();
+    this.player.update();
+    updateList(this.bullet);
+    updateList(this.enemyBullet);
+    updateList(this.enemys);
+    updaetList(this.astroids);
+  }
+
+  updateList(list){
+    let itr = list.head;
+    while (itr !== null) {
+      itr.data.update();
+      itr = null;
+    }
   }
 
   checkTimer(){
-    if (this.bulletCount > 0)
-      this.bulletCount -= 1;
-    
+    if (this.shootCount > 0)
+      this.shootCount -= 1;
+    /* check bullet's life span */
     let itr = this.enemys;
-    while (itr !== null){
-      if (itr.data.life === 0){
-        this.enemys.delete(itr);
+    while (itr !== null) {
+      if (itr.data.life === 0) {
+        let tmp = itr;
+        itr = itr.next;
+        this.enemys.delete(tmp);
+      } else
+      {
+        itr = itr.next;
       }
     }
-
+    /*-------------------------*/
+    /*    random add ennemy    */
     this.enemyCount -= 1;
     if (this.enemyCount === 0){
       let enemy = initEnemy();
       this.enemys.push(enemy);
+      this.enemyCount = 1000;
     }
+    /*-------------------------*/
+    /*    random add astroid   */
     this.astroidCount -= 1;
     if (this.astroidCount === 0){
       let astroid = initAstroid();
       this.astroids.push(astroid);
+      this.astroidCount = 1000;
     }
+    /*-------------------------*/
   }
 
   checkCollisioninLists(list1, list2){
@@ -152,14 +181,22 @@ export default class Main {
   checkCollision(){
     //bullet and astroid
     checkCollisioninLists(this.bullet, this.astroid);
+    checkCollisioninLists(this.enemysBullet, this.astroid);
     //bullet and enemy
     checkCollisioninLists(this.bullet, this.enemy);
+    checkCollisioninLists(this.enemysBullet, this.enemy);
     //bullet and player
-    checkCollisionwithPlayer(this.bullet, this.player);
+    //checkCollisionwithPlayer(this.bullet, this.player);
+    checkCollisionwithPlayer(this.enemysBullet, this.player);
     //enemy and player
     checkCollisionwithPlayer(this.enemy, this.player);
     //astroid and player
     checkCollisionwithPlayer(this.astroid, this.player);
+  }
+
+  //init touch event
+  initEvent(){
+    canvas.addEventListener("");
   }
 
   render(){

@@ -23,7 +23,7 @@ export class Player extends Sprite{
     return b;
   }
 
-  updatePosition(){
+  update(){
     this.setPosition(this.getX()+this.vel.x,
                      this.getY()+this.vel.y);
     this.setVelocity(this.vel.x*0.9, this.vel.y*0.9);
