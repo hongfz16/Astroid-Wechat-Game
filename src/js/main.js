@@ -35,9 +35,9 @@ export default class Main {
     firstBufferContext = firstCanvasBuffer.getContext('2d');
     secondBufferContext = secondCanvasBuffer.getContext('2d');
     this.start();
-    console.log(canvas.width, canvas.height);
-    console.log(firstCanvasBuffer.width, firstCanvasBuffer.height);
-    console.log(secondCanvasBuffer.width, secondCanvasBuffer.height);
+    //console.log(canvas.width, canvas.height);
+    //console.log(firstCanvasBuffer.width, firstCanvasBuffer.height);
+    //console.log(secondCanvasBuffer.width, secondCanvasBuffer.height);
   }
 
   //start game entry

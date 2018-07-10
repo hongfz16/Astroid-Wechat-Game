@@ -44,6 +44,8 @@ export default class Player extends Sprite{
     let ret = new Object();
     ret.r0 = this.circle.radius;
     ret.r1 = ret.r0 * (1 - Math.sin(this.constant.playerStyle.theta)) / (1 + Math.sin(this.constant.playerStyle.theta));
+    // console.log(ret.r0);
+    // console.log(ret.r1);
     ret.x0 = 0;
     ret.y0 = 0;
     ret.x1 = ret.r0+ret.r1;
@@ -95,8 +97,17 @@ export default class Player extends Sprite{
   update(){
     if (this.immortalCount > 0)
       this.immortalCount -= 1;
-    this.setPosition(this.getX()+this.vel.x,
-                     this.getY()+this.vel.y);
+    let posx = this.getX() + this.vel.x;
+    let posy = this.getY() + this.vel.y;
+    while (posx > this.constant.gameCor.width)
+      posx -= this.constant.gameCor.width;
+    while (posx < 0)
+      posx += this.constant.gameCor.width;
+    while (posy > this.constant.gameCor.height)
+      posy -= this.constant.gameCor.height;
+    while (posy < 0)
+      posy += this.constant.gameCor.height;
+    this.setPosition(posx, posy);
     this.setVelocity((this.vel.x+this.acc.x)*0.9, (this.vel.y+this.acc.y)*0.9);
     this.isboosting  = (this.acc.x !== 0 || this.acc.y !== 0);
     this.setAcceleration(0, 0);
@@ -128,6 +139,7 @@ export default class Player extends Sprite{
 
   loseonelife(){
     this.life -= 1;
+    this.immortalCount = 120;
     this.circle = new Circle(this.constant.gameCor.width / 2, this.constant.gameCor.height / 2, this.constant.playerStyle.r0);
   }
 }
