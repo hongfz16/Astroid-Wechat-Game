@@ -7,7 +7,7 @@ import Constant from "../constant/constant.js"
 // import this.constant.playerStyle from "../constant/constant.js"
 import { Point, Circle, Vector2d } from "../base/geometry.js"
 
-export class Player extends Sprite{
+export default class Player extends Sprite{
   constructor(constant, x = 0, y = 0, r = 5, angle = 0, life = 1){
     super(x, y, r);
     this.acc = new Vector2d();

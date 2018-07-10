@@ -1,14 +1,5 @@
 export default class Constant {
-  constructor(){
-    //game world constants
-    this.gameCor = {
-      width: canvas.width + astroidSize * 4,
-      height: canvas.height + astroidSize * 4
-    };
-    this.gameStyle = {
-      background: '#000000'
-    };
-
+  constructor(canvas){
     //astroid constants
     this.astroidSize = {
       small: 0.1 * canvas.height,
@@ -87,6 +78,16 @@ export default class Constant {
     this.buttonStyle = {
       strokeSize: 3,
       strokeColor: '#ffffff'
+    };
+    
+    //game world constants
+    console.log(canvas.width);
+    this.gameCor = {
+      width: canvas.width + this.astroidSize.large * 4,
+      height: canvas.height + this.astroidSize.large * 4
+    };
+    this.gameStyle = {
+      background: '#000000'
     };
   }
 }
