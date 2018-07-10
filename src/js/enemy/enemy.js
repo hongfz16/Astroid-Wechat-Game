@@ -11,7 +11,7 @@ export default class Enemy extends Sprite {
   constructor(constant, x = 0, y = 0, type = 'large') {
     let size = constant.enemySize[type];
     super(x, y, size);
-    this.shootTimer = this.constant.enemyShootFrame;
+    this.shootTimer = constant.enemyShootFrame;
     this.constant = constant;
   }
 
@@ -66,7 +66,7 @@ export default class Enemy extends Sprite {
     let dist = Math.sqrt(Math.pow(deltax, 2) + Math.sqrt(Math.pow(deltay, 2)));
     let velx = deltax * this.constant.bulletSpeed / dist;
     let vely = deltay * this.constant.bulletSpeed / dist;
-    let bullet = new Bullet(cx, cy, this.constant.bulletRadius, velx, vely);
+    let bullet = new Bullet(this.constant, cx, cy, this.constant.bulletRadius, velx, vely);
     return bullet;
   }
 }

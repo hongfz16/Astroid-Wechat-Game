@@ -6,12 +6,13 @@ export default class LinkedList{
   }
   push(data){
     let le = new listElement(data);
-    le.next = head;
-    this.head.prev = le;
+    le.next = this.head;
+    if (this.head !== null)
+      this.head.prev = le;
     this.head = le;
   }
   delete(itr){
-    if (itr === head){
+    if (itr.prev === null){
       this.head = this.head.next;
     } else
     {

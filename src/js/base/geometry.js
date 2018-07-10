@@ -4,7 +4,7 @@ class Point{
     this.y = y;
   }
   distance(pos){
-    return Math.sqrt((x-pos.x)*(x-pos.x) + (y-pos.y)*(y-pos.y));
+    return Math.sqrt((this.x-pos.x)*(this.x-pos.x) + (this.y-pos.y)*(this.y-pos.y));
   }
   rotate(angle = 0) {
     [this.x, this.y] = [this.x * Math.cos(angle) - this.y * Math.sin(angle),

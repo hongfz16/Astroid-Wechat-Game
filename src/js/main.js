@@ -44,11 +44,11 @@ export default class Main {
     this.enemysBullet = new LinkedList();
     this.astroids = new LinkedList();
     for (let i = 0; i < 2; ++i){
-      let enemy = initEnemy();
+      let enemy = this.initEnemy();
       this.enemys.push(enemy);
     }
     for (let i = 0; i < 2; ++i){
-      let astroid = initAstroid();
+      let astroid = this.initAstroid();
       this.astroids.push(astroid);
     }
     this.enemyCount = 1000;
@@ -59,7 +59,7 @@ export default class Main {
 
     this.gameStatus = "playing";
 
-    this.bindloop = this.loop.bind(this);
+    this.bindLoop = this.loop.bind(this);
 
     //cancel last animation frame
     window.cancelAnimationFrame(this.aniId);
@@ -75,8 +75,8 @@ export default class Main {
   loop() {
     //other things to do in a loop, e.g. update and render
     if (this.gameStatus === 'playing') {
-      update();
-      render();
+      this.update();
+      this.render();
     }
 
     //set the callback of next frame
@@ -89,11 +89,12 @@ export default class Main {
   initEnemy(){
     const posx = Math.random() * canvas.width;
     const posy = Math.random() * canvas.height;
+    let ret;
     if (Math.random() < 0.5) {
-      let ret = new Enemy(this.constant, posx, posy, "large");
+      ret = new Enemy(this.constant, posx, posy, "large");
     }
     else {
-      let ret = new Enemy(this.constant, posx, posy, "small");
+      ret = new Enemy(this.constant, posx, posy, "small");
     }
     return ret;
   }
@@ -107,13 +108,13 @@ export default class Main {
   }
 
   update(){
-    checkTimer();
-    checkCollision();
+    this.checkTimer();
+    this.checkCollision();
     this.player.update();
-    updateList(this.bullet);
-    updateList(this.enemysBullet);
-    updateList(this.enemys);
-    updaetList(this.astroids);
+    this.updateList(this.bullets);
+    this.updateList(this.enemysBullet);
+    this.updateList(this.enemys);
+    this.updateList(this.astroids);
   }
 
   updateList(list){
@@ -143,7 +144,7 @@ export default class Main {
     /*    random add enemy    */
     this.enemyCount -= 1;
     if (this.enemyCount === 0){
-      let enemy = initEnemy();
+      let enemy = this.initEnemy();
       this.enemys.push(enemy);
       this.enemyCount = 1000;
     }
@@ -161,7 +162,7 @@ export default class Main {
     /*    random add astroid   */
     this.astroidCount -= 1;
     if (this.astroidCount === 0){
-      let astroid = initAstroid();
+      let astroid = this.initAstroid();
       this.astroids.push(astroid);
       this.astroidCount = 1000;
     }
@@ -174,7 +175,7 @@ export default class Main {
       let itr2 = list2.head;
       let hasCollision = false;
       while (itr2 !== null) {
-        if (itr1.circle.checkCollision(itr2.circle)) {
+        if (itr1.data.circle.checkCollision(itr2.data.circle)) {
           let tmpitr = itr1.next;
           list1.delete(itr1);
           itr1 = tmpitr;
@@ -198,7 +199,7 @@ export default class Main {
       return;
     let itr = list.head;
     while (itr !== null) {
-      if (itr.circle.checkCollision(player.circle)){
+      if (itr.data.circle.checkCollision(player.circle)){
         this.player.loseonelife();
         if (this.player.life === 0){
           list.delete(itr);
@@ -212,18 +213,18 @@ export default class Main {
 
   checkCollision(){
     //bullet and astroid
-    checkCollisioninLists(this.bullet, this.astroid, true);
-    checkCollisioninLists(this.enemysBullet, this.astroid);
+    this.checkCollisioninLists(this.bullets, this.astroids, true);
+    this.checkCollisioninLists(this.enemysBullet, this.astroids);
     //bullet and enemy
-    checkCollisioninLists(this.bullet, this.enemy, true);
-    checkCollisioninLists(this.enemysBullet, this.enemy);
+    this.checkCollisioninLists(this.bullets, this.enemys, true);
+    this.checkCollisioninLists(this.enemysBullet, this.enemys);
     //bullet and player
     //checkCollisionwithPlayer(this.bullet, this.player);
-    checkCollisionwithPlayer(this.enemysBullet, this.player);
+    this.checkCollisionwithPlayer(this.enemysBullet, this.player);
     //enemy and player
-    checkCollisionwithPlayer(this.enemys, this.player);
+    this.checkCollisionwithPlayer(this.enemys, this.player);
     //astroid and player
-    checkCollisionwithPlayer(this.astroid, this.player);
+    this.checkCollisionwithPlayer(this.astroids, this.player);
   }
 
   render(){
@@ -250,9 +251,10 @@ export default class Main {
     }
 
     //clip to screen context
-    let gameCorx = player.getX() + this.constant.gameCor.width - canvas.width;
-    let gameCory = player.getY() + this.constant.gameCor.height - canvas.height;
+    let gameCorx = this.player.getX() + this.constant.gameCor.width - canvas.width;
+    let gameCory = this.player.getY() + this.constant.gameCor.height - canvas.height;
     ctx.drawImage(secondCanvasBuffer, gameCorx, gameCory, canvas.width, canvas.height, 0, 0, canvas.width, canvas.height);
+    this.gameInfo.drawtoCanvas(ctx);
   }
 
   drawList(list, ctx){

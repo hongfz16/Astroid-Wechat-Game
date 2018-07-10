@@ -21,10 +21,10 @@ export default class Player extends Sprite{
 
   drawtoCanvas(ctx){
     if (this.immortalCount === 0 || (this.immortalCount%30)<20){
-      let cor = getCor();
+      let cor = this.getCor();
       ctx.strokeStyle = this.constant.playerStyle.strokeColor;
       ctx.lineWidth = this.constant.playerStyle.strokeSize;
-      ctx.beingPath();
+      ctx.beginPath();
       ctx.moveTo(cor.p[5].x, cor.p[5].y);
       ctx.lineTo(cor.p[2].x, cor.p[2].y);
       ctx.lineTo(cor.p[6].x, cor.p[6].y);
@@ -48,7 +48,7 @@ export default class Player extends Sprite{
     ret.y0 = 0;
     ret.x1 = ret.r0+ret.r1;
     ret.y1 = 0;
-    ret.x2 = r0/(Math.sin(this.constant.playerStyle.theta));
+    ret.x2 = ret.r0/(Math.sin(this.constant.playerStyle.theta));
     ret.y2 = 0;
     ret.x3 = -ret.r0;
     ret.y3 = (ret.x2+ret.r0)*Math.tan(this.constant.playerStyle.theta);
@@ -61,7 +61,7 @@ export default class Player extends Sprite{
     ret.x7 = ret.x5;
     ret.y7 = 0;
     ret.x8 = ret.x3;
-    ret.y8 = (ret.x3-ret.x7)*Math.tan(palyerStyle.theta);
+    ret.y8 = (ret.x3-ret.x7)*Math.tan(this.constant.playerStyle.theta);
     ret.x9 = ret.x3;
     ret.x9 = -ret.y8;
     ret.p = [];
@@ -79,6 +79,7 @@ export default class Player extends Sprite{
       ret.p[i].rotate(this.angle);
       ret.p[i].add(this.getX(), this.getY());
     }
+    return ret;
   }
 
 
@@ -87,7 +88,7 @@ export default class Player extends Sprite{
     bullet_vel.x = Math.cos(this.angle);
     bullet_vel.y = Math.sin(this.angle);
     bullet_vel.normalize(this.constant.bulletSpeed);
-    const b = new Bullet(this.getX(), this.getY(), this.constant.bulletRadius, bullet_vel.x, bullet_vel.y);
+    const b = new Bullet(this.constant, this.getX(), this.getY(), this.constant.bulletRadius, bullet_vel.x, bullet_vel.y);
     return b;
   }
 

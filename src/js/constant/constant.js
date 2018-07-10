@@ -32,7 +32,7 @@ export default class Constant {
       medium: 0.15 * canvas.height,
       large: 0.25 * canvas.height
     };
-    this.enemyShootFrames = 100;
+    this.enemyShootFrame = 100;
     this.enemyStyle = {
       strokeSize: 2,
       strokeColor: '#ffffff'
@@ -58,22 +58,22 @@ export default class Constant {
     this.leftButtonPos = {
       x: canvas.width * 0.2,
       y: canvas.height * 0.8,
-      r: canvas.width * 0.08
+      r: canvas.width * 0.02
     };
     this.rightButtonPos = {
       x: canvas.width * 0.3,
       y: canvas.height * 0.8,
-      r: canvas.width * 0.08
+      r: canvas.width * 0.02
     };
     this.accButtonPos = {
       x: canvas.width * 0.6,
       y: canvas.height * 0.8,
-      r: canvas.width * 0.15
+      r: canvas.width * 0.02
     };
     this.shootButtonPos = {
       x: canvas.width * 0.8,
       y: canvas.height * 0.8,
-      r: canvas.width * 0.15
+      r: canvas.width * 0.02
     };
     this.buttonStyle = {
       strokeSize: 3,
@@ -81,7 +81,6 @@ export default class Constant {
     };
 
     //game world constants
-    console.log(canvas.width);
     this.gameCor = {
       width: canvas.width + this.astroidSize.large * 4,
       height: canvas.height + this.astroidSize.large * 4
