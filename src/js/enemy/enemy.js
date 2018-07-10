@@ -57,6 +57,7 @@ export class Enemy extends Sprite {
   }
 
   shoot(x, y) {
+    this.resetShootTimer();
     let cx = this.getX();
     let cy = this.getY();
     let deltax = x - cx;
