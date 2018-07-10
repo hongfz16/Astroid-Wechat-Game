@@ -1,5 +1,6 @@
 import Sprite from "../base/sprite";
 import Constant from "../constant/constant.js"
+import Bullet from "../bullet/bullet.js"
 // import this.constant.bulletRadius from "../constant/constant.js";
 // import bulletSpeed from "../constant/constant.js"
 // import this.constant.turnAngle from "../constant/constant.js"
@@ -56,8 +57,8 @@ export default class Player extends Sprite{
     ret.y3 = (ret.x2+ret.r0)*Math.tan(this.constant.playerStyle.theta);
     ret.x4 = ret.x3;
     ret.y4 = -ret.y3;
-    ret.x5 = ret.x3-ret.r1*Math.cos(this.constant.playerStyle.theta);
-    ret.y5 = ret.y3-ret.r1*Math.sin(this.constant.playerStyle.theta);
+    ret.x5 = ret.x3-ret.r0*Math.cos(this.constant.playerStyle.theta);
+    ret.y5 = ret.y3+ret.r0*Math.sin(this.constant.playerStyle.theta);
     ret.x6 = ret.x5;
     ret.y6 = -ret.y5;
     ret.x7 = ret.x5;
@@ -65,7 +66,7 @@ export default class Player extends Sprite{
     ret.x8 = ret.x3;
     ret.y8 = (ret.x3-ret.x7)*Math.tan(this.constant.playerStyle.theta);
     ret.x9 = ret.x3;
-    ret.x9 = -ret.y8;
+    ret.y9 = -ret.y8;
     ret.p = [];
     ret.p.push(new Point(ret.x0, ret.y0));
     ret.p.push(new Point(ret.x1, ret.y1));
@@ -86,7 +87,7 @@ export default class Player extends Sprite{
 
 
   shoot(){
-    let bullet_vel = new Velocity();
+    let bullet_vel = new Vector2d();
     bullet_vel.x = Math.cos(this.angle);
     bullet_vel.y = Math.sin(this.angle);
     bullet_vel.normalize(this.constant.bulletSpeed);
@@ -123,7 +124,7 @@ export default class Player extends Sprite{
   }
 
   turnleft(){
-    this.angleDelta = this.constant.turnAngle; 
+    this.angleDelta = -this.constant.turnAngle; 
   }
 
   turnright(){
@@ -131,7 +132,7 @@ export default class Player extends Sprite{
   }
 
   accelerate(){
-    setAcceleration(Math.cos(this.angle), Math.sin(this.angle));
+    this.setAcceleration(Math.cos(this.angle), Math.sin(this.angle));
     //this.acc.x = Math.cos(this.angle);
     //this.acc.y = Math.sin(this.angle);
     //this.acc.normalize();

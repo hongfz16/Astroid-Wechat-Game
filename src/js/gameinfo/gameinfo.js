@@ -11,6 +11,7 @@ export default class gameInfo{
     this.main = mainclass;
     this.score = 0;
     this.constant = constant;
+    this.initEvent();
   }
 
   scorepp(){
@@ -51,22 +52,34 @@ export default class gameInfo{
       let x = e.touches[0].clientX;
       let y = e.touches[0].clientY;
 
-      if (checkinLeft(x, y)){
-        this.main.player.turnleft();
+      if (this.checkinLeft(x, y)){
+        //this.main.player.turnleft();
+        this.main.clickLeft = true;
         console.log('Click Left button');
       } else
-      if (checkinRight(x, y)){
-        this.main.player.turnright();
+      if (this.checkinRight(x, y)){
+        // this.main.player.turnright();
+        this.main.clickRight = true;
         console.log('Click Right button');
       } else
-      if (checkinShoot(x, y)){
-        this.main.player.shoot();
+      if (this.checkinShoot(x, y)){
+        // this.main.player.shoot();
+        this.main.clickShoot = true;
         console.log('Click Shoot button');
       } else
-      if (checkinAcc(x, y)){
-        this.main.player.accelerate();
+      if (this.checkinAcc(x, y)){
+        // this.main.player.accelerate();
+        this.main.clickAcc = true;
         console.log('Click Acc button');
       }
+    }).bind(this));
+
+    canvas.addEventListener("touchend", ((e)=>{
+      e.preventDefault();
+      this.main.clickLeft = false;
+      this.main.clickRight = false;
+      this.main.clickShoot = false;
+      this.main.clickAcc = false;
     }).bind(this));
   }
   
