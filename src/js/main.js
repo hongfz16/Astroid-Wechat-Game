@@ -4,6 +4,7 @@ import Player from "./player/player.js"
 import Astroid from "./astroid/astroid.js"
 import Bullet from "./bullet/bullet.js"
 import LinkedList from "./list/linkerlist.js"
+import gameInfo from "./gameinfo/gameinfo.js"
 
 //get canvas context
 let ctx = canvas.getContext('2d');
@@ -39,7 +40,6 @@ export default class Main {
     this.astroidCount = 1000;
     //this.bulletCount = 0;
     this.shootCount = 0;
-    this.score = 0;
     this.initEvent();
 
 
@@ -196,7 +196,7 @@ export default class Main {
 
   //init touch event
   initEvent(){
-    canvas.addEventListener("");
+    canvas.addEventListener("touchstart");
   }
 
   render(){
