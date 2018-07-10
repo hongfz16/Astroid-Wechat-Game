@@ -43,16 +43,16 @@ export default class Enemy extends Sprite {
     let x = this.getX();
     let y = this.getY();
     let r = this.getRadius();
-    if (x >= r && x <= canvas.width - r && y >= r && y <= canvas.height - r) {
+    if (x >= r && x <= this.constant.gameCor.width - r && y >= r && y <= this.constant.gameCor.height - r) {
       this.drawEnemy(ctx, x, y, r);
       return;
     }
     let x2 = x;
     let y2 = y;
-    if (x < r) { x2 = x + canvas.width; }
-    if (x > canvas.width - r) { x2 = x - canvas.width; }
-    if (y < r) { y2 = y + canvas.height; }
-    if (y > canvas.height - r) { y2 = y - canvas.height; }
+    if (x < r) { x2 = x + this.constant.gameCor.width; }
+    if (x > this.constant.gameCor.width - r) { x2 = x - this.constant.gameCor.width; }
+    if (y < r) { y2 = y + this.constant.gameCor.height; }
+    if (y > this.constant.gameCor.height - r) { y2 = y - this.constant.gameCor.height; }
     this.drawEnemy(ctx, x, y, r);
     this.drawEnemy(ctx, x2, y2, r);
   }

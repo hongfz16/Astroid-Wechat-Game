@@ -53,15 +53,19 @@ export default class gameInfo{
 
       if (checkinLeft(x, y)){
         this.main.player.turnleft();
+        console.log('Click Left button');
       } else
       if (checkinRight(x, y)){
         this.main.player.turnright();
+        console.log('Click Right button');
       } else
       if (checkinShoot(x, y)){
         this.main.player.shoot();
+        console.log('Click Shoot button');
       } else
       if (checkinAcc(x, y)){
         this.main.player.accelerate();
+        console.log('Click Acc button');
       }
     }).bind(this));
   }

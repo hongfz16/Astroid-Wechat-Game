@@ -2,9 +2,9 @@ export default class Constant {
   constructor(canvas) {
     //astroid constants
     this.astroidSize = {
-      small: 0.1 * canvas.height,
-      medium: 0.2 * canvas.height,
-      large: 0.3 * canvas.height
+      small: 0.05 * canvas.height,
+      medium: 0.1 * canvas.height,
+      large: 0.15 * canvas.height
     };
     this.astroidSpeed = {
       small: 0.03 * canvas.height,
@@ -28,9 +28,9 @@ export default class Constant {
 
     //enemy constants
     this.enemySize = {
-      small: 0.05 * canvas.height,
-      medium: 0.15 * canvas.height,
-      large: 0.25 * canvas.height
+      small: 0.025 * canvas.height,
+      medium: 0.075 * canvas.height,
+      large: 0.1 * canvas.height
     };
     this.enemyShootFrame = 100;
     this.enemyStyle = {
@@ -44,7 +44,7 @@ export default class Constant {
     //player constants
     //const playerRadius = 0.15 * canvas.height;
     this.playerStyle = {
-      r0: 0.15 * canvas.height,
+      r0: 0.05 * canvas.height,
       theta: Math.PI * 15 / 180,
       strokeSize: 2,
       strokeColor: '#ffffff'
@@ -58,22 +58,22 @@ export default class Constant {
     this.leftButtonPos = {
       x: canvas.width * 0.2,
       y: canvas.height * 0.8,
-      r: canvas.width * 0.02
+      r: canvas.width * 0.03
     };
     this.rightButtonPos = {
       x: canvas.width * 0.3,
       y: canvas.height * 0.8,
-      r: canvas.width * 0.02
+      r: canvas.width * 0.03
     };
     this.accButtonPos = {
       x: canvas.width * 0.6,
       y: canvas.height * 0.8,
-      r: canvas.width * 0.02
+      r: canvas.width * 0.03
     };
     this.shootButtonPos = {
       x: canvas.width * 0.8,
       y: canvas.height * 0.8,
-      r: canvas.width * 0.02
+      r: canvas.width * 0.03
     };
     this.buttonStyle = {
       strokeSize: 3,
@@ -82,8 +82,8 @@ export default class Constant {
 
     //game world constants
     this.gameCor = {
-      width: canvas.width + this.astroidSize.large * 4,
-      height: canvas.height + this.astroidSize.large * 4
+      width: canvas.width + this.astroidSize.large * 2,
+      height: canvas.height + this.astroidSize.large * 2
     };
     this.gameStyle = {
       background: '#000000'
