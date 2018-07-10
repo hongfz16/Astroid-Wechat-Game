@@ -5,9 +5,16 @@ import Astroid from "./astroid/astroid.js"
 import Bullet from "./bullet/bullet.js"
 import LinkedList from "./list/linkerlist.js"
 import gameInfo from "./gameinfo/gameinfo.js"
+import gameCor from './constant/constant'
+import gameStyle from './constant/constant'
 
 //get canvas context
 let ctx = canvas.getContext('2d');
+//create canvas buffer and get context
+let firstCanvasBuffer = wx.createCanvas();
+let firstBufferContext = firstCanvasBuffer.getContext('2d');
+let secondCanvasBuffer = wx.createCanvas();
+let secondBufferContext = secondCanvasBuffer.getContext('2d');
 //frame per second
 const fps = 60;
 
@@ -18,6 +25,10 @@ export default class Main {
     wx.setPreferredFramesPerSecond(fps);
     this.gameStatus = undefined;
     //some other init works
+    firstCanvasBuffer.width = gameCor.width;
+    firstCanvasBuffer.height = gameCor.height;
+    secondCanvasBuffer.width = gameCor.width * 3;
+    secondCanvasBuffer.height = gameCor.height * 3;
   }
 
   //start game entry
@@ -194,7 +205,40 @@ export default class Main {
   }
 
   render(){
+    //clear all contexts
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    firstBufferContext.clearRect(0, 0, firstCanvasBuffer.width, firstCanvasBuffer.height);
+    secondBufferContext.clearRect(0, 0, secondCanvasBuffer.width, secondCanvasBuffer.height);
 
+    //draw first buffer context
+    firstBufferContext.fillStyle = gameStyle.background;
+    firstBufferContext.fillRect(0, 0, gameCor.x, gameCor.y);
+    this.drawList(this.enemys, firstBufferContext);
+    this.drawList(this.bullets, firstBufferContext);
+    this.drawList(this.enemysBullet, firstBufferContext);
+    this.drawList(this.astroids, firstBufferContext);
+    this.player.drawtoCanvas(firstBufferContext);
+
+    //copy to second buffer context
+    secondBufferContext.drawImage(firstCanvasBuffer, gameCor.width, gameCor.height)
+    for(let i = 0; i < 2; i += 1) {
+      for(let j = 0; j < 2; j += 1) {
+        secondBufferContext.drawImage(firstCanvasBuffer, gameCor.width * i, gameCor.height * j);
+      }
+    }
+
+    //clip to screen context
+    let gameCorx = player.getX() + gameCor.width - canvas.width;
+    let gameCory = player.getY() + gameCor.height - canvas.height;
+    ctx.drawImage(secondCanvasBuffer, gameCorx, gameCory, canvas.width, canvas.height, 0, 0, canvas.width, canvas.height);
+  }
+
+  drawList(list, ctx){
+    let itr = list.head;
+    while (itr !== null){
+      itr.data.drawtoCanvas(ctx);
+      itr = itr.next;
+    }
   }
 
   GameOver(){
