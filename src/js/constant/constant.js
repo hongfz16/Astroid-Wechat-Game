@@ -51,7 +51,7 @@ export default class Constant {
       theta: Math.PI * 20 / 180,
       strokeSize: 1,
       strokeColor: '#ffffff',
-      maxSpeed: 0.2 * canvas.height
+      maxSpeed: 0.021 * canvas.height
     };
 
     //gameinfo constants
