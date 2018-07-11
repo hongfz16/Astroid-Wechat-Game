@@ -160,8 +160,8 @@ export default class Player extends Sprite{
     if (this.vel.length > this.constant.playerStyle.maxSpeed){
       this.vel.normalize(this.constant.playerStyle.maxSpeed);
     }
-    this.vel.x *= 0.96;
-    this.vel.y *= 0.96;
+    this.vel.x *= 0.98;
+    this.vel.y *= 0.98;
     this.isboosting  = (this.acc.x !== 0 || this.acc.y !== 0);
     this.setAcceleration(0, 0);
     
