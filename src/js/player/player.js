@@ -27,21 +27,64 @@ export default class Player extends Sprite{
     let cor = this.getCor();
     this.smallCircle = new Circle(cor.p[1].x, cor.p[1].y, cor.r1);
     if (this.immortalCount === 0 || (this.immortalCount%30)<20){
-      ctx.strokeStyle = this.constant.playerStyle.strokeColor;
-      ctx.lineWidth = this.constant.playerStyle.strokeSize;
-      ctx.beginPath();
-      ctx.moveTo(cor.p[5].x, cor.p[5].y);
-      ctx.lineTo(cor.p[2].x, cor.p[2].y);
-      ctx.lineTo(cor.p[6].x, cor.p[6].y);
-      ctx.moveTo(cor.p[3].x, cor.p[3].y);
-      ctx.lineTo(cor.p[4].x, cor.p[4].y);
-      if (this.isboosting){
-        ctx.moveTo(cor.p[8].x, cor.p[8].y);
-        ctx.lineTo(cor.p[7].x, cor.p[7].y);
-        ctx.lineTo(cor.p[9].x, cor.p[9].y);
+
+      for (let i = 0; i <= 9; ++i) {
+        cor.p[i].x -= this.constant.gameCor.width;
+        cor.p[i].y -= this.constant.gameCor.height;
       }
-      ctx.stroke();
+      this.drawtoCanvasOneCorner(cor, ctx);
+      for (let i = 0; i <= 9; ++i) {
+        cor.p[i].x += this.constant.gameCor.width;
+      }
+      this.drawtoCanvasOneCorner(cor, ctx);
+      for (let i = 0; i <= 9; ++i) {
+        cor.p[i].x += this.constant.gameCor.width;
+      }
+      this.drawtoCanvasOneCorner(cor, ctx);
+      for (let i = 0; i <= 9; ++i) {
+        //cor.p[i].x -= this.constant.gameCor.width;
+        cor.p[i].y += this.constant.gameCor.height;
+      }
+      this.drawtoCanvasOneCorner(cor, ctx);
+      for (let i = 0; i <= 9; ++i) {
+        cor.p[i].x -= this.constant.gameCor.width;
+      }
+      this.drawtoCanvasOneCorner(cor, ctx);
+      for (let i = 0; i <= 9; ++i) {
+        cor.p[i].x -= this.constant.gameCor.width;
+      }
+      this.drawtoCanvasOneCorner(cor, ctx);
+      for (let i = 0; i <= 9; ++i) {
+        //cor.p[i].x += this.constant.gameCor.width;
+        cor.p[i].y += this.constant.gameCor.height;
+      }
+      this.drawtoCanvasOneCorner(cor, ctx);
+      for (let i = 0; i <= 9; ++i) {
+        cor.p[i].x += this.constant.gameCor.width;
+      }
+      this.drawtoCanvasOneCorner(cor, ctx);
+      for (let i = 0; i <= 9; ++i) {
+        cor.p[i].x += this.constant.gameCor.width;
+      }
+      this.drawtoCanvasOneCorner(cor, ctx);
     }
+  }
+
+  drawtoCanvasOneCorner(cor, ctx){
+    ctx.strokeStyle = this.constant.playerStyle.strokeColor;
+    ctx.lineWidth = this.constant.playerStyle.strokeSize;
+    ctx.beginPath();
+    ctx.moveTo(cor.p[5].x, cor.p[5].y);
+    ctx.lineTo(cor.p[2].x, cor.p[2].y);
+    ctx.lineTo(cor.p[6].x, cor.p[6].y);
+    ctx.moveTo(cor.p[3].x, cor.p[3].y);
+    ctx.lineTo(cor.p[4].x, cor.p[4].y);
+    if (this.isboosting) {
+      ctx.moveTo(cor.p[8].x, cor.p[8].y);
+      ctx.lineTo(cor.p[7].x, cor.p[7].y);
+      ctx.lineTo(cor.p[9].x, cor.p[9].y);
+    }
+    ctx.stroke();
   }
 
   getCor(){
