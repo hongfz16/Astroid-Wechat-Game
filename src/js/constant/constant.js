@@ -44,8 +44,8 @@ export default class Constant {
     //player constants
     //const playerRadius = 0.15 * canvas.height;
     this.playerStyle = {
-      r0: 0.05 * canvas.height,
-      theta: Math.PI * 15 / 180,
+      r0: 0.02 * canvas.height,
+      theta: Math.PI * 20 / 180,
       strokeSize: 2,
       strokeColor: '#ffffff'
     };
