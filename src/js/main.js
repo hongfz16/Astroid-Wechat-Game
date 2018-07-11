@@ -371,7 +371,7 @@ export default class Main {
   GameOver(){
     this.gameStatus = "over";
     window.cancelAnimationFrame(this.aniId);
-    setTimeout(this.start.bind(this), 1000);
+    setTimeout(this.start.bind(this), 100);
   }
 
 }
