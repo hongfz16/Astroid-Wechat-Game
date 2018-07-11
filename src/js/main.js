@@ -285,7 +285,20 @@ export default class Main {
     // this.firstBufferContext.fillStyle = '#ffffff';
     // this.firstBufferContext.fillRect(0, 0, this.constant.gameCor.x, this.constant.gameCor.y);
     this.firstBufferContext.fillStyle = this.constant.gameStyle.background;
-    this.firstBufferContext.fillRect(0, 0, this.constant.gameCor.x, this.constant.gameCor.y);
+    this.firstBufferContext.fillRect(0, 0, this.constant.gameCor.width, this.constant.gameCor.height);
+    this.firstBufferContext.beginPath();
+    for(let i = 1; i < this.constant.gameCor.width; i += 100) {
+      this.firstBufferContext.moveTo(i, 0);
+      this.firstBufferContext.lineTo(i, this.constant.gameCor.height);
+    }
+    for(let i = 1; i < this.constant.gameCor.height; i += 100) {
+      this.firstBufferContext.moveTo(0, i);
+      this.firstBufferContext.lineTo(this.constant.gameCor.width, i);
+    }
+    this.firstBufferContext.fillStyle = this.constant.gameStyle.backline;
+    this.firstBufferContext.lineSize = this.constant.gameStyle.lineSize;
+    this.firstBufferContext.stroke();
+
     this.drawList(this.enemys, this.firstBufferContext);
     this.drawList(this.bullets, this.firstBufferContext);
     this.drawList(this.enemysBullet, this.firstBufferContext);
@@ -302,6 +315,7 @@ export default class Main {
 
     //clip to screen context
     // console.log(this.player.getX(), this.player.getY());
+
     let gameCorx = this.player.getX() + this.constant.gameCor.width - this.canvas.width / 2;
     let gameCory = this.player.getY() + this.constant.gameCor.height - this.canvas.height / 2;
     this.ctx.drawImage(this.secondCanvasBuffer, gameCorx, gameCory, this.canvas.width, this.canvas.height, 0, 0, this.canvas.width, this.canvas.height);
@@ -309,7 +323,8 @@ export default class Main {
 
     // let gx = this.constant.gameCor.width;
     // let gy = this.constant.gameCor.height;
-    // ctx.drawImage(secondCanvasBuffer, 0, 0, gx * 3, gy * 3, 0, 0, canvas.width, canvas.height);
+    // this.ctx.drawImage(this.secondCanvasBuffer, 0, 0, gx * 3, gy * 3, 0, 0, this.canvas.width, this.canvas.height);
+    // this.gameInfo.drawtoCanvas(this.ctx);
 
     // if(!this.printed) {
     //   console.log(secondCanvasBuffer.toTempFilePath({

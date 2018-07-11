@@ -95,7 +95,9 @@ export default class Constant {
       height: canvas.height + this.astroidSize.large * 2
     };
     this.gameStyle = {
-      background: '#000000'
+      background: '#000000',
+      backline: 'rgba(190, 190, 190, 190)',
+      lineSize: 1
     };
   }
 }
