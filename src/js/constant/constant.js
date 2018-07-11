@@ -2,7 +2,7 @@ export default class Constant {
   constructor(canvas) {
     //astroid constants
     this.canvas = canvas;
-    console.log(canvas);
+    // console.log(canvas);
 
     this.astroidSize = {
       small: 0.05 * canvas.height,

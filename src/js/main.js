@@ -15,9 +15,6 @@ const fps = 60;
 export default class Main {
   constructor() {
     this.aniId = 0;
-    if (canvas.width < canvas.height){
-      [canvas.width, canvas.height] = [canvas.height, canvas.width];
-    }
     // console.log(canvas.width);
     // console.log(canvas.height);
     // wx.setPreferredFramesPerSecond(fps);
@@ -235,9 +232,9 @@ export default class Main {
     let itr = list.head;
     while (itr !== null) {
       if (itr.data.checkCollision(this.constant, player)){
-        this.player.loseonelife();
-        if (this.player.life === 0){
-          list.delete(itr);
+        player.loseonelife();
+        list.delete(itr);
+        if (player.life === 0){
           this.GameOver();
           break;
         }

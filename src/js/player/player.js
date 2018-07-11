@@ -38,7 +38,6 @@ export default class Player extends Sprite{
       }
       ctx.stroke();
     }
-
   }
 
   getCor(){
@@ -109,7 +108,7 @@ export default class Player extends Sprite{
     while (posy < 0)
       posy += this.constant.gameCor.height;
     this.setPosition(posx, posy);
-    this.setVelocity((this.vel.x+this.acc.x)*0.9, (this.vel.y+this.acc.y)*0.9);
+    this.setVelocity((this.vel.x+this.acc.x)*0.95, (this.vel.y+this.acc.y)*0.95);
     this.isboosting  = (this.acc.x !== 0 || this.acc.y !== 0);
     this.setAcceleration(0, 0);
     
@@ -132,7 +131,7 @@ export default class Player extends Sprite{
   }
 
   accelerate(){
-    this.setAcceleration(Math.cos(this.angle), Math.sin(this.angle));
+    this.setAcceleration(Math.cos(this.angle)/2, Math.sin(this.angle)/2);
     //this.acc.x = Math.cos(this.angle);
     //this.acc.y = Math.sin(this.angle);
     //this.acc.normalize();
