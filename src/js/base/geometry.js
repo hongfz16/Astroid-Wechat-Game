@@ -1,3 +1,5 @@
+import Constant from '../constant/constant.js'
+
 class Point{
   constructor(x = 0, y = 0){
     this.x = x;
@@ -21,8 +23,19 @@ class Circle{
     this.center = new Point(x, y);
     this.radius = r;
   }
-  checkCollision(cir){
-    return (this.center.distance(cir.center) < this.radius + cir.radius);
+  checkCollision(constant, cir) {
+    let p0 = new Point(this.center.x, this.center.y);
+    let p1 = new Point(cir.center.x, cir.center.y);
+    if (p0.x - p1.x > constant.gameCor.width / 2)
+      p1.x += constant.gameCor.width;
+    else if (p1.x - p0.x > constant.gameCor.width / 2)
+      p0.x += constant.gameCor.width;
+    
+    if (p0.y - p1.y > constant.gameCor.height / 2)
+      p1.y += constant.gameCor.height;
+    else if (p1.x - p0.x > constant.gameCor.height / 2)
+      p0.y += constant.gameCor.height;
+    return (p0.distance(p1) < this.radius + cir.radius);
   }
 }
 

@@ -200,7 +200,7 @@ export default class Main {
       let itr2 = list2.head;
       let hasCollision = false;
       while (itr2 !== null) {
-        if (itr1.data.circle.checkCollision(itr2.data.circle)) {
+        if (itr1.data.checkCollision(this.constant, itr2.data)) {
           let tmpitr = itr1.next;
           list1.delete(itr1);
           itr1 = tmpitr;
@@ -224,7 +224,7 @@ export default class Main {
       return;
     let itr = list.head;
     while (itr !== null) {
-      if (itr.data.circle.checkCollision(player.circle)){
+      if (itr.data.checkCollision(this.constant, player)){
         this.player.loseonelife();
         if (this.player.life === 0){
           list.delete(itr);
