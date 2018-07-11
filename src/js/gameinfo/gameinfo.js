@@ -53,21 +53,33 @@ export default class gameInfo{
       let y = e.touches[0].clientY;
 
       if (this.checkinLeft(x, y)){
-        this.main.player.turnleft();
+        //this.main.player.turnleft();
+        this.main.clickLeft = true;
         console.log('Click Left button');
       } else
       if (this.checkinRight(x, y)){
-        this.main.player.turnright();
+        // this.main.player.turnright();
+        this.main.clickRight = true;
         console.log('Click Right button');
       } else
       if (this.checkinShoot(x, y)){
-        this.main.player.shoot();
+        // this.main.player.shoot();
+        this.main.clickShoot = true;
         console.log('Click Shoot button');
       } else
       if (this.checkinAcc(x, y)){
-        this.main.player.accelerate();
+        // this.main.player.accelerate();
+        this.main.clickAcc = true;
         console.log('Click Acc button');
       }
+    }).bind(this));
+
+    canvas.addEventListener("touchend", ((e)=>{
+      e.preventDefault();
+      this.main.clickLeft = false;
+      this.main.clickRight = false;
+      this.main.clickShoot = false;
+      this.main.clickAcc = false;
     }).bind(this));
   }
   
