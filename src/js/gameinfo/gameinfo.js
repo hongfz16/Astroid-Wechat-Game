@@ -38,11 +38,20 @@ export default class gameInfo{
     ctx.stroke();
   }
 
+  drawScore(ctx, x, y) {
+    ctx.fillStyle = this.constant.scoreStyle.color;
+    ctx.font = this.constant.scoreStyle.font;
+    ctx.textAlign = this.constant.scoreStyle.textAlign;
+    ctx.textBaseline = this.constant.scoreStyle.textBaseline;
+    ctx.fillText(`Score: ${this.score}`, x, y);
+  }
+
   drawtoCanvas(ctx){
     this.drawTri(ctx, this.constant.leftButtonPos.x, this.constant.leftButtonPos.y, this.constant.leftButtonPos.r, Math.PI / 3);
     this.drawTri(ctx, this.constant.rightButtonPos.x, this.constant.rightButtonPos.y, this.constant.rightButtonPos.r, 0);
     this.drawCircle(ctx, this.constant.accButtonPos.x, this.constant.accButtonPos.y, this.constant.accButtonPos.r);
     this.drawCircle(ctx, this.constant.shootButtonPos.x, this.constant.shootButtonPos.y, this.constant.shootButtonPos.r);
+    this.drawScore(ctx, this.constant.scorePos.x, this.constant.scorePos.y);
   }
 
   initEvent(){

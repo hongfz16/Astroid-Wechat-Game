@@ -15,7 +15,7 @@ export default class Constant {
       large: 0.01 * canvas.height
     };
     this.astroidStyle = {
-      strokeSize: 3,
+      strokeSize: 1,
       strokeColor: '#ffffff'
     };
     this.astroidSplitAngle = Math.PI / 36;
@@ -37,7 +37,7 @@ export default class Constant {
     };
     this.enemyShootFrame = 100;
     this.enemyStyle = {
-      strokeSize: 2,
+      strokeSize: 1,
       strokeColor: '#ffffff'
     };
 
@@ -49,14 +49,20 @@ export default class Constant {
     this.playerStyle = {
       r0: 0.03 * canvas.height,
       theta: Math.PI * 20 / 180,
-      strokeSize: 2,
+      strokeSize: 1,
       strokeColor: '#ffffff'
     };
 
     //gameinfo constants
     this.scorePos = {
       x: canvas.width * 0.02,
-      y: canvas.height * 0.02
+      y: canvas.height * 0.05
+    };
+    this.scoreStyle = {
+      textAlign: 'left',
+      textBaseline: 'middle',
+      font: `${this.canvas.height * 0.05}px sans-serif`,
+      color: '#ffffff'
     };
     this.leftButtonPos = {
       x: canvas.width * 0.2,
