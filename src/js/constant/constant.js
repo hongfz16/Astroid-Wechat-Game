@@ -40,7 +40,7 @@ export default class Constant {
       strokeSize: 1,
       strokeColor: '#ffffff'
     };
-    this.enemySpeed = 0.01 * canvas.height;
+    this.enemySpeed = 0.005 * canvas.height;
     this.enemyVelTimer = 300;
 
     //turning angle per frame
@@ -94,8 +94,8 @@ export default class Constant {
 
     //game world constants
     this.gameCor = {
-      width: canvas.width + this.astroidSize.large * 2,
-      height: canvas.height + this.astroidSize.large * 2
+      width: canvas.width * 1.5,
+      height: canvas.height * 1.5
     };
     this.gameStyle = {
       background: '#000000',
