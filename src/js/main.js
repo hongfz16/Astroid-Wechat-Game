@@ -114,24 +114,39 @@ export default class Main {
     return cnt;
   }
 
+  getRandompos(){
+    let ret = new Point();
+    ret.x = Math.random() * this.constant.gameCor.width;
+    while (Math.abs(ret.x-this.player.getX()) < this.canvas.width / 2){
+      ret.x = Math.random() * this.constant.gameCor.width;
+    }
+    ret.y = Math.random() * this.constant.gameCor.height;
+    while (Math.abs(ret.y - this.player.getY()) < this.canvas.height / 2) {
+      ret.y = Math.random() * this.constant.gameCor.height;
+    }
+    return ret;
+  }
+
   initEnemy(){
-    const posx = Math.random() * this.constant.gameCor.width;
-    const posy = Math.random() * this.constant.gameCor.height;
+    const pos = this.getRandompos();
+    //const posx = Math.random() * this.constant.gameCor.width;
+    //const posy = Math.random() * this.constant.gameCor.height;
     let ret;
     if (Math.random() < 0.5) {
-      ret = new Enemy(this.constant, posx, posy, "large");
+      ret = new Enemy(this.constant, pos.x, pos.y, "large");
     }
     else {
-      ret = new Enemy(this.constant, posx, posy, "small");
+      ret = new Enemy(this.constant, pos.x, pos.y, "small");
     }
     return ret;
   }
 
   initAstroid(){
-    const posx = Math.random() * this.constant.gameCor.width;
-    const posy = Math.random() * this.constant.gameCor.height;
+    const pos = this.getRandompos();
+    //const posx = Math.random() * this.constant.gameCor.width;
+    //const posy = Math.random() * this.constant.gameCor.height;
     let vel = new Vector2d(Math.random() * 2 - 1, Math.random() * 2 - 1);
-    let ret = new Astroid(this.constant, posx, posy, vel.x, vel.y, "large");
+    let ret = new Astroid(this.constant, pos.x, pos.y, vel.x, vel.y, "large");
     return ret;
   }
 

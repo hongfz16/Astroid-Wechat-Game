@@ -5,13 +5,13 @@ export default class Constant {
     // console.log(canvas);
 
     this.astroidSize = {
-      small: 0.05 * canvas.height,
-      medium: 0.1 * canvas.height,
-      large: 0.15 * canvas.height
+      small: 0.04 * canvas.height,
+      medium: 0.07 * canvas.height,
+      large: 0.1 * canvas.height
     };
     this.astroidSpeed = {
-      small: 0.03 * canvas.height,
-      medium: 0.02 * canvas.height,
+      small: 0.02 * canvas.height,
+      medium: 0.015 * canvas.height,
       large: 0.01 * canvas.height
     };
     this.astroidStyle = {
@@ -26,14 +26,14 @@ export default class Constant {
       strokeColor: '#ffffff'
     };
     this.bulletLife = 55;
-    this.bulletSpeed = 0.03 * canvas.height;
+    this.bulletSpeed = 0.021 * canvas.height;
     this.bulletRadius = 0.01 * canvas.height;
 
     //enemy constants
     this.enemySize = {
-      small: 0.025 * canvas.height,
-      medium: 0.075 * canvas.height,
-      large: 0.1 * canvas.height
+      small: 0.015 * canvas.height,
+      medium: 0.020 * canvas.height,
+      large: 0.030 * canvas.height
     };
     this.enemyShootFrame = 100;
     this.enemyStyle = {
@@ -49,11 +49,11 @@ export default class Constant {
     //player constants
     //const playerRadius = 0.15 * canvas.height;
     this.playerStyle = {
-      r0: 0.03 * canvas.height,
+      r0: 0.02 * canvas.height,
       theta: Math.PI * 20 / 180,
       strokeSize: 1,
       strokeColor: '#ffffff',
-      maxSpeed: 0.2 * canvas.height
+      maxSpeed: 0.021 * canvas.height
     };
 
     //gameinfo constants
