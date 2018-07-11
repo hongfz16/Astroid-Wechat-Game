@@ -40,6 +40,8 @@ export default class Constant {
       strokeSize: 1,
       strokeColor: '#ffffff'
     };
+    this.enemySpeed = 0.01 * canvas.height;
+    this.enemyVelTimer = 300;
 
     //turning angle per frame
     this.turnAngle = Math.PI * 3 / 180;
