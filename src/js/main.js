@@ -56,7 +56,7 @@ export default class Main {
     this.enemys = new LinkedList();
     this.enemysBullet = new LinkedList();
     this.astroids = new LinkedList();
-    for (let i = 0; i < 2; ++i){
+    for (let i = 0; i < 1; ++i){
       let enemy = this.initEnemy();
       this.enemys.push(enemy);
     }
@@ -132,10 +132,14 @@ export default class Main {
     //const posx = Math.random() * this.constant.gameCor.width;
     //const posy = Math.random() * this.constant.gameCor.height;
     let ret;
-    if (Math.random() < 0.5) {
+    if (Math.random() < 0.33) {
       ret = new Enemy(this.constant, pos.x, pos.y, "large");
     }
-    else {
+    else
+    if (Math.random() < 0.5) {
+      ret = new Enemy(this.constant, pos.x, pos.y, "medium");
+    } else
+    {
       ret = new Enemy(this.constant, pos.x, pos.y, "small");
     }
     return ret;
@@ -201,8 +205,10 @@ export default class Main {
     /*    random add enemy    */
     this.enemyCount -= 1;
     if (this.enemyCount === 0){
-      let enemy = this.initEnemy();
-      this.enemys.push(enemy);
+      if (this.enemys.head === null){
+        let enemy = this.initEnemy();
+        this.enemys.push(enemy);
+      }
       this.enemyCount = 1000;
     }
     /*-------------------------*/
@@ -210,7 +216,7 @@ export default class Main {
     itr = this.enemys.head;
     while (itr !== null) {
       // console.log(itr.data.shootTimer);
-      if (itr.data.shootTimer === 0) {
+      if (itr.data.shootTimer === 0 && this.canShoot(itr.data)) {
         let bul = itr.data.shoot(this.player.getX(), this.player.getY());
         this.enemysBullet.push(bul);
       }
@@ -225,6 +231,11 @@ export default class Main {
       this.astroidCount = 1000;
     }
     /*-------------------------*/
+  }
+
+  canShoot(enemy){
+    return (Math.abs(enemy.getX()-this.player.getX()) < this.canvas.width/2) &&
+           (Math.abs(enemy.getY() - this.player.getY()) < this.canvas.height / 2);
   }
 
   checkCollisioninLists(list1, list2, flag = false){

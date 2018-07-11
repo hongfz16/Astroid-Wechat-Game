@@ -35,7 +35,7 @@ export default class Constant {
       medium: 0.020 * canvas.height,
       large: 0.030 * canvas.height
     };
-    this.enemyShootFrame = 100;
+    this.enemyShootFrame = 300;
     this.enemyStyle = {
       strokeSize: 1,
       strokeColor: '#ffffff'
