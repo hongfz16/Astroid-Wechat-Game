@@ -18,11 +18,15 @@ export default class Player extends Sprite{
     this.life = life;
     this.isboosting = false;
     this.constant = constant;
+
+    let cor = this.getCor();
+    this.smallCircle = new Circle(cor.p[1].x, cor.p[1].y, cor.r1);
   }
 
   drawtoCanvas(ctx){
+    let cor = this.getCor();
+    this.smallCircle = new Circle(cor.p[1].x, cor.p[1].y, cor.r1);
     if (this.immortalCount === 0 || (this.immortalCount%30)<20){
-      let cor = this.getCor();
       ctx.strokeStyle = this.constant.playerStyle.strokeColor;
       ctx.lineWidth = this.constant.playerStyle.strokeSize;
       ctx.beginPath();
@@ -141,5 +145,10 @@ export default class Player extends Sprite{
     this.life -= 1;
     this.immortalCount = 120;
     this.circle = new Circle(this.constant.gameCor.width / 2, this.constant.gameCor.height / 2, this.constant.playerStyle.r0);
+  }
+
+  checkCollision(constant, sprite){
+    return this.circle.checkCollision(constant, sprite.circle) ||
+      this.smallCircle.checkCollision(constant, sprite.circle);
   }
 }

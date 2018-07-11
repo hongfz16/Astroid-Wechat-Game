@@ -231,7 +231,7 @@ export default class Main {
       return;
     let itr = list.head;
     while (itr !== null) {
-      if (itr.data.checkCollision(this.constant, player)){
+      if (player.checkCollision(this.constant, itr.data)){
         player.loseonelife();
         list.delete(itr);
         if (player.life === 0){
