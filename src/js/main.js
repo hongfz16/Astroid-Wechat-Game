@@ -276,7 +276,7 @@ export default class Main {
     this.checkCollisioninLists(this.enemysBullet, this.astroids);
     //bullet and enemy
     this.checkCollisioninLists(this.bullets, this.enemys, true);
-    this.checkCollisioninLists(this.enemysBullet, this.enemys);
+    //this.checkCollisioninLists(this.enemysBullet, this.enemys);
     //bullet and player
     //checkCollisionwithPlayer(this.bullet, this.player);
     this.checkCollisionwithPlayer(this.enemysBullet, this.player);
