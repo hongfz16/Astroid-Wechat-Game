@@ -23,16 +23,16 @@ export default class Astroid extends Sprite {
     this.circle.center.y %= this.constant.gameCor.height;
   }
 
-  splite() {
+  split() {
     let childList = [];
     let childstyle = '';
-    if(this.type === 'small') return childlist;
+    if(this.type === 'small') return childList;
     if(this.type === 'large') childstyle = 'medium';
     if(this.type === 'medium') childstyle = 'small';
     this.vel.rotate(this.constant.astroidSplitAngle);
-    let child1 = new Astroid(this.getX(), this.getY(), this.vel.x, this.vel.y, childstyle);
+    let child1 = new Astroid(this.constant, this.getX(), this.getY(), this.vel.x, this.vel.y, childstyle);
     this.vel.rotate(-2 * this.constant.astroidSplitAngle);
-    let child2 = new Astroid(this.getX(), this.getY(), this.vel.x, this.vel.y, childstyle);
+    let child2 = new Astroid(this.constant, this.getX(), this.getY(), this.vel.x, this.vel.y, childstyle);
     childList.push(child1);
     childList.push(child2);
     return childList;

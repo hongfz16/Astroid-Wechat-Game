@@ -18,7 +18,7 @@ export default class Constant {
       strokeSize: 1,
       strokeColor: '#ffffff'
     };
-    this.astroidSplitAngle = Math.PI / 36;
+    this.astroidSplitAngle = Math.PI * 3 / 36;
 
     //bullet constants
     this.bulletStyle = {
@@ -26,7 +26,7 @@ export default class Constant {
       strokeColor: '#ffffff'
     };
     this.bulletLife = 55;
-    this.bulletSpeed = 0.05 * canvas.height;
+    this.bulletSpeed = 0.03 * canvas.height;
     this.bulletRadius = 0.01 * canvas.height;
 
     //enemy constants
@@ -42,7 +42,7 @@ export default class Constant {
     };
 
     //turning angle per frame
-    this.turnAngle = Math.PI / 180;
+    this.turnAngle = Math.PI * 3 / 180;
 
     //player constants
     //const playerRadius = 0.15 * canvas.height;

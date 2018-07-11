@@ -56,10 +56,10 @@ export default class Main {
     this.enemys = new LinkedList();
     this.enemysBullet = new LinkedList();
     this.astroids = new LinkedList();
-    // for (let i = 0; i < 2; ++i){
-    //   let enemy = this.initEnemy();
-    //   this.enemys.push(enemy);
-    // }
+    for (let i = 0; i < 2; ++i){
+      let enemy = this.initEnemy();
+      this.enemys.push(enemy);
+    }
     for (let i = 0; i < 2; ++i){
       let astroid = this.initAstroid();
       this.astroids.push(astroid);
@@ -142,7 +142,7 @@ export default class Main {
     if (this.clickShoot && this.shootCount === 0) {
       let bul = this.player.shoot();
       this.bullets.push(bul);
-      this.shootCount = 60;
+      this.shootCount = 30;
     }
     if (this.clickAcc) { this.player.accelerate(); }
 
@@ -203,6 +203,7 @@ export default class Main {
 
   checkCollisioninLists(list1, list2, flag = false){
     let itr1 = list1.head;
+    let newlist = [];
     while (itr1 !== null) {
       let itr2 = list2.head;
       let hasCollision = false;
@@ -211,6 +212,15 @@ export default class Main {
           let tmpitr = itr1.next;
           list1.delete(itr1);
           itr1 = tmpitr;
+
+          if (itr2.data instanceof Astroid){
+            let childlist = itr2.data.split();
+            while (childlist.length > 0){
+              let back = childlist.pop();
+              newlist.push(back);
+            }
+          }
+
           list2.delete(itr2);
           hasCollision = true;
           break;
@@ -224,6 +234,12 @@ export default class Main {
         this.gameInfo.scorepp();
       }
     }
+
+    while (newlist.length > 0){
+      let back = newlist.pop();
+      list2.push(back);
+    }
+
   }
 
   checkCollisionwithPlayer(list, player){
