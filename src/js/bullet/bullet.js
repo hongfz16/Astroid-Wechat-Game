@@ -23,9 +23,10 @@ export default class Bullet extends Sprite {
 
   drawtoCanvas(ctx) {
     ctx.beginPath();
-    ctx.arc(this.getX(), this.getY(), this.getRadius(), 0, 2 * Math.PI);
     ctx.strokeStyle = this.constant.bulletStyle.strokeColor;
     ctx.lineWidth = this.constant.bulletStyle.strokeSize;
+    ctx.arc(this.getX(), this.getY(), this.getRadius(), 0, 2 * Math.PI);
     ctx.stroke();
+    ctx.closePath();
   }
 }

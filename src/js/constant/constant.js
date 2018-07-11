@@ -22,9 +22,9 @@ export default class Constant {
       strokeSize: 1,
       strokeColor: '#ffffff'
     };
-    this.bulletLife = 500;
+    this.bulletLife = 55;
     this.bulletSpeed = 0.05 * canvas.height;
-    this.bulletRadius = 0.02 * canvas.height;
+    this.bulletRadius = 0.01 * canvas.height;
 
     //enemy constants
     this.enemySize = {

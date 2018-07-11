@@ -49,10 +49,10 @@ export default class Main {
     this.enemys = new LinkedList();
     this.enemysBullet = new LinkedList();
     this.astroids = new LinkedList();
-    for (let i = 0; i < 2; ++i){
-      let enemy = this.initEnemy();
-      this.enemys.push(enemy);
-    }
+    // for (let i = 0; i < 2; ++i){
+    //   let enemy = this.initEnemy();
+    //   this.enemys.push(enemy);
+    // }
     for (let i = 0; i < 2; ++i){
       let astroid = this.initAstroid();
       this.astroids.push(astroid);
@@ -97,8 +97,8 @@ export default class Main {
   }
   
   initEnemy(){
-    const posx = Math.random() * canvas.width;
-    const posy = Math.random() * canvas.height;
+    const posx = Math.random() * this.constant.gameCor.width;
+    const posy = Math.random() * this.constant.gameCor.height;
     let ret;
     if (Math.random() < 0.5) {
       ret = new Enemy(this.constant, posx, posy, "large");
@@ -110,14 +110,15 @@ export default class Main {
   }
 
   initAstroid(){
-    const posx = Math.random()*canvas.width;
-    const posy = Math.random()*canvas.height;
+    const posx = Math.random() * this.constant.gameCor.width;
+    const posy = Math.random() * this.constant.gameCor.height;
     let vel = new Vector2d(Math.random() * 2 - 1, Math.random() * 2 - 1);
     let ret = new Astroid(this.constant, posx, posy, vel.x, vel.y, "large");
     return ret;
   }
 
   update(){
+    console.log(this.gameInfo.score);
     this.react();
     this.checkTimer();
     this.checkCollision();
@@ -131,9 +132,10 @@ export default class Main {
   react(){
     if (this.clickLeft) { this.player.turnleft(); }
     if (this.clickRight) { this.player.turnright(); }
-    if (this.clickShoot) {
+    if (this.clickShoot && this.shootCount === 0) {
       let bul = this.player.shoot();
       this.bullets.push(bul);
+      this.shootCount = 60;
     }
     if (this.clickAcc) { this.player.accelerate(); }
 
@@ -211,7 +213,7 @@ export default class Main {
       if (hasCollision === false) {
         itr1 = itr1.next;
       } else
-      {
+      if (flag === true){
         this.gameInfo.scorepp();
       }
     }
@@ -307,10 +309,14 @@ export default class Main {
 
   drawList(list, ctx){
     let itr = list.head;
+    //let cnt = 0;
     while (itr !== null){
       itr.data.drawtoCanvas(ctx);
+      //cnt += 1;
       itr = itr.next;
     }
+    // if (list === this.bullets)
+    //   console.log(cnt);
   }
 
   GameOver(){
