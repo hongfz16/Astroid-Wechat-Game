@@ -19,8 +19,8 @@ export default class Main {
     this.gameStatus = undefined;
     let width = canvas.width;
     let height = canvas.height;
-    canvas.width = height;
-    canvas.height = width;
+    canvas.width = (width > height) ? width : height;
+    canvas.height = (width < height) ? width : height;
     this.canvas = canvas;//wx.createCanvas();
     //get canvas contextthis.constant.gameCor
     this.ctx = this.canvas.getContext('2d');
