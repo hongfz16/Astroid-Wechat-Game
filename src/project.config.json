@@ -1,17 +1,20 @@
 {
 	"description": "项目配置文件。",
+	"packOptions": {
+		"ignore": []
+	},
 	"setting": {
-		"urlCheck": false,
+		"urlCheck": true,
 		"es6": true,
 		"postcss": true,
 		"minified": true,
 		"newFeature": true
 	},
 	"compileType": "game",
-	"libVersion": "game",
-	"appid": "touristappid",
-	"projectname": "Astroid",
-	"isGameTourist": true,
+	"libVersion": "2.1.1",
+	"appid": "wxad5c03d4d3aabb9b",
+	"projectname": "Astroid-Wegame",
+	"isGameTourist": false,
 	"condition": {
 		"search": {
 			"current": -1,
