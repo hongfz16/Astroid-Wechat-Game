@@ -91,6 +91,7 @@ export default class Main {
   //game main loop
   loop() {
     //other things to do in a loop, e.g. update and render
+    //console.log(this.calcLength(this.enemys));
     if (this.gameStatus === 'playing') {
       this.update();
       this.render();
@@ -103,6 +104,16 @@ export default class Main {
     );
   }
   
+  calcLength(list){
+    let itr = list.head;
+    let cnt = 0;
+    while (itr !== null){
+      cnt += 1;
+      itr = itr.next;
+    }
+    return cnt;
+  }
+
   initEnemy(){
     const posx = Math.random() * this.constant.gameCor.width;
     const posy = Math.random() * this.constant.gameCor.height;
@@ -360,7 +371,7 @@ export default class Main {
   GameOver(){
     this.gameStatus = "over";
     window.cancelAnimationFrame(this.aniId);
-    setTimeout(this.start(), 1000);
+    setTimeout(this.start.bind(this), 1000);
   }
 
 }

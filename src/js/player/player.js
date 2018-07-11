@@ -137,7 +137,8 @@ export default class Player extends Sprite{
     bullet_vel.x = Math.cos(this.angle);
     bullet_vel.y = Math.sin(this.angle);
     bullet_vel.normalize(this.constant.bulletSpeed);
-    const b = new Bullet(this.constant, this.getX(), this.getY(), this.constant.bulletRadius, bullet_vel.x, bullet_vel.y);
+    let cor = this.getCor();
+    const b = new Bullet(this.constant, cor.p[2].x, cor.p[2].y, this.constant.bulletRadius, bullet_vel.x, bullet_vel.y);
     return b;
   }
 
@@ -155,7 +156,12 @@ export default class Player extends Sprite{
     while (posy < 0)
       posy += this.constant.gameCor.height;
     this.setPosition(posx, posy);
-    this.setVelocity((this.vel.x+this.acc.x)*0.95, (this.vel.y+this.acc.y)*0.95);
+    this.setVelocity(this.vel.x+this.acc.x, this.vel.y+this.acc.y);
+    if (this.vel.length > this.constant.playerStyle.maxSpeed){
+      this.vel.normalize(this.constant.playerStyle.maxSpeed);
+    }
+    this.vel.x *= 0.96;
+    this.vel.y *= 0.96;
     this.isboosting  = (this.acc.x !== 0 || this.acc.y !== 0);
     this.setAcceleration(0, 0);
     
