@@ -19,6 +19,8 @@ export default class Astroid extends Sprite {
   update() {
     this.circle.center.x += this.vel.x;
     this.circle.center.y += this.vel.y;
+    this.circle.center.x += this.constant.gameCor.width;
+    this.circle.center.y += this.constant.gameCor.height;
     this.circle.center.x %= this.constant.gameCor.width;
     this.circle.center.y %= this.constant.gameCor.height;
   }
@@ -61,15 +63,22 @@ export default class Astroid extends Sprite {
       this.drawAstroid(ctx, x, y, r);
       return;
     }
-    let x2 = x;
-    let y2 = y;
-    if(x < r) {x2 = x + this.constant.gameCor.width;}
-    if(x > this.constant.gameCor.width - r) {x2 = x - this.constant.gameCor.width;}
-    if(y < r) {y2 = y + this.constant.gameCor.height;}
-    if(y > this.constant.gameCor.height - r) {y2 = y - this.constant.gameCor.height;}
+    let x2 = x + this.constant.gameCor.width;
+    let y2 = y + this.constant.gameCor.height;
+    let x3 = x - this.constant.gameCor.width;
+    let y3 = y - this.constant.gameCor.height;
+    // if(x < r) {x2 = x + this.constant.gameCor.width;}
+    // if(x > this.constant.gameCor.width - r) {x2 = x - this.constant.gameCor.width;}
+    // if(y < r) {y2 = y + this.constant.gameCor.height;}
+    // if(y > this.constant.gameCor.height - r) {y2 = y - this.constant.gameCor.height;}
     this.drawAstroid(ctx, x, y, r);
     this.drawAstroid(ctx, x2, y2, r);
     this.drawAstroid(ctx, x, y2, r);
     this.drawAstroid(ctx, x2, y, r);
+    this.drawAstroid(ctx, x3, y3, r);
+    this.drawAstroid(ctx, x, y3, r);
+    this.drawAstroid(ctx, x3, y, r);
+    this.drawAstroid(ctx, x2, y3, r);
+    this.drawAstroid(ctx, x3, y2, r);
   }
 }

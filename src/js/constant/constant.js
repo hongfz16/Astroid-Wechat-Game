@@ -65,24 +65,24 @@ export default class Constant {
       color: '#ffffff'
     };
     this.leftButtonPos = {
-      x: canvas.width * 0.2,
+      x: canvas.width * 0.15,
       y: canvas.height * 0.8,
-      r: canvas.width * 0.03
+      r: canvas.width * 0.05
     };
     this.rightButtonPos = {
-      x: canvas.width * 0.3,
+      x: canvas.width * 0.25,
       y: canvas.height * 0.8,
-      r: canvas.width * 0.03
+      r: canvas.width * 0.05
     };
     this.accButtonPos = {
-      x: canvas.width * 0.6,
+      x: canvas.width * 0.7,
       y: canvas.height * 0.8,
-      r: canvas.width * 0.03
+      r: canvas.width * 0.05
     };
     this.shootButtonPos = {
-      x: canvas.width * 0.8,
+      x: canvas.width * 0.85,
       y: canvas.height * 0.8,
-      r: canvas.width * 0.03
+      r: canvas.width * 0.05
     };
     this.buttonStyle = {
       strokeSize: 3,

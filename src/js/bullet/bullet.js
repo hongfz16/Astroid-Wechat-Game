@@ -14,6 +14,8 @@ export default class Bullet extends Sprite {
   update() {
     this.circle.center.x += this.vel.x;
     this.circle.center.y += this.vel.y;
+    this.circle.center.x += this.constant.gameCor.width;
+    this.circle.center.y += this.constant.gameCor.height;
     this.circle.center.x %= this.constant.gameCor.width;
     this.circle.center.y %= this.constant.gameCor.height;
     if(this.life > 0) {
