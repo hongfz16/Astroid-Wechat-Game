@@ -22,6 +22,11 @@ const fps = 60;
 export default class Main {
   constructor() {
     this.aniId = 0;
+    if (canvas.width < canvas.height){
+      [canvas.width, canvas.height] = [canvas.height, canvas.width];
+    }
+    // console.log(canvas.width);
+    // console.log(canvas.height);
     // wx.setPreferredFramesPerSecond(fps);
     this.gameStatus = undefined;
     this.constant = new Constant(canvas);
@@ -118,7 +123,7 @@ export default class Main {
   }
 
   update(){
-    console.log(this.gameInfo.score);
+    //console.log(this.gameInfo.score);
     this.react();
     this.checkTimer();
     this.checkCollision();
