@@ -360,6 +360,7 @@ export default class Main {
   GameOver(){
     this.gameStatus = "over";
     window.cancelAnimationFrame(this.aniId);
+    setTimeout(this.start(), 1000);
   }
 
 }
