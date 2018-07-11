@@ -5,7 +5,6 @@ import Main from '../main'
 // import shootButtonPos from '../constant/constant'
 // import buttonStyle from '../constant/constant'
 
-
 export default class gameInfo{
   constructor(constant, mainclass){
     this.main = mainclass;
@@ -47,7 +46,7 @@ export default class gameInfo{
   }
 
   initEvent(){
-    canvas.addEventListener("touchstart",((e)=>{
+    this.constant.canvas.addEventListener("touchstart",((e)=>{
       e.preventDefault();
       let x = e.touches[0].clientX;
       let y = e.touches[0].clientY;
@@ -74,7 +73,7 @@ export default class gameInfo{
       }
     }).bind(this));
 
-    canvas.addEventListener("touchend", ((e)=>{
+    this.constant.canvas.addEventListener("touchend", ((e)=>{
       e.preventDefault();
       this.main.clickLeft = false;
       this.main.clickRight = false;
