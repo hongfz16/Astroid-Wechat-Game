@@ -26,26 +26,25 @@ export default class Main {
     this.canvas = canvas;//wx.createCanvas();
     //get canvas contextthis.constant.gameCor
     this.ctx = this.canvas.getContext('2d');
-    //create canvas buffer and get context
-    this.firstCanvasBuffer = wx.createCanvas();
-    this.firstBufferContext = this.firstCanvasBuffer.getContext('2d');
-    this.secondCanvasBuffer = wx.createCanvas();
-    this.secondBufferContext = this.secondCanvasBuffer.getContext('2d');
     this.constant = new Constant(this.canvas);
+    //create canvas buffer and get context
+    // this.firstCanvasBuffer = wx.createCanvas();
+    // this.firstBufferContext = this.firstCanvasBuffer.getContext('2d');
+    // this.secondCanvasBuffer = wx.createCanvas();
+    // this.secondBufferContext = this.secondCanvasBuffer.getContext('2d');
     // console.log(this.constant.gameCor);
     //some other init works
     // console.log(Player);
-    this.firstCanvasBuffer.width = this.constant.gameCor.width;
-    this.firstCanvasBuffer.height = this.constant.gameCor.height;
-    this.secondCanvasBuffer.width = this.constant.gameCor.width * 3;
-    this.secondCanvasBuffer.height = this.constant.gameCor.height * 3;
-    this.firstBufferContext = this.firstCanvasBuffer.getContext('2d');
-    this.secondBufferContext = this.secondCanvasBuffer.getContext('2d');
+    // this.firstCanvasBuffer.width = this.constant.gameCor.width;
+    // this.firstCanvasBuffer.height = this.constant.gameCor.height;
+    // this.secondCanvasBuffer.width = this.constant.gameCor.width * 3;
+    // this.secondCanvasBuffer.height = this.constant.gameCor.height * 3;
+    // this.firstBufferContext = this.firstCanvasBuffer.getContext('2d');
+    // this.secondBufferContext = this.secondCanvasBuffer.getContext('2d');
     this.start();
     //console.log(canvas.width, canvas.height);
     //console.log(firstCanvasBuffer.width, firstCanvasBuffer.height);
     //console.log(secondCanvasBuffer.width, secondCanvasBuffer.height);
-    this.printed = false;
   }
 
   //start game entry
@@ -325,79 +324,74 @@ export default class Main {
 
   render(){
     //clear all contexts
+    // console.log(this.player.getX(),this.player.getY());
+    // console.log(this.constant.gameCor.width,this.constant.gameCor.height);
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    this.firstBufferContext.clearRect(0, 0, this.firstCanvasBuffer.width, this.firstCanvasBuffer.height);
-    this.secondBufferContext.clearRect(0, 0, this.secondCanvasBuffer.width, this.secondCanvasBuffer.height);
+    this.ctx.fillStyle = this.constant.gameStyle.background;
+    this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+    this.drawBackground(this.ctx);
+    this.drawList(this.enemys, this.ctx);
+    this.drawList(this.bullets, this.ctx);
+    this.drawList(this.enemysBullet, this.ctx);
+    this.drawList(this.astroids, this.ctx);
+    this.player.drawtoCanvas(this.ctx, this.player.getX(), this.player.getY());
+    this.gameInfo.drawtoCanvas(this.ctx);
+  }
 
-    //draw first buffer context
-    // this.firstBufferContext.fillStyle = '#ffffff';
-    // this.firstBufferContext.fillRect(0, 0, this.constant.gameCor.x, this.constant.gameCor.y);
-    this.firstBufferContext.fillStyle = this.constant.gameStyle.background;
-    this.firstBufferContext.fillRect(0, 0, this.constant.gameCor.width, this.constant.gameCor.height);
-    this.firstBufferContext.beginPath();
+  drawBackground(ctx) {
+    let x = [];
+    let y = [];
     for(let i = 1; i < this.constant.gameCor.width; i += 100) {
-      this.firstBufferContext.moveTo(i, 0);
-      this.firstBufferContext.lineTo(i, this.constant.gameCor.height);
+      x.push(i);
     }
-    for(let i = 1; i < this.constant.gameCor.height; i += 100) {
-      this.firstBufferContext.moveTo(0, i);
-      this.firstBufferContext.lineTo(this.constant.gameCor.width, i);
+    for (let i = 1; i < this.constant.gameCor.height; i += 100) {
+      y.push(i);
     }
-    this.firstBufferContext.fillStyle = this.constant.gameStyle.backline;
-    this.firstBufferContext.lineSize = this.constant.gameStyle.lineSize;
-    this.firstBufferContext.stroke();
-
-    this.drawList(this.enemys, this.firstBufferContext);
-    this.drawList(this.bullets, this.firstBufferContext);
-    this.drawList(this.enemysBullet, this.firstBufferContext);
-    this.drawList(this.astroids, this.firstBufferContext);
-    this.player.drawtoCanvas(this.firstBufferContext);
-
-    //copy to second buffer context
-    // this.secondBufferContext.drawImage(this.firstCanvasBuffer, this.constant.gameCor.width, this.constant.gameCor.height)
-    for(let i = 0; i < 3; i += 1) {
-      for(let j = 0; j < 3; j += 1) {
-        this.secondBufferContext.drawImage(this.firstCanvasBuffer, 0, 0, this.constant.gameCor.width, this.constant.gameCor.height, this.constant.gameCor.width * i, this.constant.gameCor.height * j, this.constant.gameCor.width, this.constant.gameCor.height);
+    ctx.beginPath();
+    for(let i = 0 ; i < x.length; i += 1) {
+      let arrx = [x[i], x[i] + this.constant.gameCor.width, x[i] - this.constant.gameCor.width];
+      for(let j = 0; j < arrx.length; j += 1) {
+        let newCorStart = this.player.corTrans(arrx[j], 1 - this.constant.gameCor.height, 
+                                               this.player.getX(), this.player.getY(), 
+                                               this.constant.gameCor.width, this.constant.gameCor.height,
+                                               this.constant.canvas.width, this.constant.canvas.height);
+        let newCorEnd = this.player.corTrans(arrx[j], 2 * this.constant.gameCor.height - 1,
+                                             this.player.getX(), this.player.getY(),
+                                             this.constant.gameCor.width, this.constant.gameCor.height,
+                                             this.constant.canvas.width, this.constant.canvas.height);
+        ctx.strokeStyle = this.constant.gameStyle.backline;
+        ctx.lineWidth = this.constant.gameStyle.lineSize;
+        ctx.moveTo(newCorStart.x, newCorStart.y);
+        ctx.lineTo(newCorEnd.x, newCorEnd.y);
       }
     }
-
-    //clip to screen context
-    // console.log(this.player.getX(), this.player.getY());
-
-    let gameCorx = this.player.getX() + this.constant.gameCor.width - this.canvas.width / 2;
-    let gameCory = this.player.getY() + this.constant.gameCor.height - this.canvas.height / 2;
-    this.ctx.drawImage(this.secondCanvasBuffer, gameCorx, gameCory, this.canvas.width, this.canvas.height, 0, 0, this.canvas.width, this.canvas.height);
-    this.gameInfo.drawtoCanvas(this.ctx);
-
-    // let gx = this.constant.gameCor.width;
-    // let gy = this.constant.gameCor.height;
-    // this.ctx.drawImage(this.secondCanvasBuffer, 0, 0, gx * 3, gy * 3, 0, 0, this.canvas.width, this.canvas.height);
-    // this.gameInfo.drawtoCanvas(this.ctx);
-
-    // if(!this.printed) {
-    //   console.log(secondCanvasBuffer.toTempFilePath({
-    //     x: 0,
-    //     y: 0,
-    //     width: this.constant.gameCor.width * 3,
-    //     height: this.constant.gameCor.height * 3,
-    //     destWidth: this.constant.gameCor.width * 3,
-    //     destHeight: this.constant.gameCor.height * 3,
-    //     success: (res) => {
-    //       wx.shareAppMessage({
-    //         imageUrl: res.tempFilePath
-    //       })
-    //     }
-    //   }));
-    //   this.printed = true;
-    // }
-
+    ctx.stroke();
+    ctx.beginPath();
+    for (let i = 0; i < y.length; i += 1) {
+      let arry = [y[i], y[i] + this.constant.gameCor.height, y[i] - this.constant.gameCor.height];
+      for (let j = 0; j < arry.length; j += 1) {
+        let newCorStart = this.player.corTrans(1 - this.constant.gameCor.width, arry[j],
+                                               this.player.getX(), this.player.getY(),
+                                               this.constant.gameCor.width, this.constant.gameCor.height,
+                                               this.constant.canvas.width, this.constant.canvas.height);
+        let newCorEnd = this.player.corTrans(this.constant.gameCor.width * 2 - 1, arry[j],
+                                             this.player.getX(), this.player.getY(),
+                                             this.constant.gameCor.width, this.constant.gameCor.height,
+                                             this.constant.canvas.width, this.constant.canvas.height);
+        ctx.strokeStyle = this.constant.gameStyle.backline;
+        ctx.lineWidth = this.constant.gameStyle.lineSize;
+        ctx.moveTo(newCorStart.x, newCorStart.y);
+        ctx.lineTo(newCorEnd.x, newCorEnd.y);
+      }
+    }
+    ctx.stroke();
   }
 
   drawList(list, ctx){
     let itr = list.head;
     //let cnt = 0;
     while (itr !== null){
-      itr.data.drawtoCanvas(ctx);
+      itr.data.drawtoCanvas(ctx, this.player.getX(), this.player.getY());
       //cnt += 1;
       itr = itr.next;
     }

@@ -43,4 +43,14 @@ export default class Sprite{
   setY(y) {
     this.circle.center.y = y;
   }
+
+  corTrans(cx, cy, px, py, gamew, gameh, screenx, screeny) {
+    cx += gamew;
+    cy += gameh;
+    px += gamew;
+    py += gameh;
+    let tx = cx - px + screenx * 0.5;
+    let ty = cy - py + screeny * 0.5;
+    return {x: tx, y: ty};
+  }
 }

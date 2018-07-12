@@ -25,8 +25,7 @@ export default class Player extends Sprite{
   }
 
   drawtoCanvas(ctx){
-    let cor = this.getCor();
-    this.smallCircle = new Circle(cor.p[1].x, cor.p[1].y, cor.r1);
+    let cor = this.getCor(true);
     if (this.immortalCount === 0 || (this.immortalCount%30)<20){
 
       for (let i = 0; i <= 9; ++i) {
@@ -88,7 +87,7 @@ export default class Player extends Sprite{
     ctx.stroke();
   }
 
-  getCor(){
+  getCor(flag = false){
     let ret = new Object();
     ret.r0 = this.circle.radius;
     ret.r1 = ret.r0 * (1 - Math.sin(this.constant.playerStyle.theta)) / (1 + Math.sin(this.constant.playerStyle.theta));
@@ -127,7 +126,13 @@ export default class Player extends Sprite{
     ret.p.push(new Point(ret.x9, ret.y9));
     for (let i = 0; i < ret.p.length; ++i){
       ret.p[i].rotate(this.angle);
-      ret.p[i].add(this.getX(), this.getY());
+      if (flag) {
+        ret.p[i].add(this.constant.canvas.width / 2, this.constant.canvas.height / 2);
+      }
+      else
+      {
+        ret.p[i].add(this.getX(), this.getY());
+      }
     }
     return ret;
   }
@@ -144,6 +149,8 @@ export default class Player extends Sprite{
   }
 
   update(){
+    let cor = this.getCor();
+    this.smallCircle = new Circle(cor.p[1].x, cor.p[1].y, cor.r1);
     if (this.immortalCount > 0)
       this.immortalCount -= 1;
     let posx = this.getX() + this.vel.x;

@@ -55,30 +55,35 @@ export default class Astroid extends Sprite {
     ctx.stroke();
   }
 
-  drawtoCanvas(ctx) {
+  drawtoCanvas(ctx, px, py) {
     let r = this.getRadius();
     let x = this.getX();
     let y = this.getY();
-    if (x >= r && x <= this.constant.gameCor.width - r && y >= r && y <= this.constant.gameCor.height - r) {
-      this.drawAstroid(ctx, x, y, r);
-      return;
-    }
+    // if (x >= r && x <= this.constant.gameCor.width - r && y >= r && y <= this.constant.gameCor.height - r) {
+    //   let newCor = this.corTrans(x, y, px, py, this.constant.gameCor.width, this.constant.gameCor.height, this.constant.canvas.width, this.constant.canvas.height);
+    //   this.drawAstroid(ctx, newCor.x, newCor.y, r);
+    //   return;
+    // }
     let x2 = x + this.constant.gameCor.width;
     let y2 = y + this.constant.gameCor.height;
     let x3 = x - this.constant.gameCor.width;
     let y3 = y - this.constant.gameCor.height;
-    // if(x < r) {x2 = x + this.constant.gameCor.width;}
-    // if(x > this.constant.gameCor.width - r) {x2 = x - this.constant.gameCor.width;}
-    // if(y < r) {y2 = y + this.constant.gameCor.height;}
-    // if(y > this.constant.gameCor.height - r) {y2 = y - this.constant.gameCor.height;}
-    this.drawAstroid(ctx, x, y, r);
-    this.drawAstroid(ctx, x2, y2, r);
-    this.drawAstroid(ctx, x, y2, r);
-    this.drawAstroid(ctx, x2, y, r);
-    this.drawAstroid(ctx, x3, y3, r);
-    this.drawAstroid(ctx, x, y3, r);
-    this.drawAstroid(ctx, x3, y, r);
-    this.drawAstroid(ctx, x2, y3, r);
-    this.drawAstroid(ctx, x3, y2, r);
+    let arrx = [x, x2, x3];
+    let arry = [y, y2, y3];
+    for(let i = 0; i < 3; i += 1) {
+      for(let j = 0; j < 3; j += 1) {
+        let newCor = this.corTrans(arrx[i], arry[j], px, py, this.constant.gameCor.width, this.constant.gameCor.height, this.constant.canvas.width, this.constant.canvas.height);
+        this.drawAstroid(ctx, newCor.x, newCor.y, r);
+      }
+    }
+    // this.drawAstroid(ctx, x, y, r);
+    // this.drawAstroid(ctx, x2, y2, r);
+    // this.drawAstroid(ctx, x, y2, r);
+    // this.drawAstroid(ctx, x2, y, r);
+    // this.drawAstroid(ctx, x3, y3, r);
+    // this.drawAstroid(ctx, x, y3, r);
+    // this.drawAstroid(ctx, x3, y, r);
+    // this.drawAstroid(ctx, x2, y3, r);
+    // this.drawAstroid(ctx, x3, y2, r);
   }
 }
