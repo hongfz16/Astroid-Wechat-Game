@@ -7,6 +7,7 @@ import LinkedList from "./list/linkerlist"
 import gameInfo from "./gameinfo/gameinfo"
 import Enemy from "./enemy/enemy"
 import Constant from "./constant/constant"
+import Welcome from "./WelcOver/welcom"
 
 //frame per second
 const fps = 60;
@@ -41,16 +42,36 @@ export default class Main {
     this.secondCanvasBuffer.height = this.constant.gameCor.height * 3;
     this.firstBufferContext = this.firstCanvasBuffer.getContext('2d');
     this.secondBufferContext = this.secondCanvasBuffer.getContext('2d');
-    this.start();
-    //console.log(canvas.width, canvas.height);
-    //console.log(firstCanvasBuffer.width, firstCanvasBuffer.height);
-    //console.log(secondCanvasBuffer.width, secondCanvasBuffer.height);
+    //this.start();
+    //window.cancelAnimationFrame(this.aniId);
+    this.welcome();
     this.printed = false;
+  }
+
+  welcome(){
+    window.cancelAnimationFrame(this.aniId);
+    console.log("welcome");
+    this.wel = new Welcome(this);
+    this.gameStatus = "Welcome";
+    this.bindLoop = this.loop.bind(this);
+    this.aniId = window.requestAnimationFrame(
+      this.bindLoop,
+      this.canvas
+    );
+    //this.wel.drawtoCanvas(this.ctx);
   }
 
   //start game entry
   start() {
     //init some other data
+    if (this.wel) {
+      console.log("delete wel");
+      delete this.wel;
+    }
+    if (this.over) {
+      console.log("delete over");
+      delete this.over;
+    }
     this.player = new Player(this.constant, this.constant.gameCor.width / 2, this.constant.gameCor.height / 2, this.constant.playerStyle.r0);
     this.bullets = new LinkedList();
     this.enemys = new LinkedList();
@@ -98,6 +119,9 @@ export default class Main {
   loop() {
     //other things to do in a loop, e.g. update and render
     //console.log(this.calcLength(this.enemys));
+    if (this.gameStatus === "Welcome") {
+      this.wel.drawtoCanvas();
+    } else
     if (this.gameStatus === 'playing') {
       this.update();
       this.render();
