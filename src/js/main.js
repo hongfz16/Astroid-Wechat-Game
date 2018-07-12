@@ -156,11 +156,11 @@ export default class Main {
     let vel;
     if (aimtoPlayer){
       vel = new Vector2d(this.player.getX() - pos.x, this.player.getY() - pos.y);
-      vel.normalize(1);
     } else
     {
       vel = new Vector2d(Math.random() * 2 - 1, Math.random() * 2 - 1);
     }
+    vel.normalize((Math.random()+0.5) * this.canvas.height / 300);
     let ret = new Astroid(this.constant, pos.x, pos.y, vel.x, vel.y, "large");
     return ret;
   }
