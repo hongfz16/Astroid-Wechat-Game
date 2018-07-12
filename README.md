@@ -1,6 +1,10 @@
 # Astroid-Wechat-Game
 Classic game Astroid in Wechat-Game platform
 
+## Bugs
+- 安卓手机上按钮点击后检测不到松开事件
+- 外星人会从屏幕外面射子弹进来
+
 ## Todo List
 - 添加音乐
 - 改进按钮
