@@ -8,6 +8,7 @@ import gameInfo from "./gameinfo/gameinfo"
 import Enemy from "./enemy/enemy"
 import Constant from "./constant/constant"
 import Welcome from "./WelcOver/welcom"
+import Over from "./WelcOver/over"
 
 //frame per second
 const fps = 60;
@@ -33,9 +34,7 @@ export default class Main {
     this.secondCanvasBuffer = wx.createCanvas();
     this.secondBufferContext = this.secondCanvasBuffer.getContext('2d');
     this.constant = new Constant(this.canvas);
-    // console.log(this.constant.gameCor);
     //some other init works
-    // console.log(Player);
     this.firstCanvasBuffer.width = this.constant.gameCor.width;
     this.firstCanvasBuffer.height = this.constant.gameCor.height;
     this.secondCanvasBuffer.width = this.constant.gameCor.width * 3;
@@ -43,14 +42,16 @@ export default class Main {
     this.firstBufferContext = this.firstCanvasBuffer.getContext('2d');
     this.secondBufferContext = this.secondCanvasBuffer.getContext('2d');
     //this.start();
-    //window.cancelAnimationFrame(this.aniId);
     this.welcome();
     this.printed = false;
   }
 
   welcome(){
+    if (this.over) {
+      delete this.over;
+    }
     window.cancelAnimationFrame(this.aniId);
-    console.log("welcome");
+    //console.log("welcome");
     this.wel = new Welcome(this);
     this.gameStatus = "Welcome";
     this.bindLoop = this.loop.bind(this);
@@ -58,18 +59,15 @@ export default class Main {
       this.bindLoop,
       this.canvas
     );
-    //this.wel.drawtoCanvas(this.ctx);
   }
 
   //start game entry
   start() {
     //init some other data
     if (this.wel) {
-      console.log("delete wel");
       delete this.wel;
     }
     if (this.over) {
-      console.log("delete over");
       delete this.over;
     }
     this.player = new Player(this.constant, this.constant.gameCor.width / 2, this.constant.gameCor.height / 2, this.constant.playerStyle.r0);
@@ -125,6 +123,9 @@ export default class Main {
     if (this.gameStatus === 'playing') {
       this.update();
       this.render();
+    } else
+    if (this.gameStatus === 'over') {
+      this.over.drawtoCanvas();
     }
 
     //set the callback of next frame
@@ -323,7 +324,8 @@ export default class Main {
         player.loseonelife();
         list.delete(itr);
         if (player.life === 0){
-          this.GameOver();
+          setTimeout(this.GameOver.bind(this), 100);
+          //this.GameOver();
           break;
         }
       }
@@ -429,10 +431,17 @@ export default class Main {
     //   console.log(cnt);
   }
 
-  GameOver(){
-    this.gameStatus = "over";
+  GameOver() {
     window.cancelAnimationFrame(this.aniId);
-    setTimeout(this.start.bind(this), 100);
+    
+    //setTimeout(this.start.bind(this), 100);
+    this.over = new Over(this);
+    this.gameStatus = "over";
+    this.bindLoop = this.loop.bind(this);
+    this.aniId = window.requestAnimationFrame(
+      this.bindLoop,
+      this.canvas
+    );
   }
 
 }

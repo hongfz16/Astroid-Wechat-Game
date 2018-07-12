@@ -136,6 +136,46 @@ export default class Constant {
       textBaseline: 'middle',
       textFont: `${this.canvas.height * 1 / 10}px kaiti`,
     };
+
+    //Over constants
+    this.overTitle = {
+      textColor: '#ffffff',
+      textAlign: 'center',
+      textBaseline: 'middle',
+      textFont: `${this.canvas.height * 1 / 5}px sans-serif`
+    };
+    this.oversmallTitle = {
+      textColor: '#ffffff',
+      textAlign: 'center',
+      textBaseline: 'middle',
+      textFont: `${this.canvas.height * 1 / 30}px sans-serif`
+    };
+    this.restartButton = {
+      x0: canvas.width * 3 / 10.0,
+      y0: canvas.height / 2.0,
+      x1: canvas.width * 7 / 10.0,
+      y1: canvas.height * 2 / 3.0,
+      r: canvas.width / 30.0,
+      strokeSize: 2,
+      strokeColor: '#ffffff',
+      textColor: '#ffffff',
+      textAlign: 'center',
+      textBaseline: 'middle',
+      textFont: `${this.canvas.height * 1 / 10}px sans-serif`,
+    };
+    this.backButton = {
+      x0: canvas.width * 3 / 10.0,
+      y0: canvas.height * 3 / 4.0,
+      x1: canvas.width * 7 / 10.0,
+      y1: canvas.height * 11 / 12.0,
+      r: canvas.width / 30.0,
+      strokeSize: 2,
+      strokeColor: '#ffffff',
+      textColor: '#ffffff',
+      textAlign: 'center',
+      textBaseline: 'middle',
+      textFont: `${this.canvas.height * 1 / 10}px kaiti`,
+    };
   }
 }
 

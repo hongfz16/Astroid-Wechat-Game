@@ -3,14 +3,11 @@ import Main from "../main"
 
 export default class Welcome{
   constructor(main){
-    console.log("in Welcome");
     this.canvas = main.canvas;
     this.ctx = main.ctx;
     this.main = main;
-    //this.drawtoCanvas(main.ctx);
     this.hasTouched = false;
     this.initEvent();
-    console.log("out Welcome");
   }
 
   initEvent(){
@@ -22,6 +19,9 @@ export default class Welcome{
         if (this.checkinStart(x, y)){
           setTimeout(this.main.start.bind(this.main), 100);
           this.hasTouched = true;
+        }
+        if (this.checkinScore(x, y)){
+          //this.hasTouched = true;
         }
       }
     }).bind(this));
@@ -99,5 +99,12 @@ export default class Welcome{
       x <= this.main.constant.startButton.x1 &&
       y >= this.main.constant.startButton.y0 &&
       y <= this.main.constant.startButton.y1;
+  }
+
+  checkinScore(x, y) {
+    return x >= this.main.constant.stageButton.x0 &&
+      x <= this.main.constant.stageButton.x1 &&
+      y >= this.main.constant.stageButton.y0 &&
+      y <= this.main.constant.stageButton.y1;
   }
 }
