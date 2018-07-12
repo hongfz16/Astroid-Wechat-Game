@@ -26,7 +26,7 @@ export default class Constant {
       strokeColor: '#ffffff'
     };
     this.bulletLife = 55;
-    this.bulletSpeed = 0.025 * canvas.height;
+    this.bulletSpeed = 0.03 * canvas.height;
     this.bulletRadius = 0.01 * canvas.height;
 
     //enemy constants

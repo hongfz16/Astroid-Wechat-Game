@@ -57,8 +57,9 @@ export default class gameInfo{
   initEvent(){
     this.constant.canvas.addEventListener("touchstart",((e)=>{
       e.preventDefault();
-      let x = e.touches[0].clientX;
-      let y = e.touches[0].clientY;
+      for (let i = 0; i < e.touches.length; ++i){
+      let x = e.touches[i].clientX;
+      let y = e.touches[i].clientY;
 
       if (this.checkinLeft(x, y)){
         //this.main.player.turnleft();
@@ -79,6 +80,7 @@ export default class gameInfo{
         // this.main.player.accelerate();
         this.main.clickAcc = true;
         console.log('Click Acc button');
+      }
       }
     }).bind(this));
 
