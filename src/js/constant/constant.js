@@ -26,7 +26,7 @@ export default class Constant {
       strokeColor: '#ffffff'
     };
     this.bulletLife = 55;
-    this.bulletSpeed = 0.021 * canvas.height;
+    this.bulletSpeed = 0.025 * canvas.height;
     this.bulletRadius = 0.01 * canvas.height;
 
     //enemy constants
@@ -53,7 +53,7 @@ export default class Constant {
       theta: Math.PI * 20 / 180,
       strokeSize: 1,
       strokeColor: '#ffffff',
-      maxSpeed: 0.021 * canvas.height
+      maxSpeed: 0.024 * canvas.height
     };
 
     //gameinfo constants

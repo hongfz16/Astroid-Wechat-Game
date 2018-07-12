@@ -11,6 +11,7 @@ import { Point, Circle, Vector2d } from "../base/geometry.js"
 export default class Player extends Sprite{
   constructor(constant, x = 0, y = 0, r = 5, angle = 0, life = 1){
     super(x, y, r);
+    this.vel = new Vector2d();
     this.acc = new Vector2d();
     this.angle = angle;
     this.angleDelta = 0;
@@ -157,7 +158,7 @@ export default class Player extends Sprite{
       posy += this.constant.gameCor.height;
     this.setPosition(posx, posy);
     this.setVelocity(this.vel.x+this.acc.x, this.vel.y+this.acc.y);
-    if (this.vel.length > this.constant.playerStyle.maxSpeed){
+    if (this.vel.length() > this.constant.playerStyle.maxSpeed){
       this.vel.normalize(this.constant.playerStyle.maxSpeed);
     }
     this.vel.x *= 0.98;

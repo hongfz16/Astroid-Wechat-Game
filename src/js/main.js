@@ -60,9 +60,15 @@ export default class Main {
       let enemy = this.initEnemy();
       this.enemys.push(enemy);
     }
-    for (let i = 0; i < 2; ++i){
+    for (let i = 0; i < 3; ++i){
       let astroid = this.initAstroid();
       this.astroids.push(astroid);
+    }
+    {
+      for (let i = 0; i < 3; ++i) {
+        let astroid = this.initAstroid(true);
+        this.astroids.push(astroid);
+      }
     }
     this.enemyCount = 1000;
     this.astroidCount = 1000;
@@ -145,11 +151,16 @@ export default class Main {
     return ret;
   }
 
-  initAstroid(){
+  initAstroid(aimtoPlayer = false){
     const pos = this.getRandompos();
-    //const posx = Math.random() * this.constant.gameCor.width;
-    //const posy = Math.random() * this.constant.gameCor.height;
-    let vel = new Vector2d(Math.random() * 2 - 1, Math.random() * 2 - 1);
+    let vel;
+    if (aimtoPlayer){
+      vel = new Vector2d(this.player.getX() - pos.x, this.player.getY() - pos.y);
+      vel.normalize(1);
+    } else
+    {
+      vel = new Vector2d(Math.random() * 2 - 1, Math.random() * 2 - 1);
+    }
     let ret = new Astroid(this.constant, pos.x, pos.y, vel.x, vel.y, "large");
     return ret;
   }
