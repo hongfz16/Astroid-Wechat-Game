@@ -57,6 +57,10 @@ export default class gameInfo{
   initEvent(){
     this.constant.canvas.addEventListener("touchstart",((e)=>{
       e.preventDefault();
+      this.main.clickLeft = false;
+      this.main.clickRight = false;
+      this.main.clickShoot = false;
+      this.main.clickAcc = false;
       for (let i = 0; i < e.touches.length; ++i){
       let x = e.touches[i].clientX;
       let y = e.touches[i].clientY;
@@ -64,22 +68,22 @@ export default class gameInfo{
       if (this.checkinLeft(x, y)){
         //this.main.player.turnleft();
         this.main.clickLeft = true;
-        console.log('Click Left button');
+        //console.log('Click Left button');
       } else
       if (this.checkinRight(x, y)){
         // this.main.player.turnright();
         this.main.clickRight = true;
-        console.log('Click Right button');
+        //console.log('Click Right button');
       } else
       if (this.checkinShoot(x, y)){
         // this.main.player.shoot();
         this.main.clickShoot = true;
-        console.log('Click Shoot button');
+        //console.log('Click Shoot button');
       } else
       if (this.checkinAcc(x, y)){
         // this.main.player.accelerate();
         this.main.clickAcc = true;
-        console.log('Click Acc button');
+        //console.log('Click Acc button');
       }
       }
     }).bind(this));
@@ -90,6 +94,27 @@ export default class gameInfo{
       this.main.clickRight = false;
       this.main.clickShoot = false;
       this.main.clickAcc = false;
+      for (let i = 0; i < e.touches.length; ++i) {
+        let x = e.touches[i].clientX;
+        let y = e.touches[i].clientY;
+
+        if (this.checkinLeft(x, y)) {
+          this.main.clickLeft = true;
+          //console.log('Click Left button');
+        } else
+          if (this.checkinRight(x, y)) {
+            this.main.clickRight = true;
+            //console.log('Click Right button');
+          } else
+            if (this.checkinShoot(x, y)) {
+              this.main.clickShoot = true;
+              //console.log('Click Shoot button');
+            } else
+              if (this.checkinAcc(x, y)) {
+                this.main.clickAcc = true;
+                //console.log('Click Acc button');
+              }
+      }
     }).bind(this));
   }
   

@@ -237,7 +237,7 @@ export default class Main {
     /*    random add astroid   */
     this.astroidCount -= 1;
     if (this.astroidCount === 0){
-      let astroid = this.initAstroid();
+      let astroid = this.initAstroid(true);
       this.astroids.push(astroid);
       this.astroidCount = 1000;
     }
