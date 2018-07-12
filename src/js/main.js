@@ -7,6 +7,8 @@ import LinkedList from "./list/linkerlist"
 import gameInfo from "./gameinfo/gameinfo"
 import Enemy from "./enemy/enemy"
 import Constant from "./constant/constant"
+import Welcome from "./WelcOver/welcom"
+import Over from "./WelcOver/over"
 
 //frame per second
 const fps = 60;
@@ -27,29 +29,33 @@ export default class Main {
     //get canvas contextthis.constant.gameCor
     this.ctx = this.canvas.getContext('2d');
     this.constant = new Constant(this.canvas);
-    //create canvas buffer and get context
-    // this.firstCanvasBuffer = wx.createCanvas();
-    // this.firstBufferContext = this.firstCanvasBuffer.getContext('2d');
-    // this.secondCanvasBuffer = wx.createCanvas();
-    // this.secondBufferContext = this.secondCanvasBuffer.getContext('2d');
-    // console.log(this.constant.gameCor);
-    //some other init works
-    // console.log(Player);
-    // this.firstCanvasBuffer.width = this.constant.gameCor.width;
-    // this.firstCanvasBuffer.height = this.constant.gameCor.height;
-    // this.secondCanvasBuffer.width = this.constant.gameCor.width * 3;
-    // this.secondCanvasBuffer.height = this.constant.gameCor.height * 3;
-    // this.firstBufferContext = this.firstCanvasBuffer.getContext('2d');
-    // this.secondBufferContext = this.secondCanvasBuffer.getContext('2d');
-    this.start();
-    //console.log(canvas.width, canvas.height);
-    //console.log(firstCanvasBuffer.width, firstCanvasBuffer.height);
-    //console.log(secondCanvasBuffer.width, secondCanvasBuffer.height);
+    this.welcome();
+  }
+
+  welcome(){
+    if (this.over) {
+      delete this.over;
+    }
+    window.cancelAnimationFrame(this.aniId);
+    //console.log("welcome");
+    this.wel = new Welcome(this);
+    this.gameStatus = "Welcome";
+    this.bindLoop = this.loop.bind(this);
+    this.aniId = window.requestAnimationFrame(
+      this.bindLoop,
+      this.canvas
+    );
   }
 
   //start game entry
   start() {
     //init some other data
+    if (this.wel) {
+      delete this.wel;
+    }
+    if (this.over) {
+      delete this.over;
+    }
     this.player = new Player(this.constant, this.constant.gameCor.width / 2, this.constant.gameCor.height / 2, this.constant.playerStyle.r0);
     this.bullets = new LinkedList();
     this.enemys = new LinkedList();
@@ -97,9 +103,15 @@ export default class Main {
   loop() {
     //other things to do in a loop, e.g. update and render
     //console.log(this.calcLength(this.enemys));
+    if (this.gameStatus === "Welcome") {
+      this.wel.drawtoCanvas();
+    } else
     if (this.gameStatus === 'playing') {
       this.update();
       this.render();
+    } else
+    if (this.gameStatus === 'over') {
+      this.over.drawtoCanvas();
     }
 
     //set the callback of next frame
@@ -236,7 +248,7 @@ export default class Main {
     /*    random add astroid   */
     this.astroidCount -= 1;
     if (this.astroidCount === 0){
-      let astroid = this.initAstroid();
+      let astroid = this.initAstroid(true);
       this.astroids.push(astroid);
       this.astroidCount = 1000;
     }
@@ -298,7 +310,8 @@ export default class Main {
         player.loseonelife();
         list.delete(itr);
         if (player.life === 0){
-          this.GameOver();
+          setTimeout(this.GameOver.bind(this), 100);
+          //this.GameOver();
           break;
         }
       }
@@ -399,10 +412,17 @@ export default class Main {
     //   console.log(cnt);
   }
 
-  GameOver(){
-    this.gameStatus = "over";
+  GameOver() {
     window.cancelAnimationFrame(this.aniId);
-    setTimeout(this.start.bind(this), 100);
+    
+    //setTimeout(this.start.bind(this), 100);
+    this.over = new Over(this);
+    this.gameStatus = "over";
+    this.bindLoop = this.loop.bind(this);
+    this.aniId = window.requestAnimationFrame(
+      this.bindLoop,
+      this.canvas
+    );
   }
 
 }

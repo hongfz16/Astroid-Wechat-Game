@@ -11,3 +11,4 @@ Classic game Astroid in Wechat-Game platform
 - 多人对战可以尝试
 - AI
 - 添加广告
+- Android
