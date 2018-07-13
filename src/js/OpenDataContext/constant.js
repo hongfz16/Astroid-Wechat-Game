@@ -156,7 +156,7 @@ export default class Constant {
       textColor: '#ffffff',
       textAlign: 'center',
       textBaseline: 'middle',
-      textFont: `${this.canvas.height * 1 / 30}px sans-serif`
+      textFont: `${this.canvas.height * 1 / 20}px sans-serif`
     };
     this.restartButton = {
       x0: canvas.width * 3 / 10.0,

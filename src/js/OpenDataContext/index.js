@@ -1,6 +1,7 @@
 import Constant from "./constant.js"
 
 let constant;
+let highest;
 function drawRoundRect(x0, y0, x1, y1, r, ctx) {
   ctx.strokeStyle = constant.startButton.strokeColor;
   ctx.lineWidth = constant.startButton.strokeSize;
@@ -52,7 +53,7 @@ function render(canvas, highestScore, curscore){
                      constant.backButton.y1,
                      constant.backButton.r,
                      ctx);
-  drawText("Resart",
+  drawText("Restart",
                 (constant.restartButton.x0 + constant.restartButton.x1) / 2,
                 (constant.restartButton.y0 + constant.restartButton.y1) / 2,
                 constant.restartButton.textColor,
@@ -75,46 +76,77 @@ wx.onMessage(data => {
   if (data.type === "firstConnection"){
     let sharedCanvas = wx.getSharedCanvas();
     constant = new Constant(sharedCanvas);
-  } else
-  if (data.type === 'drawHighest') {
+
     let keys = ['highestScore'];
     wx.getUserCloudStorage({
       keyList: keys,
       success: res => {
-        //console.log(res.KVDataList[0].value);
-        let sharedCanvas = wx.getSharedCanvas();
-        render(sharedCanvas, res.KVDataList[0].value, data.curscore);
-      },
-      fail() {
-        console.log('Fail to get user cloud storage');
-      }
-    });
-  }
-  else
-  if (data.type === 'newScore') {
-    //console.log(data);
-    let keys = ['highestScore'];
-    wx.getUserCloudStorage({
-      keyList: keys,
-      success: res => {
-        //console.log(res.KVDataList);
-        if (res.KVDataList.length === 0 || parseInt(res.KVDataList[0].value) < data.score){
-          //console.log(res.KVDataList[0].value);
-          //res.KVDataList[0].highestScore = data.score;
-          wx.setUserCloudStorage({
-            KVDataList: [{ key: 'highestScore', value: `${data.score}` }],
-            success: res => {
-              console.log(res);
-            },
-            fail: res => {
-              console.log(res);
-            }
-          });
+        if (res.KVDataList.length === 0) {
+          highest = 0;
+        }
+        else
+        {
+          highest = parseInt(res.KVDataList[0].value);
         }
       },
       fail() {
         console.log('Fail to get user cloud storage');
       }
     });
+  } else
+  if (data.type === 'drawHighest') {
+    //let keys = ['highestScore'];
+    let sharedCanvas = wx.getSharedCanvas();
+    render(sharedCanvas, highest, data.curscore);
+    // wx.getUserCloudStorage({
+    //   keyList: keys,
+    //   success: res => {
+    //     //console.log(res.KVDataList[0].value);
+    //     let sharedCanvas = wx.getSharedCanvas();
+    //     render(sharedCanvas, res.KVDataList[0].value, data.curscore);
+    //   },
+    //   fail() {
+    //     console.log('Fail to get user cloud storage');
+    //   }
+    // });
+  }
+  else
+  if (data.type === 'newScore') {
+    //console.log(data);
+    if (highest < data.score){
+      highest = data.score;
+      wx.setUserCloudStorage({
+        KVDataList: [{ key: 'highestScore', value: `${data.score}` }],
+        success: res => {
+          console.log(res);
+        },
+        fail: res => {
+          console.log(res);
+        }
+      });
+    }
+    // let keys = ['highestScore'];
+    // wx.getUserCloudStorage({
+    //   keyList: keys,
+    //   success: res => {
+    //     //console.log(res.KVDataList);
+    //     if (res.KVDataList.length === 0 || parseInt(res.KVDataList[0].value) < data.score){
+    //       //console.log(res.KVDataList[0].value);
+    //       //res.KVDataList[0].highestScore = data.score;
+    //       wx.setUserCloudStorage({
+    //         KVDataList: [{ key: 'highestScore', value: `${data.score}` }],
+    //         success: res => {
+    //           console.log(res);
+    //         },
+    //         fail: res => {
+    //           console.log(res);
+    //         }
+    //       });
+    //     }
+    //   },
+    //   fail() {
+    //     console.log('Fail to get user cloud storage');
+    //   }
+    // });
   }
 });
