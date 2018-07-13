@@ -81,7 +81,7 @@ export default class Constant {
       centerx: canvas.width * 0.2,
       centery: canvas.height * 0.8,
       width: canvas.width * 0.25,
-      r: canvas.width * 0.05
+      r: canvas.width * 0.04
     };
     this.slideHandleStyle = {
       backcolor: 'rgba(255, 255, 255, 200)',
