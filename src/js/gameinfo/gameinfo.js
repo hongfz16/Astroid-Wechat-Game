@@ -13,6 +13,8 @@ export default class gameInfo{
     this.slideHandleCenterX = this.constant.slideHandlePos.centerx;
     this.slideHandleCenterY = this.constant.slideHandlePos.centery;
     this.initEvent();
+    this.accFlag = {isTouched: false, id: -1};
+    this.shootFlag = {isTouched: true, id: -1};
   }
 
   scorepp(){
@@ -48,14 +50,26 @@ export default class gameInfo{
     ctx.fillText(`Score: ${this.score}`, x, y);
   }
 
-  drawSlideHandle(ctx, circlex, circley, handlex, handley, r) {
+  drawSlideHandle(ctx, circlex, circley, handlex, handley, r, handlewidth) {
     ctx.beginPath();
-    ctx.moveTo()
+    ctx.moveTo(handlex - 0.5 * handlewidth, handley - r);
+    ctx.lineTo(handlex + 0.5 * handlewidth, handley - r);
+    ctx.arc(handlex + 0.5 * handlewidth, handley, r, - Math.PI / 2, Math.PI / 2);
+    ctx.lineTo(handlex + 0.5 * handlewidth, handley + r);
+    ctx.arc(handlex - 0.5 * handlewidth, handley, r, Math.PI / 2, Math.PI * 3 / 2);
+    ctx.fillStyle = this.constant.slideHandleStyle.backcolor;
+    ctx.fill();
+
+    ctx.beginPath();
+    ctx.arc(circlex, circley, r, 0, Math.PI * 2);
+    ctx.fillStyle = this.constant.slideHandleStyle.frontcolor;
+    ctx.fill();
   }
 
   drawtoCanvas(ctx){
-    this.drawTri(ctx, this.constant.leftButtonPos.x, this.constant.leftButtonPos.y, this.constant.leftButtonPos.r, Math.PI / 3);
-    this.drawTri(ctx, this.constant.rightButtonPos.x, this.constant.rightButtonPos.y, this.constant.rightButtonPos.r, 0);
+    // this.drawTri(ctx, this.constant.leftButtonPos.x, this.constant.leftButtonPos.y, this.constant.leftButtonPos.r, Math.PI / 3);
+    // this.drawTri(ctx, this.constant.rightButtonPos.x, this.constant.rightButtonPos.y, this.constant.rightButtonPos.r, 0);
+    this.drawSlideHandle(ctx, this.slideHandleCenterX, this.slideHandleCenterY, this.constant.slideHandlePos.centerx, this.constant.slideHandlePos.centery, this.constant.slideHandlePos.r, this.constant.slideHandlePos.width);
     this.drawCircle(ctx, this.constant.accButtonPos.x, this.constant.accButtonPos.y, this.constant.accButtonPos.r);
     this.drawCircle(ctx, this.constant.shootButtonPos.x, this.constant.shootButtonPos.y, this.constant.shootButtonPos.r);
     this.drawScore(ctx, this.constant.scorePos.x, this.constant.scorePos.y);
@@ -64,34 +78,57 @@ export default class gameInfo{
   initEvent(){
     this.constant.canvas.addEventListener("touchstart",((e)=>{
       e.preventDefault();
-      this.main.clickLeft = false;
-      this.main.clickRight = false;
+      // this.main.clickLeft = false;
+      // this.main.clickRight = false;
       this.main.clickShoot = false;
       this.main.clickAcc = false;
       for (let i = 0; i < e.touches.length; ++i){
       let x = e.touches[i].clientX;
       let y = e.touches[i].clientY;
 
-      if (this.checkinLeft(x, y)){
-        //this.main.player.turnleft();
-        this.main.clickLeft = true;
-        //console.log('Click Left button');
-      } else
-      if (this.checkinRight(x, y)){
-        // this.main.player.turnright();
-        this.main.clickRight = true;
-        //console.log('Click Right button');
-      } else
+      // if (this.checkinLeft(x, y)){
+      //   //this.main.player.turnleft();
+      //   this.main.clickLeft = true;
+      //   //console.log('Click Left button');
+      // } else
+      // if (this.checkinRight(x, y)){
+      //   // this.main.player.turnright();
+      //   this.main.clickRight = true;
+      //   //console.log('Click Right button');
+      // } else
       if (this.checkinShoot(x, y)){
-        // this.main.player.shoot();
         this.main.clickShoot = true;
-        //console.log('Click Shoot button');
+        this.shootFlag.isTouched = true;
+        this.shootFlag.id = e.touches[i].identifier;
       } else
       if (this.checkinAcc(x, y)){
-        // this.main.player.accelerate();
         this.main.clickAcc = true;
-        //console.log('Click Acc button');
+        this.accFlag.isTouched = true;
+        this.accFlag.id = e.touches[i].identifier;
       }
+      }
+    }).bind(this));
+
+    this.constant.canvas.addEventListener('touchmove', ((e) => {
+      e.preventDefault();
+      for(let i = 0; i < e.changedTouches.length; i += 1) {
+        let x = e.changedTouches[i].clientX;
+        let y = e.changedTouches[i].clientY;
+        let id = e.changedTouches[i].identifier;
+        if(id === this.shootFlag.id) {
+          if(!(this.checkinShoot(x, y))) {
+            this.main.clickShoot = false;
+            this.shootFlag.isTouched = false;
+            this.shootFlag.id = -1;
+          }
+        }
+        else if(id === this.accFlag.id) {
+          if(!(this.checkinAcc(x, y))) {
+            this.main.clickAcc = false;
+            this.accFlag.isTouched = false;
+            this.accFlag.id = -1;
+          }
+        }
       }
     }).bind(this));
 
@@ -104,25 +141,27 @@ export default class gameInfo{
       for (let i = 0; i < e.changedTouches.length; ++i) {
         let x = e.changedTouches[i].clientX;
         let y = e.changedTouches[i].clientY;
-
-        console.log(i, x, y);
-
-        if (this.checkinLeft(x, y)) {
-          this.main.clickLeft = false;
-          //console.log('Click Left button');
-        } else
-          if (this.checkinRight(x, y)) {
-            this.main.clickRight = false;
-            //console.log('Click Right button');
-          } else
-            if (this.checkinShoot(x, y)) {
-              this.main.clickShoot = false;
-              //console.log('Click Shoot button');
-            } else
-              if (this.checkinAcc(x, y)) {
-                this.main.clickAcc = false;
-                //console.log('Click Acc button');
-              }
+        let id = e.changedTouches[i].identifier;
+        // if (this.checkinLeft(x, y)) {
+        //   this.main.clickLeft = false;
+        //   //console.log('Click Left button');
+        // } else
+        //   if (this.checkinRight(x, y)) {
+        //     this.main.clickRight = false;
+        //     //console.log('Click Right button');
+        //   } else
+        if (id === this.shootFlag.id) {
+          this.main.clickShoot = false;
+          this.shootFlag.isTouched = false;
+          this.shootFlag.id = -1;
+          //console.log('Click Shoot button');
+        }
+        else if (id === this.accFlag.id) {
+            this.main.clickAcc = false;
+            this.accFlag.isTouched = false;
+            this.accFlag.id = -1;
+            //console.log('Click Acc button');
+        }
       }
     }).bind(this));
   }
