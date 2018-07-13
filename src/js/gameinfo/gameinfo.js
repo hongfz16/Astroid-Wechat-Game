@@ -166,6 +166,7 @@ export default class gameInfo{
       for (let i = 0; i < e.changedTouches.length; ++i) {
         let x = e.changedTouches[i].clientX;
         let y = e.changedTouches[i].clientY;
+// <<<<<<< HEAD
         let id = e.changedTouches[i].identifier;
         // if (this.checkinLeft(x, y)) {
         //   this.main.clickLeft = false;
@@ -193,6 +194,27 @@ export default class gameInfo{
           this.slideFlag.id = -1;
           this.slideHandleCenterX = this.constant.slideHandlePos.centerx;
         }
+// =======
+
+//         // console.log(i, x, y);
+
+//         if (this.checkinLeft(x, y)) {
+//           this.main.clickLeft = false;
+//           //console.log('Click Left button');
+//         } else
+//           if (this.checkinRight(x, y)) {
+//             this.main.clickRight = false;
+//             //console.log('Click Right button');
+//           } else
+//             if (this.checkinShoot(x, y)) {
+//               this.main.clickShoot = false;
+//               //console.log('Click Shoot button');
+//             } else
+//               if (this.checkinAcc(x, y)) {
+//                 this.main.clickAcc = false;
+//                 //console.log('Click Acc button');
+//               }
+// >>>>>>> scoreboard
       }
     }).bind(this));
   }

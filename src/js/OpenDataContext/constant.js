@@ -77,23 +77,13 @@ export default class Constant {
       y: canvas.height * 0.8,
       r: canvas.width * 0.05
     };
-    this.slideHandlePos = {
-      centerx: canvas.width * 0.2,
-      centery: canvas.height * 0.8,
-      width: canvas.width * 0.25,
-      r: canvas.width * 0.04
-    };
-    this.slideHandleStyle = {
-      backcolor: 'rgba(255, 255, 255, 200)',
-      frontcolor: 'rgba(255, 255, 255, 10)'
-    };
     this.accButtonPos = {
-      x: canvas.width * 0.75,
+      x: canvas.width * 0.7,
       y: canvas.height * 0.8,
       r: canvas.width * 0.05
     };
     this.shootButtonPos = {
-      x: canvas.width * 0.9,
+      x: canvas.width * 0.85,
       y: canvas.height * 0.8,
       r: canvas.width * 0.05
     };
@@ -118,7 +108,7 @@ export default class Constant {
     this.gameStyle = {
       background: '#000000',
       backline: 'rgba(190, 190, 190, 190)',
-      lineSize: 2
+      lineSize: 1
     };
 
     //welcome constants
@@ -166,7 +156,7 @@ export default class Constant {
       textColor: '#ffffff',
       textAlign: 'center',
       textBaseline: 'middle',
-      textFont: `${this.canvas.height * 1 / 30}px sans-serif`
+      textFont: `${this.canvas.height * 1 / 20}px sans-serif`
     };
     this.restartButton = {
       x0: canvas.width * 3 / 10.0,
