@@ -49,17 +49,18 @@ export default class Main {
     let height = canvas.height;
     canvas.width = (width > height) ? width : height;
     canvas.height = (width < height) ? width : height;
-    this.canvas = canvas;//wx.createCanvas();
-    // console.log(this.canvas);
-    // canvas.style.width = canvas.width + 'px';
-    // canvas.style.height = canvas.height + 'px';
-    // let pixelRatio = wx.getSystemInfoSync().pixelRatio;
-    // canvas.width *= pixelRatio;
-    // canvas.height *= pixelRatio;
+    this.canvas = canvas;
+    this.openDataContext = wx.getOpenDataContext();
+    this.sharedCanvas = this.openDataContext.canvas;
+    this.sharedCanvas.width = canvas.width;
+    this.sharedCanvas.height = canvas.height;
     //get canvas contextthis.constant.gameCor
     this.ctx = this.canvas.getContext('2d');
     // this.ctx.scale(pixelRatio, pixelRatio);
     this.constant = new Constant(this.canvas);
+    this.openDataContext.postMessage({
+      type: 'firstConnection',
+    });
     this.welcome();
     wx.getSystemInfo({success(res) { console.log(res.system); }});
   }
@@ -454,19 +455,19 @@ export default class Main {
     //setTimeout(this.start.bind(this), 100);
     this.over = new Over(this);
     this.gameStatus = "over";
-    let kvdata = {};
-    kvdata.key = 'highest_score';
-    kvdata.value = this.gameInfo.score.toString();
-    console.log(kvdata);
-    wx.setUserCloudStorage({
-      KVDataList: [kvdata],
-      success() {
-        console.log('Successfully set cloud storage!');
-      },
-      fail() {
-        console.log('Fail to set cloud storage!');
-      }
-    });
+    // let kvdata = {};
+    // kvdata.key = 'highestScore';
+    // kvdata.value = this.gameInfo.score;
+    // console.log(kvdata);
+    // wx.setUserCloudStorage({
+    //   KVDataList: [kvdata],
+    //   success() {
+    //     console.log('Successfully set cloud storage!');
+    //   },
+    //   fail() {
+    //     console.log('Fail to set cloud storage!');
+    //   }
+    // });
     this.bindLoop = this.loop.bind(this);
     this.aniId = window.requestAnimationFrame(
       this.bindLoop,

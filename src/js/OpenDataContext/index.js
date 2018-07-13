@@ -1,11 +1,116 @@
+import Constant from "./constant.js"
+
+let constant;
+function drawRoundRect(x0, y0, x1, y1, r, ctx) {
+  ctx.strokeStyle = constant.startButton.strokeColor;
+  ctx.lineWidth = constant.startButton.strokeSize;
+  ctx.beginPath();
+  ctx.moveTo(x0 + r, y0);
+  ctx.arcTo(x1, y0, x1, y1, r);
+  ctx.arcTo(x1, y1, x0, y1, r);
+  ctx.arcTo(x0, y1, x0, y0, r);
+  ctx.arcTo(x0, y0, x0 + r, y0, r);
+  ctx.stroke();
+}
+
+function drawText(data, x, y, textColor, textAlign, textBaseline, textFont, ctx) {
+  ctx.fillStyle = textColor;
+  ctx.textAlign = textAlign;
+  ctx.textBaseline = textBaseline;
+  ctx.font = textFont;
+  ctx.fillText(data, x, y);
+}
+
+function render(canvas, highestScore, curscore){
+  let ctx = canvas.getContext('2d');
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  drawText(`Score: ${curscore}`,
+                canvas.width / 2,
+                canvas.height / 4,
+                constant.overTitle.textColor,
+                constant.overTitle.textAlign,
+                constant.overTitle.textBaseline,
+                constant.overTitle.textFont,
+                ctx);
+  drawText(`Highest Score: ` + highestScore,
+                canvas.width / 2,
+                canvas.height * 2 / 5,
+                constant.oversmallTitle.textColor,
+                constant.oversmallTitle.textAlign,
+                constant.oversmallTitle.textBaseline,
+                constant.oversmallTitle.textFont,
+                ctx);
+  drawRoundRect(constant.restartButton.x0,
+                     constant.restartButton.y0,
+                     constant.restartButton.x1,
+                     constant.restartButton.y1,
+                     constant.restartButton.r,
+                     ctx);
+  drawRoundRect(constant.backButton.x0,
+                     constant.backButton.y0,
+                     constant.backButton.x1,
+                     constant.backButton.y1,
+                     constant.backButton.r,
+                     ctx);
+  drawText("Resart",
+                (constant.restartButton.x0 + constant.restartButton.x1) / 2,
+                (constant.restartButton.y0 + constant.restartButton.y1) / 2,
+                constant.restartButton.textColor,
+                constant.restartButton.textAlign,
+                constant.restartButton.textBaseline,
+                constant.restartButton.textFont,
+                ctx);
+  drawText("Back",
+                (constant.backButton.x0 + constant.backButton.x1) / 2,
+                (constant.backButton.y0 + constant.backButton.y1) / 2,
+                constant.backButton.textColor,
+                constant.backButton.textAlign,
+                constant.backButton.textBaseline,
+                constant.backButton.textFont,
+                ctx);
+}
+
 wx.onMessage(data => {
-  console.log(data);
-  if(data.type === 'drawHighest') {
-    let keys = ['highest_score'];
+  //console.log(data);
+  if (data.type === "firstConnection"){
+    let sharedCanvas = wx.getSharedCanvas();
+    constant = new Constant(sharedCanvas);
+  } else
+  if (data.type === 'drawHighest') {
+    let keys = ['highestScore'];
     wx.getUserCloudStorage({
       keyList: keys,
-      success(res) {
-        console.log(res.KVDataList);
+      success: res => {
+        //console.log(res.KVDataList[0].value);
+        let sharedCanvas = wx.getSharedCanvas();
+        render(sharedCanvas, res.KVDataList[0].value, data.curscore);
+      },
+      fail() {
+        console.log('Fail to get user cloud storage');
+      }
+    });
+  }
+  else
+  if (data.type === 'newScore') {
+    //console.log(data);
+    let keys = ['highestScore'];
+    wx.getUserCloudStorage({
+      keyList: keys,
+      success: res => {
+        //console.log(res.KVDataList);
+        if (res.KVDataList.length === 0 || parseInt(res.KVDataList[0].value) < data.score){
+          //console.log(res.KVDataList[0].value);
+          //res.KVDataList[0].highestScore = data.score;
+          wx.setUserCloudStorage({
+            KVDataList: [{ key: 'highestScore', value: `${data.score}` }],
+            success: res => {
+              console.log(res);
+            },
+            fail: res => {
+              console.log(res);
+            }
+          });
+        }
       },
       fail() {
         console.log('Fail to get user cloud storage');
