@@ -90,28 +90,30 @@ export default class gameInfo{
 
     this.constant.canvas.addEventListener("touchend", ((e)=>{
       e.preventDefault();
-      this.main.clickLeft = false;
-      this.main.clickRight = false;
-      this.main.clickShoot = false;
-      this.main.clickAcc = false;
-      for (let i = 0; i < e.touches.length; ++i) {
-        let x = e.touches[i].clientX;
-        let y = e.touches[i].clientY;
+      //this.main.clickLeft = false;
+      //this.main.clickRight = false;
+      //this.main.clickShoot = false;
+      //this.main.clickAcc = false;
+      for (let i = 0; i < e.changedTouches.length; ++i) {
+        let x = e.changedTouches[i].clientX;
+        let y = e.changedTouches[i].clientY;
+
+        console.log(i, x, y);
 
         if (this.checkinLeft(x, y)) {
-          this.main.clickLeft = true;
+          this.main.clickLeft = false;
           //console.log('Click Left button');
         } else
           if (this.checkinRight(x, y)) {
-            this.main.clickRight = true;
+            this.main.clickRight = false;
             //console.log('Click Right button');
           } else
             if (this.checkinShoot(x, y)) {
-              this.main.clickShoot = true;
+              this.main.clickShoot = false;
               //console.log('Click Shoot button');
             } else
               if (this.checkinAcc(x, y)) {
-                this.main.clickAcc = true;
+                this.main.clickAcc = false;
                 //console.log('Click Acc button');
               }
       }

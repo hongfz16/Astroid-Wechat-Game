@@ -17,8 +17,6 @@ const fps = 60;
 export default class Main {
   constructor() {
     this.aniId = 0;
-    // console.log(canvas.width);
-    // console.log(canvas.height);
     // wx.setPreferredFramesPerSecond(fps);
     this.gameStatus = undefined;
     let width = canvas.width;
@@ -26,10 +24,18 @@ export default class Main {
     canvas.width = (width > height) ? width : height;
     canvas.height = (width < height) ? width : height;
     this.canvas = canvas;//wx.createCanvas();
+    // console.log(this.canvas);
+    // canvas.style.width = canvas.width + 'px';
+    // canvas.style.height = canvas.height + 'px';
+    // let pixelRatio = wx.getSystemInfoSync().pixelRatio;
+    // canvas.width *= pixelRatio;
+    // canvas.height *= pixelRatio;
     //get canvas contextthis.constant.gameCor
     this.ctx = this.canvas.getContext('2d');
+    // this.ctx.scale(pixelRatio, pixelRatio);
     this.constant = new Constant(this.canvas);
     this.welcome();
+    wx.getSystemInfo({success(res) { console.log(res.system); }});
   }
 
   welcome(){
@@ -208,21 +214,25 @@ export default class Main {
     }
   }
 
-  checkTimer(){
-    if (this.shootCount > 0)
-      this.shootCount -= 1;
-    /* check bullet's life span */
-    let itr = this.bullets.head;
+  checkBulletLife(list){
+    let itr = list.head;
     while (itr !== null) {
       if (itr.data.life === 0) {
         let tmp = itr;
         itr = itr.next;
-        this.bullets.delete(tmp);
-      } else
-      {
+        list.delete(tmp);
+      } else {
         itr = itr.next;
       }
     }
+  }
+
+  checkTimer(){
+    if (this.shootCount > 0)
+      this.shootCount -= 1;
+    /* check bullet's life span */
+    this.checkBulletLife(this.bullets);
+    this.checkBulletLife(this.enemysBullet);
     /*-------------------------*/
     /*    random add enemy    */
     this.enemyCount -= 1;
@@ -235,7 +245,7 @@ export default class Main {
     }
     /*-------------------------*/
     /*       enemy shoot       */
-    itr = this.enemys.head;
+    let itr = this.enemys.head;
     while (itr !== null) {
       // console.log(itr.data.shootTimer);
       if (itr.data.shootTimer === 0 && this.canShoot(itr.data)) {
