@@ -88,12 +88,12 @@ export default class Constant {
       frontcolor: 'rgba(255, 255, 255, 10)'
     };
     this.accButtonPos = {
-      x: canvas.width * 0.7,
+      x: canvas.width * 0.75,
       y: canvas.height * 0.8,
       r: canvas.width * 0.05
     };
     this.shootButtonPos = {
-      x: canvas.width * 0.85,
+      x: canvas.width * 0.9,
       y: canvas.height * 0.8,
       r: canvas.width * 0.05
     };
@@ -110,7 +110,7 @@ export default class Constant {
     this.gameStyle = {
       background: '#000000',
       backline: 'rgba(190, 190, 190, 190)',
-      lineSize: 1
+      lineSize: 2
     };
 
     //welcome constants

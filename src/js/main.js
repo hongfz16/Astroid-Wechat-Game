@@ -352,13 +352,13 @@ export default class Main {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.ctx.fillStyle = this.constant.gameStyle.background;
     this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
-    this.drawBackground(this.ctx);
     this.drawList(this.enemys, this.ctx);
     this.drawList(this.bullets, this.ctx);
     this.drawList(this.enemysBullet, this.ctx);
     this.drawList(this.astroids, this.ctx);
     this.player.drawtoCanvas(this.ctx, this.player.getX(), this.player.getY());
     this.gameInfo.drawtoCanvas(this.ctx);
+    this.drawBackground(this.ctx);
   }
 
   drawBackground(ctx) {
