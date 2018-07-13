@@ -10,6 +10,8 @@ export default class gameInfo{
     this.main = mainclass;
     this.score = 0;
     this.constant = constant;
+    this.slideHandleCenterX = this.constant.slideHandlePos.centerx;
+    this.slideHandleCenterY = this.constant.slideHandlePos.centery;
     this.initEvent();
   }
 
@@ -44,6 +46,11 @@ export default class gameInfo{
     ctx.textAlign = this.constant.scoreStyle.textAlign;
     ctx.textBaseline = this.constant.scoreStyle.textBaseline;
     ctx.fillText(`Score: ${this.score}`, x, y);
+  }
+
+  drawSlideHandle(ctx, circlex, circley, handlex, handley, r) {
+    ctx.beginPath();
+    ctx.moveTo()
   }
 
   drawtoCanvas(ctx){

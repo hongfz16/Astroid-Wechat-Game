@@ -77,6 +77,16 @@ export default class Constant {
       y: canvas.height * 0.8,
       r: canvas.width * 0.05
     };
+    this.slideHandlePos = {
+      centerx: canvas.width * 0.2,
+      centery: canvas.height * 0.8,
+      width: canvas.width * 0.2,
+      r: canvas.width * 0.03
+    };
+    this.slideHandleStyle = {
+      backcolor: 'rgba(255, 255, 255, 100)',
+      frontcolor: 'rgba(255, 255, 255, 200)'
+    };
     this.accButtonPos = {
       x: canvas.width * 0.7,
       y: canvas.height * 0.8,
