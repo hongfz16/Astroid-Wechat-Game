@@ -9,6 +9,7 @@ import Enemy from "./enemy/enemy"
 import Constant from "./constant/constant"
 import Welcome from "./WelcOver/welcom"
 import Over from "./WelcOver/over"
+import Music from "./music/music"
 
 //frame per second
 const fps = 60;
@@ -61,6 +62,7 @@ export default class Main {
     this.openDataContext.postMessage({
       type: 'firstConnection',
     });
+    this.music = new Music();
     this.welcome();
     wx.getSystemInfo({success(res) { console.log(res.system); }});
   }
@@ -228,9 +230,9 @@ export default class Main {
       let bul = this.player.shoot();
       this.bullets.push(bul);
       this.shootCount = 30;
+      this.music.playShoot();
     }
     if (this.clickAcc) { this.player.accelerate(); }
-
   }
 
   updateList(list){
@@ -317,6 +319,14 @@ export default class Main {
             }
           }
 
+          if (flag === true) { // is player's bullet
+            this.gameInfo.scorepp();
+            if (itr2.data instanceof Enemy) { //score += 2 if hit enemy
+              this.gameInfo.scorepp();
+            }
+            this.music.playExplosion();
+          }
+
           list2.delete(itr2);
           hasCollision = true;
           break;
@@ -325,9 +335,6 @@ export default class Main {
       }
       if (hasCollision === false) {
         itr1 = itr1.next;
-      } else
-      if (flag === true){
-        this.gameInfo.scorepp();
       }
     }
 
