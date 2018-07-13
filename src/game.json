@@ -1,3 +1,4 @@
 {
-    "deviceOrientation": "landscape"
+    "deviceOrientation": "landscape",
+    "openDataContext": "js/OpenDataContext"
 }

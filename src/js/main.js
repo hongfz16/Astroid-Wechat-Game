@@ -16,6 +16,32 @@ const fps = 60;
 //main class
 export default class Main {
   constructor() {
+
+    // wx.getUserInfo({
+    //   success(res) {
+    //     console.log(res.openIdList);
+    //   }
+    // });
+    // let button = wx.createUserInfoButton({
+    //   type: 'text',
+    //   text: '获取用户信息',
+    //   style: {
+    //     left: 10,
+    //     top: 76,
+    //     width: 200,
+    //     height: 40,
+    //     lineHeight: 40,
+    //     backgroundColor: '#ff0000',
+    //     color: '#ffffff',
+    //     textAlign: 'center',
+    //     fontSize: 16,
+    //     borderRadius: 4
+    //   }
+    // })
+    // button.onTap((res) => {
+    //   console.log(res)
+    // })
+
     this.aniId = 0;
     // wx.setPreferredFramesPerSecond(fps);
     this.gameStatus = undefined;
@@ -23,17 +49,18 @@ export default class Main {
     let height = canvas.height;
     canvas.width = (width > height) ? width : height;
     canvas.height = (width < height) ? width : height;
-    this.canvas = canvas;//wx.createCanvas();
-    // console.log(this.canvas);
-    // canvas.style.width = canvas.width + 'px';
-    // canvas.style.height = canvas.height + 'px';
-    // let pixelRatio = wx.getSystemInfoSync().pixelRatio;
-    // canvas.width *= pixelRatio;
-    // canvas.height *= pixelRatio;
+    this.canvas = canvas;
+    this.openDataContext = wx.getOpenDataContext();
+    this.sharedCanvas = this.openDataContext.canvas;
+    this.sharedCanvas.width = canvas.width;
+    this.sharedCanvas.height = canvas.height;
     //get canvas contextthis.constant.gameCor
     this.ctx = this.canvas.getContext('2d');
     // this.ctx.scale(pixelRatio, pixelRatio);
     this.constant = new Constant(this.canvas);
+    this.openDataContext.postMessage({
+      type: 'firstConnection',
+    });
     this.welcome();
     wx.getSystemInfo({success(res) { console.log(res.system); }});
   }
@@ -62,6 +89,7 @@ export default class Main {
     if (this.over) {
       delete this.over;
     }
+    this.slideRatio = 0;
     this.player = new Player(this.constant, this.constant.gameCor.width / 2, this.constant.gameCor.height / 2, this.constant.playerStyle.r0);
     this.bullets = new LinkedList();
     this.enemys = new LinkedList();
@@ -195,8 +223,7 @@ export default class Main {
   }
 
   react(){
-    if (this.clickLeft) { this.player.turnleft(); }
-    if (this.clickRight) { this.player.turnright(); }
+    this.player.turn(this.slideRatio);
     if (this.clickShoot && this.shootCount === 0) {
       let bul = this.player.shoot();
       this.bullets.push(bul);
@@ -352,13 +379,13 @@ export default class Main {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.ctx.fillStyle = this.constant.gameStyle.background;
     this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
-    this.drawBackground(this.ctx);
     this.drawList(this.enemys, this.ctx);
     this.drawList(this.bullets, this.ctx);
     this.drawList(this.enemysBullet, this.ctx);
     this.drawList(this.astroids, this.ctx);
     this.player.drawtoCanvas(this.ctx, this.player.getX(), this.player.getY());
     this.gameInfo.drawtoCanvas(this.ctx);
+    this.drawBackground(this.ctx);
   }
 
   drawBackground(ctx) {
@@ -428,6 +455,20 @@ export default class Main {
     //setTimeout(this.start.bind(this), 100);
     this.over = new Over(this);
     this.gameStatus = "over";
+    // let kvdata = {};
+    // kvdata.key = 'highestScore';
+    // kvdata.value = this.gameInfo.score;
+    // console.log(kvdata);
+    // wx.setUserCloudStorage({
+    //   KVDataList: [kvdata],
+    //   success() {
+    //     console.log('Successfully set cloud storage!');
+    //   },
+    //   fail() {
+    //     console.log('Fail to set cloud storage!');
+    //   }
+    // });
+    
     this.bindLoop = this.loop.bind(this);
     this.aniId = window.requestAnimationFrame(
       this.bindLoop,
