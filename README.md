@@ -2,6 +2,7 @@
 Classic game Astroid in Wechat-Game platform
 
 ## Bugs
+- 点击按钮之后直接移动离开按钮区域，则会导致按钮一直被按下的现象
 
 ## Todo List
 - 添加音乐
