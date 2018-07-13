@@ -16,6 +16,32 @@ const fps = 60;
 //main class
 export default class Main {
   constructor() {
+
+    // wx.getUserInfo({
+    //   success(res) {
+    //     console.log(res.openIdList);
+    //   }
+    // });
+    let button = wx.createUserInfoButton({
+      type: 'text',
+      text: '获取用户信息',
+      style: {
+        left: 10,
+        top: 76,
+        width: 200,
+        height: 40,
+        lineHeight: 40,
+        backgroundColor: '#ff0000',
+        color: '#ffffff',
+        textAlign: 'center',
+        fontSize: 16,
+        borderRadius: 4
+      }
+    })
+    button.onTap((res) => {
+      console.log(res)
+    })
+
     this.aniId = 0;
     // wx.setPreferredFramesPerSecond(fps);
     this.gameStatus = undefined;
@@ -428,6 +454,19 @@ export default class Main {
     //setTimeout(this.start.bind(this), 100);
     this.over = new Over(this);
     this.gameStatus = "over";
+    let kvdata = {};
+    kvdata.key = 'highest_score';
+    kvdata.value = this.gameInfo.score.toString();
+    console.log(kvdata);
+    wx.setUserCloudStorage({
+      KVDataList: [kvdata],
+      success() {
+        console.log('Successfully set cloud storage!');
+      },
+      fail() {
+        console.log('Fail to set cloud storage!');
+      }
+    });
     this.bindLoop = this.loop.bind(this);
     this.aniId = window.requestAnimationFrame(
       this.bindLoop,

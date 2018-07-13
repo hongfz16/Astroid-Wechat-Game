@@ -98,7 +98,7 @@ export default class gameInfo{
         let x = e.changedTouches[i].clientX;
         let y = e.changedTouches[i].clientY;
 
-        console.log(i, x, y);
+        // console.log(i, x, y);
 
         if (this.checkinLeft(x, y)) {
           this.main.clickLeft = false;

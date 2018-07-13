@@ -9,6 +9,8 @@ export default class Over {
     this.hasTouched = false;
     this.score = main.gameInfo.score;
     this.initEvent();
+    this.openDataContext = wx.getOpenDataContext();
+    this.currHighest = undefined;
   }
 
   initEvent(){
@@ -40,7 +42,13 @@ export default class Over {
                   this.main.constant.overTitle.textBaseline,
                   this.main.constant.overTitle.textFont,
                   ctx);
-    this.drawText("Highest Score: ",
+    if(this.currHighest === undefined) {
+      this.openDataContext.postMessage({
+        type: 'drawHighest',
+      });
+      this.currHighest = true;
+    }
+    this.drawText(`Highest Score: ${1234}`,
                   this.canvas.width / 2,
                   this.canvas.height * 2 / 5,
                   this.main.constant.oversmallTitle.textColor,

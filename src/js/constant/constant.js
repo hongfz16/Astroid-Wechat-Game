@@ -93,9 +93,17 @@ export default class Constant {
     };
 
     //game world constants
+    let gameCorWidth = 0;
+    let gameCorHeight = 0;
+    while(gameCorWidth < this.canvas.width * 2) {
+      gameCorWidth += 100;
+    }
+    while(gameCorHeight < this.canvas.height * 2) {
+      gameCorHeight += 100;
+    }
     this.gameCor = {
-      width: canvas.width * 2,
-      height: canvas.height * 2
+      width: gameCorWidth,
+      height: gameCorHeight
     };
     this.gameStyle = {
       background: '#000000',
