@@ -60,7 +60,7 @@ export default class Over {
                        this.main.constant.backButton.y1,
                        this.main.constant.backButton.r,
                        ctx);
-    this.drawText("Retart",
+    this.drawText("Restart",
                   (this.main.constant.restartButton.x0 + this.main.constant.restartButton.x1) / 2,
                   (this.main.constant.restartButton.y0 + this.main.constant.restartButton.y1) / 2,
                   this.main.constant.restartButton.textColor,

@@ -62,6 +62,7 @@ export default class Main {
     if (this.over) {
       delete this.over;
     }
+    this.slideRatio = 0;
     this.player = new Player(this.constant, this.constant.gameCor.width / 2, this.constant.gameCor.height / 2, this.constant.playerStyle.r0);
     this.bullets = new LinkedList();
     this.enemys = new LinkedList();
@@ -195,8 +196,7 @@ export default class Main {
   }
 
   react(){
-    if (this.clickLeft) { this.player.turnleft(); }
-    if (this.clickRight) { this.player.turnright(); }
+    this.player.turn(this.slideRatio);
     if (this.clickShoot && this.shootCount === 0) {
       let bul = this.player.shoot();
       this.bullets.push(bul);
