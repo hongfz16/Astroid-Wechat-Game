@@ -71,7 +71,7 @@ export default class Main {
       let enemy = this.initEnemy();
       this.enemys.push(enemy);
     }
-    for (let i = 0; i < 3; ++i){
+    for (let i = 0; i < 5; ++i){
       let astroid = this.initAstroid();
       this.astroids.push(astroid);
     }
@@ -260,7 +260,7 @@ export default class Main {
     if (this.astroidCount === 0){
       let astroid = this.initAstroid(true);
       this.astroids.push(astroid);
-      this.astroidCount = 1000;
+      this.astroidCount = Math.max(100, 1000-this.aniID/10);
     }
     /*-------------------------*/
   }
