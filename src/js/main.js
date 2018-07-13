@@ -468,6 +468,7 @@ export default class Main {
     //     console.log('Fail to set cloud storage!');
     //   }
     // });
+    
     this.bindLoop = this.loop.bind(this);
     this.aniId = window.requestAnimationFrame(
       this.bindLoop,
