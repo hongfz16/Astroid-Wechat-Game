@@ -67,12 +67,63 @@ export default class gameInfo{
     ctx.fill();
   }
 
+  drawAcc(ctx, x, y, r) {
+    this.drawCircle(ctx, x, y, r);
+    ctx.beginPath();
+    ctx.moveTo(x + this.constant.accButtonDesign[0][0], y + this.constant.accButtonDesign[0][1]);
+    for(let i = 1; i < this.constant.accButtonDesign.length; i += 1) {
+      ctx.lineTo(x + this.constant.accButtonDesign[i][0], y + this.constant.accButtonDesign[i][1]);
+    }
+    ctx.closePath();
+    ctx.strokeStyle = this.constant.buttonStyle.strokeColor;
+    ctx.lineWidth = this.constant.buttonStyle.strokeSize;
+    ctx.stroke();
+  }
+
+  drawShoot(ctx, x, y, r) {
+    this.drawCircle(ctx, x, y, r);
+    // ctx.beginPath();
+    // ctx.strokeStyle = 'rgba(255, 255, 255, 100)';
+    // ctx.lineWidth = this.constant.buttonStyle.strokeSize;
+    // ctx.arc(x, y, r, 0, Math.PI * 2);
+    // ctx.stroke();
+
+    // ctx.beginPath();
+    // ctx.strokeStyle = this.constant.buttonStyle.strokeColor;
+    // ctx.lineWidth = this.constant.buttonStyle.strokeSize;
+    // ctx.arc(x, y, r, -Math.PI / 2, Math.PI * 2 * (30 - this.main.shootCount) / 30 - Math.PI / 2);
+    // ctx.stroke();
+
+    if(this.main.shootCount !== 0) {
+      ctx.beginPath();
+      ctx.fillStyle = 'rgba(255, 255, 255, 100)';
+      ctx.moveTo(x, y);
+      // ctx.lineTo(x, y - r);
+      ctx.arc(x, y, r, Math.PI * 2 * (30 - this.main.shootCount) / 30 - Math.PI / 2, Math.PI * 3 / 2);
+      ctx.closePath();
+      ctx.fill();
+    }
+
+    ctx.beginPath();
+    let rr = this.constant.shootButtonDesign.r;
+    let R = this.constant.shootButtonDesign.R;
+    ctx.moveTo(x - R, y);
+    ctx.lineTo(x + R, y);
+    ctx.moveTo(x, y - R);
+    ctx.lineTo(x, y + R);
+    ctx.moveTo(x + rr, y);
+    ctx.arc(x, y, rr, 0, Math.PI * 2);
+    ctx.strokeStyle = this.constant.buttonStyle.strokeColor;
+    ctx.lineWidth = this.constant.buttonStyle.strokeSize;
+    ctx.stroke();
+  }
+
   drawtoCanvas(ctx){
     // this.drawTri(ctx, this.constant.leftButtonPos.x, this.constant.leftButtonPos.y, this.constant.leftButtonPos.r, Math.PI / 3);
     // this.drawTri(ctx, this.constant.rightButtonPos.x, this.constant.rightButtonPos.y, this.constant.rightButtonPos.r, 0);
     this.drawSlideHandle(ctx, this.slideHandleCenterX, this.slideHandleCenterY, this.constant.slideHandlePos.centerx, this.constant.slideHandlePos.centery, this.constant.slideHandlePos.r, this.constant.slideHandlePos.width);
-    this.drawCircle(ctx, this.constant.accButtonPos.x, this.constant.accButtonPos.y, this.constant.accButtonPos.r);
-    this.drawCircle(ctx, this.constant.shootButtonPos.x, this.constant.shootButtonPos.y, this.constant.shootButtonPos.r);
+    this.drawAcc(ctx, this.constant.accButtonPos.x, this.constant.accButtonPos.y, this.constant.accButtonPos.r);
+    this.drawShoot(ctx, this.constant.shootButtonPos.x, this.constant.shootButtonPos.y, this.constant.shootButtonPos.r);
     this.drawScore(ctx, this.constant.scorePos.x, this.constant.scorePos.y);
   }
 

@@ -12,6 +12,11 @@ export default class Enemy extends Sprite {
   constructor(constant, x = 0, y = 0, type = 'large') {
     let size = constant.enemySize[type];
     super(x, y, size);
+    let sr = size / 2;
+    let sy = y + size / 2;
+    let deltasx = size * Math.sqrt(2);
+    this.circle.addSubCircle(x + deltasx, sy, sr);
+    this.circle.addSubCircle(x - deltasx, sy, sr);
     this.shootTimer = constant.enemyShootFrame;
     this.constant = constant;
     this.setVel();
@@ -28,13 +33,25 @@ export default class Enemy extends Sprite {
     this.velTimer = Math.random() * this.constant.enemyVelTimer;
   }
 
+  mupdate(cir) {
+    cir.center.x += this.vel.x;
+    cir.center.y += this.vel.y;
+    cir.center.x += this.constant.gameCor.width;
+    cir.center.y += this.constant.gameCor.height;
+    cir.center.x %= this.constant.gameCor.width;
+    cir.center.y %= this.constant.gameCor.height;
+  }
+
   update() {
-    this.circle.center.x += this.vel.x;
-    this.circle.center.y += this.vel.y;
-    this.circle.center.x += this.constant.gameCor.width;
-    this.circle.center.y += this.constant.gameCor.height;
-    this.circle.center.x %= this.constant.gameCor.width;
-    this.circle.center.y %= this.constant.gameCor.height;
+    for(let i = 0; i < this.circle.subcircle.length; i += 1) {
+      this.mupdate(this.circle.subcircle[i]);
+    }
+    // this.circle.center.x += this.vel.x;
+    // this.circle.center.y += this.vel.y;
+    // this.circle.center.x += this.constant.gameCor.width;
+    // this.circle.center.y += this.constant.gameCor.height;
+    // this.circle.center.x %= this.constant.gameCor.width;
+    // this.circle.center.y %= this.constant.gameCor.height;
     if(this.shootTimer > 0) {
       this.shootTimer -= 1;
     }
@@ -51,12 +68,22 @@ export default class Enemy extends Sprite {
   }
 
   drawEnemy(ctx, x, y, r) {
-    ctx.beginPath();
-    ctx.moveTo(x - 2 * r, y + r);
-    ctx.arc(x, y + r, 2 * r, Math.PI, Math.PI * 2);
-    ctx.closePath();
+    let theta = Math.PI / 12;
     ctx.strokeStyle = this.constant.enemyStyle.strokeColor;
     ctx.lineWidth = this.constant.enemyStyle.strokeSize;
+    ctx.beginPath();
+    // ctx.moveTo(x - 2 * r, y + r);
+    // ctx.arc(x, y + r, 2 * r, Math.PI, Math.PI * 2);
+    ctx.arc(x, y + r, 2 * r, Math.PI + theta, Math.PI * 2 - theta);
+    ctx.moveTo(x - r * 2 * (Math.cos(theta) + Math.sin(theta)), y + r);
+    ctx.arc(x - r * 2 * Math.cos(theta), y + r, r * 2 * Math.sin(theta), Math.PI, Math.PI * 3 / 2);
+    ctx.arc(x + r * 2 * Math.cos(theta), y + r, r * 2 * Math.sin(theta), Math.PI * 3 / 2, Math.PI * 2);
+    ctx.moveTo(x - r * 2 * Math.cos(theta), y + r - r * 2 * Math.sin(theta));
+    ctx.lineTo(x + r * 2 * Math.cos(theta), y + r - r * 2 * Math.sin(theta));
+    // ctx.stroke();
+    // ctx.beginPath();
+    ctx.moveTo(x - r * 2 * (Math.cos(theta) + Math.sin(theta)), y + r);
+    ctx.lineTo(x + r * 2 * (Math.cos(theta) + Math.sin(theta)), y + r);
     ctx.stroke();
   }
 
