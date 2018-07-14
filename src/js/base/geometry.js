@@ -22,8 +22,28 @@ class Circle{
   constructor(x = 0, y = 0, r = 1){
     this.center = new Point(x, y);
     this.radius = r;
+    this.subcircle = [this];
   }
+
+  addSubCircle(x, y, r) {
+    let sub = new Circle(x, y, r);
+    this.subcircle.push(sub);
+  }
+
   checkCollision(constant, cir) {
+    let cnt = 0;
+    for(let i = 0; i < this.subcircle.length; i += 1) {
+      for(let j = 0; j < cir.subcircle.length; j += 1) {
+        cnt += 1;
+        if(this.subcircle[i].checkOneCollision(constant, cir.subcircle[j])) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  checkOneCollision(constant, cir) {
     let p0 = new Point(this.center.x, this.center.y);
     let p1 = new Point(cir.center.x, cir.center.y);
     if (p0.x - p1.x > constant.gameCor.width / 2)

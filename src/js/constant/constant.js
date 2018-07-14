@@ -92,6 +92,20 @@ export default class Constant {
       y: canvas.height * 0.8,
       r: canvas.width * 0.05
     };
+    let ar = this.accButtonPos.r;
+    this.accButtonDesign = [
+      [0, ar * -0.7],
+      [ar * 0.5, ar * -0.7],
+      [0, -0.1 * ar],
+      [0.5 * ar, -0.1 * ar],
+      [-0.5 * ar, 0.7 * ar],
+      [0, 0.1 * ar],
+      [-0.5 * ar, 0.1 * ar]
+    ];
+    this.shootButtonDesign = {
+      r: ar * 0.6,
+      R: ar * 0.8
+    };
     this.shootButtonPos = {
       x: canvas.width * 0.9,
       y: canvas.height * 0.8,
