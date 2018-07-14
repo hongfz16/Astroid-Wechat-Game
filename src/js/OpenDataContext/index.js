@@ -137,15 +137,17 @@ wx.onMessage(data => {
     }
   } else
   if (data.type === 'nextPage') {
-    console.log("nextPage");
+    //console.log("nextPage");
     if (friends !== undefined){
+      console.log("nextPage");
       friends.pageplus();
       friends.drawtoCanvas(sharedCanvas);
     }
   } else
   if (data.type === 'prevPage') {
-    console.log("prevPage");
+    //console.log("prevPage");
     if (friends !== undefined){
+      console.log("prevPage");
       friends.pageminus();
       friends.drawtoCanvas(sharedCanvas);
     }
