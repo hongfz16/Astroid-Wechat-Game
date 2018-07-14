@@ -1,36 +1,36 @@
-let instance
+let instance;
 
 export default class Music {
   constructor() {
     if (instance)
-      return instance
+      return instance;
 
-    instance = this
+    instance = this;
 
-    this.bgmAudio = new Audio()
-    this.bgmAudio.loop = true
-    this.bgmAudio.src = 'audio/bgm.mp3'
+    this.bgmAudio = new Audio();
+    this.bgmAudio.loop = true;
+    this.bgmAudio.src = 'audio/bgm.mp3';
 
-    this.shootAudio = new Audio()
-    this.shootAudio.src = 'audio/bullet.mp3'
+    this.shootAudio = new Audio();
+    this.shootAudio.src = 'audio/bullet.mp3';
 
-    this.boomAudio = new Audio()
-    this.boomAudio.src = 'audio/boom.mp3'
+    this.boomAudio = new Audio();
+    this.boomAudio.src = 'audio/boom.mp3';
 
-    this.playBgm()
+    //this.playBgm();
   }
 
   playBgm() {
-    this.bgmAudio.play()
+    this.bgmAudio.play();
   }
 
   playShoot() {
-    this.shootAudio.currentTime = 0
-    this.shootAudio.play()
+    this.shootAudio.currentTime = 0;
+    this.shootAudio.play();
   }
 
   playExplosion() {
-    this.boomAudio.currentTime = 0
-    this.boomAudio.play()
+    this.boomAudio.currentTime = 0;
+    this.boomAudio.play();
   }
 }

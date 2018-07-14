@@ -285,11 +285,14 @@ export default class Main {
     }
     /*-------------------------*/
     /*    random add astroid   */
+    //console.log("random add astroid");
     this.astroidCount -= 1;
     if (this.astroidCount === 0){
+      //console.log("astroidCount = 0");
       let astroid = this.initAstroid(true);
       this.astroids.push(astroid);
-      this.astroidCount = Math.max(100, 1000-this.aniID/10);
+      this.astroidCount = Math.max(100, 1000-this.aniId/10);
+      //console.log(`astroidCount ${this.astroidCount}`);
     }
     /*-------------------------*/
   }
