@@ -99,8 +99,14 @@ export default class LeaderBoard{
                     y + this.constant.leaderboard.perheight / 2,
                     ctx);
       x += this.constant.leaderboard.idWidth;
+      this.drawImage(this.userData[index].image,
+                     x + (this.constant.leaderboard.perheight - this.constant.leaderboard.imageWidth) / 2,
+                     y + (this.constant.leaderboard.perheight - this.constant.leaderboard.imageHeight) / 2,
+                     this.constant.leaderboard.imageWidth,
+                     this.constant.leaderboard.imageHeight,
+                     ctx);
       this.drawText(this.userData[index].nickname,
-                    x + this.constant.leaderboard.nickWidth / 2,
+                    x + (this.constant.leaderboard.perheight+this.constant.leaderboard.nickWidth) / 2,
                     y + this.constant.leaderboard.perheight / 2,
                     ctx);
       x += this.constant.leaderboard.nickWidth;
@@ -150,5 +156,9 @@ export default class LeaderBoard{
     ctx.textBaseline = 'middle';
     ctx.font = this.constant.leaderboard.textFont;
     ctx.fillText(data, x, y);
+  }
+
+  drawImage(img, x, y, width, height, ctx){
+    ctx.drawImage(img, x, y, width, height);
   }
 }
