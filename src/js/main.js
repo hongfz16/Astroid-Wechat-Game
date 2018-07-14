@@ -173,7 +173,7 @@ export default class Main {
     //const posx = Math.random() * this.constant.gameCor.width;
     //const posy = Math.random() * this.constant.gameCor.height;
     let ret;
-    if (Math.random() < 1) {
+    if (Math.random() < 0.33) {
       ret = new Enemy(this.constant, pos.x, pos.y, "large");
     }
     else
@@ -377,13 +377,13 @@ export default class Main {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.ctx.fillStyle = this.constant.gameStyle.background;
     this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+    this.drawBackground(this.ctx);
+    this.player.drawtoCanvas(this.ctx, this.player.getX(), this.player.getY());
     this.drawList(this.enemys, this.ctx);
     this.drawList(this.bullets, this.ctx);
     this.drawList(this.enemysBullet, this.ctx);
     this.drawList(this.astroids, this.ctx);
-    this.player.drawtoCanvas(this.ctx, this.player.getX(), this.player.getY());
     this.gameInfo.drawtoCanvas(this.ctx);
-    this.drawBackground(this.ctx);
   }
 
   drawBackground(ctx) {
@@ -407,10 +407,12 @@ export default class Main {
                                              this.player.getX(), this.player.getY(),
                                              this.constant.gameCor.width, this.constant.gameCor.height,
                                              this.constant.canvas.width, this.constant.canvas.height);
-        ctx.strokeStyle = this.constant.gameStyle.backline;
-        ctx.lineWidth = this.constant.gameStyle.lineSize;
-        ctx.moveTo(newCorStart.x, newCorStart.y);
-        ctx.lineTo(newCorEnd.x, newCorEnd.y);
+        if(newCorStart.x > 0 && newCorStart.x < canvas.width) {
+          ctx.strokeStyle = this.constant.gameStyle.backline;
+          ctx.lineWidth = this.constant.gameStyle.lineSize;
+          ctx.moveTo(newCorStart.x, newCorStart.y);
+          ctx.lineTo(newCorEnd.x, newCorEnd.y);
+        }
       }
     }
     ctx.stroke();
@@ -426,10 +428,12 @@ export default class Main {
                                              this.player.getX(), this.player.getY(),
                                              this.constant.gameCor.width, this.constant.gameCor.height,
                                              this.constant.canvas.width, this.constant.canvas.height);
-        ctx.strokeStyle = this.constant.gameStyle.backline;
-        ctx.lineWidth = this.constant.gameStyle.lineSize;
-        ctx.moveTo(newCorStart.x, newCorStart.y);
-        ctx.lineTo(newCorEnd.x, newCorEnd.y);
+        if(newCorStart.y > 0 && newCorStart.y < canvas.height){
+          ctx.strokeStyle = this.constant.gameStyle.backline;
+          ctx.lineWidth = this.constant.gameStyle.lineSize;
+          ctx.moveTo(newCorStart.x, newCorStart.y);
+          ctx.lineTo(newCorEnd.x, newCorEnd.y);
+        }
       }
     }
     ctx.stroke();

@@ -131,8 +131,8 @@ export default class Constant {
     };
     this.gameStyle = {
       background: '#000000',
-      backline: 'rgba(190, 190, 190, 190)',
-      lineSize: 2
+      backline: 'rgb(50, 50, 50)',
+      lineSize: 1
     };
 
     //welcome constants

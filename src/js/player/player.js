@@ -28,44 +28,44 @@ export default class Player extends Sprite{
     let cor = this.getCor(true);
     if (this.immortalCount === 0 || (this.immortalCount%30)<20){
 
-      for (let i = 0; i <= 9; ++i) {
-        cor.p[i].x -= this.constant.gameCor.width;
-        cor.p[i].y -= this.constant.gameCor.height;
-      }
-      this.drawtoCanvasOneCorner(cor, ctx);
-      for (let i = 0; i <= 9; ++i) {
-        cor.p[i].x += this.constant.gameCor.width;
-      }
-      this.drawtoCanvasOneCorner(cor, ctx);
-      for (let i = 0; i <= 9; ++i) {
-        cor.p[i].x += this.constant.gameCor.width;
-      }
-      this.drawtoCanvasOneCorner(cor, ctx);
-      for (let i = 0; i <= 9; ++i) {
-        //cor.p[i].x -= this.constant.gameCor.width;
-        cor.p[i].y += this.constant.gameCor.height;
-      }
-      this.drawtoCanvasOneCorner(cor, ctx);
-      for (let i = 0; i <= 9; ++i) {
-        cor.p[i].x -= this.constant.gameCor.width;
-      }
-      this.drawtoCanvasOneCorner(cor, ctx);
-      for (let i = 0; i <= 9; ++i) {
-        cor.p[i].x -= this.constant.gameCor.width;
-      }
-      this.drawtoCanvasOneCorner(cor, ctx);
-      for (let i = 0; i <= 9; ++i) {
-        //cor.p[i].x += this.constant.gameCor.width;
-        cor.p[i].y += this.constant.gameCor.height;
-      }
-      this.drawtoCanvasOneCorner(cor, ctx);
-      for (let i = 0; i <= 9; ++i) {
-        cor.p[i].x += this.constant.gameCor.width;
-      }
-      this.drawtoCanvasOneCorner(cor, ctx);
-      for (let i = 0; i <= 9; ++i) {
-        cor.p[i].x += this.constant.gameCor.width;
-      }
+      // for (let i = 0; i <= 9; ++i) {
+      //   cor.p[i].x -= this.constant.gameCor.width;
+      //   cor.p[i].y -= this.constant.gameCor.height;
+      // }
+      // this.drawtoCanvasOneCorner(cor, ctx);
+      // for (let i = 0; i <= 9; ++i) {
+      //   cor.p[i].x += this.constant.gameCor.width;
+      // }
+      // this.drawtoCanvasOneCorner(cor, ctx);
+      // for (let i = 0; i <= 9; ++i) {
+      //   cor.p[i].x += this.constant.gameCor.width;
+      // }
+      // this.drawtoCanvasOneCorner(cor, ctx);
+      // for (let i = 0; i <= 9; ++i) {
+      //   //cor.p[i].x -= this.constant.gameCor.width;
+      //   cor.p[i].y += this.constant.gameCor.height;
+      // }
+      // this.drawtoCanvasOneCorner(cor, ctx);
+      // for (let i = 0; i <= 9; ++i) {
+      //   cor.p[i].x -= this.constant.gameCor.width;
+      // }
+      // this.drawtoCanvasOneCorner(cor, ctx);
+      // for (let i = 0; i <= 9; ++i) {
+      //   cor.p[i].x -= this.constant.gameCor.width;
+      // }
+      // this.drawtoCanvasOneCorner(cor, ctx);
+      // for (let i = 0; i <= 9; ++i) {
+      //   //cor.p[i].x += this.constant.gameCor.width;
+      //   cor.p[i].y += this.constant.gameCor.height;
+      // }
+      // this.drawtoCanvasOneCorner(cor, ctx);
+      // for (let i = 0; i <= 9; ++i) {
+      //   cor.p[i].x += this.constant.gameCor.width;
+      // }
+      // this.drawtoCanvasOneCorner(cor, ctx);
+      // for (let i = 0; i <= 9; ++i) {
+      //   cor.p[i].x += this.constant.gameCor.width;
+      // }
       this.drawtoCanvasOneCorner(cor, ctx);
     }
   }
