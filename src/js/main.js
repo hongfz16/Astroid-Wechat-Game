@@ -10,6 +10,7 @@ import Constant from "./constant/constant"
 import Welcome from "./WelcOver/welcom"
 import Over from "./WelcOver/over"
 import Music from "./music/music"
+import LeaderBoard from "./leaderboard/leaderboard"
 
 //frame per second
 const fps = 60;
@@ -62,6 +63,9 @@ export default class Main {
     this.openDataContext.postMessage({
       type: 'firstConnection',
     });
+    this.openDataContext.postMessage({
+      type: 'updateFriends',
+    });
     this.music = new Music();
     this.welcome();
     wx.getSystemInfo({success(res) { console.log(res.system); }});
@@ -70,6 +74,9 @@ export default class Main {
   welcome(){
     if (this.over) {
       delete this.over;
+    }
+    if (this.leaderboard){
+      delete this.leaderboard;
     }
     window.cancelAnimationFrame(this.aniId);
     //console.log("welcome");
@@ -85,6 +92,10 @@ export default class Main {
   //start game entry
   start() {
     //init some other data
+    this.openDataContext.postMessage({
+      type: 'updateFriends',
+    });
+
     if (this.wel) {
       delete this.wel;
     }
@@ -148,6 +159,9 @@ export default class Main {
     } else
     if (this.gameStatus === 'over') {
       this.over.drawtoCanvas();
+    } else
+    if (this.gameStatus === 'leaderboard'){
+      this.leaderboard.drawtoCanvas();
     }
 
     //set the callback of next frame
@@ -462,23 +476,22 @@ export default class Main {
   GameOver() {
     window.cancelAnimationFrame(this.aniId);
     
-    //setTimeout(this.start.bind(this), 100);
     this.over = new Over(this);
     this.gameStatus = "over";
-    // let kvdata = {};
-    // kvdata.key = 'highestScore';
-    // kvdata.value = this.gameInfo.score;
-    // console.log(kvdata);
-    // wx.setUserCloudStorage({
-    //   KVDataList: [kvdata],
-    //   success() {
-    //     console.log('Successfully set cloud storage!');
-    //   },
-    //   fail() {
-    //     console.log('Fail to set cloud storage!');
-    //   }
-    // });
     
+    this.bindLoop = this.loop.bind(this);
+    this.aniId = window.requestAnimationFrame(
+      this.bindLoop,
+      this.canvas
+    );
+  }
+
+  showLeaderBoard() {
+    window.cancelAnimationFrame(this.aniId);
+
+    this.leaderboard = new LeaderBoard(this);
+    this.gameStatus = "leaderboard";
+
     this.bindLoop = this.loop.bind(this);
     this.aniId = window.requestAnimationFrame(
       this.bindLoop,

@@ -20,8 +20,10 @@ export default class Welcome{
           setTimeout(this.main.start.bind(this.main), 100);
           this.hasTouched = true;
         }
-        if (this.checkinScore(x, y)){
-          //this.hasTouched = true;
+        if (this.checkinLeader(x, y)){
+          //showLeaderBoard
+          setTimeout(this.main.showLeaderBoard.bind(this.main), 100);
+          this.hasTouched = true;
         }
       }
     }).bind(this));
@@ -59,7 +61,7 @@ export default class Welcome{
                   this.main.constant.startButton.textBaseline,
                   this.main.constant.startButton.textFont,
                   ctx);
-    this.drawText("Score Board",
+    this.drawText("Leader Board",
                   (this.main.constant.stageButton.x0 + this.main.constant.stageButton.x1) / 2,
                   (this.main.constant.stageButton.y0 + this.main.constant.stageButton.y1) / 2,
                   this.main.constant.stageButton.textColor,
@@ -101,7 +103,7 @@ export default class Welcome{
       y <= this.main.constant.startButton.y1;
   }
 
-  checkinScore(x, y) {
+  checkinLeader(x, y) {
     return x >= this.main.constant.stageButton.x0 &&
       x <= this.main.constant.stageButton.x1 &&
       y >= this.main.constant.stageButton.y0 &&

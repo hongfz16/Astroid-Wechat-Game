@@ -1,7 +1,9 @@
 import Constant from "./constant.js"
+import LeaderBoard from "./leaderboard.js"
 
 let constant;
 let highest;
+let friends;
 function drawRoundRect(x0, y0, x1, y1, r, ctx) {
   ctx.strokeStyle = constant.startButton.strokeColor;
   ctx.lineWidth = constant.startButton.strokeSize;
@@ -98,17 +100,6 @@ wx.onMessage(data => {
     //let keys = ['highestScore'];
     let sharedCanvas = wx.getSharedCanvas();
     render(sharedCanvas, highest, data.curscore);
-    // wx.getUserCloudStorage({
-    //   keyList: keys,
-    //   success: res => {
-    //     //console.log(res.KVDataList[0].value);
-    //     let sharedCanvas = wx.getSharedCanvas();
-    //     render(sharedCanvas, res.KVDataList[0].value, data.curscore);
-    //   },
-    //   fail() {
-    //     console.log('Fail to get user cloud storage');
-    //   }
-    // });
   }
   else
   if (data.type === 'newScore') {
@@ -125,28 +116,38 @@ wx.onMessage(data => {
         }
       });
     }
-    // let keys = ['highestScore'];
-    // wx.getUserCloudStorage({
-    //   keyList: keys,
-    //   success: res => {
-    //     //console.log(res.KVDataList);
-    //     if (res.KVDataList.length === 0 || parseInt(res.KVDataList[0].value) < data.score){
-    //       //console.log(res.KVDataList[0].value);
-    //       //res.KVDataList[0].highestScore = data.score;
-    //       wx.setUserCloudStorage({
-    //         KVDataList: [{ key: 'highestScore', value: `${data.score}` }],
-    //         success: res => {
-    //           console.log(res);
-    //         },
-    //         fail: res => {
-    //           console.log(res);
-    //         }
-    //       });
-    //     }
-    //   },
-    //   fail() {
-    //     console.log('Fail to get user cloud storage');
-    //   }
-    // });
+  } else
+  if (data.type === 'updateFriends') {
+    wx.getFriendCloudStorage({
+      keyList: ['highestScore'],
+      success: res => {
+        console.log(res.data);
+        friends = new LeaderBoard(res.data, constant);
+      },
+      fail: res => {
+      },
+      complete: res => {
+      }
+    });
+  } else
+  if (data.type === 'drawLeaderBoard') {
+    if (friends !== undefined){
+      let sharedCanvas = wx.getSharedCanvas();
+      friends.drawtoCanvas(sharedCanvas);
+    }
+  } else
+  if (data.type === 'nextPage') {
+    console.log("nextPage");
+    if (friends !== undefined){
+      friends.pageplus();
+      friends.drawtoCanvas(sharedCanvas);
+    }
+  } else
+  if (data.type === 'prevPage') {
+    console.log("prevPage");
+    if (friends !== undefined){
+      friends.pageminus();
+      friends.drawtoCanvas(sharedCanvas);
+    }
   }
 });

@@ -194,6 +194,25 @@ export default class Constant {
       textBaseline: 'middle',
       textFont: `${this.canvas.height * 1 / 10}px kaiti`,
     };
+
+    let pp = Math.floor(this.canvas.height / 60) - 2;
+    let wi = this.canvas.width * 2 / 3;
+    //leaderboard constants
+    this.leaderboard = {
+      perheight: 60,
+      perpage: pp,
+      width: wi,
+      blankheight: (this.canvas.height - (pp + 2) * 60) / 2,
+
+      idWidth: wi / 6,
+      nickWidth: wi * 4 / 6,
+      scoreWidth: wi / 6,
+
+      lineSize: 2,
+      lineColor: '#ffffff',
+
+      textFont: `${this.canvas.height / 18}px sans-serif`,
+    }
   }
 }
 
