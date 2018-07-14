@@ -13,3 +13,4 @@ Classic game Astroid in Wechat-Game platform
 - 安卓机ChromeV8引擎对离屏画布不友好：直接画上屏画布
 - 排行榜
 - 碰撞检测：多个圆填充三角形
+- 安卓手机闪屏问题：安卓上绘制透明度性能差
