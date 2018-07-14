@@ -226,6 +226,9 @@ export default class Constant {
       lineColor: '#ffffff',
 
       textFont: `${this.canvas.height / 18}px sans-serif`,
+
+      imageWidth: 50,
+      imageHeight: 50,
     }
   }
 }
