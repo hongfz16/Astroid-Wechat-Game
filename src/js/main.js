@@ -291,8 +291,8 @@ export default class Main {
       //console.log("astroidCount = 0");
       let astroid = this.initAstroid(true);
       this.astroids.push(astroid);
-      this.astroidCount = Math.max(100, 1000-this.aniId/10);
-      //console.log(`astroidCount ${this.astroidCount}`);
+      this.astroidCount = Math.max(100, Math.floor(1000-this.aniId/10));
+      console.log(`astroidCount ${this.astroidCount}`);
     }
     /*-------------------------*/
   }
