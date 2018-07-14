@@ -27,7 +27,9 @@ export default class LeaderBoard{
   }
 
   pageplus(){
-    if (this.userData.length > (this.curpage+1)*this.constant.perpage){
+    //console.log((this.curpage + 1) * this.constant.leaderboard.perpage);
+    //console.log(this.userData.length);
+    if (this.userData.length > (this.curpage+1)*this.constant.leaderboard.perpage){
       this.curpage += 1;
     }
   }
@@ -70,6 +72,7 @@ export default class LeaderBoard{
 
   drawInfo(ctx){
     //console.log("in drawInfo");
+    //console.log(this.curpage);
     let x = (this.constant.canvas.width - this.constant.leaderboard.width) / 2;
     let y = this.constant.leaderboard.blankheight;
     //console.log(x, y);
@@ -90,9 +93,9 @@ export default class LeaderBoard{
 
     for (let i = 1; i <= this.constant.leaderboard.perpage; i++) {
       x = (this.constant.canvas.width - this.constant.leaderboard.width) / 2;
-      y = this.constant.leaderboard.blankheight + i*this.constant.leaderboard.perheight*i;
+      y = this.constant.leaderboard.blankheight + i*this.constant.leaderboard.perheight;
 
-      let index = this.curpage * (this.constant.leaderboard.perpage-1) + i-1;
+      let index = this.curpage * this.constant.leaderboard.perpage + i-1;
       if (index >= this.userData.length) { break; }
       this.drawText(index+1,
                     x + this.constant.leaderboard.idWidth / 2,

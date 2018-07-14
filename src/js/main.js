@@ -18,32 +18,6 @@ const fps = 60;
 //main class
 export default class Main {
   constructor() {
-
-    // wx.getUserInfo({
-    //   success(res) {
-    //     console.log(res.openIdList);
-    //   }
-    // });
-    // let button = wx.createUserInfoButton({
-    //   type: 'text',
-    //   text: '获取用户信息',
-    //   style: {
-    //     left: 10,
-    //     top: 76,
-    //     width: 200,
-    //     height: 40,
-    //     lineHeight: 40,
-    //     backgroundColor: '#ff0000',
-    //     color: '#ffffff',
-    //     textAlign: 'center',
-    //     fontSize: 16,
-    //     borderRadius: 4
-    //   }
-    // })
-    // button.onTap((res) => {
-    //   console.log(res)
-    // })
-
     this.aniId = 0;
     // wx.setPreferredFramesPerSecond(fps);
     this.gameStatus = undefined;
@@ -199,7 +173,7 @@ export default class Main {
     //const posx = Math.random() * this.constant.gameCor.width;
     //const posy = Math.random() * this.constant.gameCor.height;
     let ret;
-    if (Math.random() < 0.33) {
+    if (Math.random() < 1) {
       ret = new Enemy(this.constant, pos.x, pos.y, "large");
     }
     else
@@ -306,7 +280,7 @@ export default class Main {
       let astroid = this.initAstroid(true);
       this.astroids.push(astroid);
       this.astroidCount = Math.max(100, Math.floor(1000-this.aniId/10));
-      console.log(`astroidCount ${this.astroidCount}`);
+      // console.log(`astroidCount ${this.astroidCount}`);
     }
     /*-------------------------*/
   }
