@@ -14,8 +14,8 @@ export default class Welcome{
     this.main.canvas.addEventListener("touchstart", ((e) => {
       e.preventDefault();
       if (this.hasTouched === false){
-        let x = e.touches[0].clientX;
-        let y = e.touches[0].clientY;
+        let x = e.touches[0].clientX * this.main.constant.dpr;
+        let y = e.touches[0].clientY * this.main.constant.dpr;
         if (this.checkinStart(x, y)){
           setTimeout(this.main.start.bind(this.main), 100);
           this.hasTouched = true;

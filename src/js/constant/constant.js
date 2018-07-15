@@ -4,6 +4,9 @@ export default class Constant {
     this.canvas = canvas;
     // console.log(canvas);
 
+    this.dpr = wx.getSystemInfoSync().pixelRatio;
+    console.log('pixelRatio:', this.dpr);
+
     this.astroidSize = {
       small: 0.04 * canvas.height,
       medium: 0.07 * canvas.height,
@@ -44,7 +47,7 @@ export default class Constant {
     this.enemyVelTimer = 300;
 
     //turning angle per frame
-    this.turnAngle = Math.PI * 3 / 180;
+    this.turnAngle = Math.PI * 6 / 180;
 
     //player constants
     //const playerRadius = 0.15 * canvas.height;
@@ -115,6 +118,16 @@ export default class Constant {
       strokeSize: 3,
       strokeColor: '#ffffff'
     };
+    this.handle2dStyle = {
+      margin: canvas.width * 0.02,
+      x: canvas.width * 0.2,
+      y: canvas.height * 0.8,
+      circleR: canvas.width * 0.1,
+      handleR: canvas.width * 0.04,
+      backcolor: 'rgba(255, 255, 255, 200)',
+      frontcolor: 'rgba(255, 255, 255, 10)'
+    }
+
 
     //game world constants
     let gameCorWidth = 0;
@@ -209,14 +222,14 @@ export default class Constant {
       textFont: `${this.canvas.height * 1 / 10}px kaiti`,
     };
 
-    let pp = Math.floor(this.canvas.height / 60) - 2;
+    let pp = Math.floor(this.canvas.height / (60 * this.dpr)) - 2;
     let wi = this.canvas.width * 2 / 3;
     //leaderboard constants
     this.leaderboard = {
-      perheight: 60,
+      perheight: 60 * this.dpr,
       perpage: pp,
       width: wi,
-      blankheight: (this.canvas.height - (pp + 2) * 60) / 2,
+      blankheight: (this.canvas.height - (pp + 2) * (60 * this.dpr)) / 2,
 
       idWidth: wi / 6,
       nickWidth: wi * 4 / 6,
@@ -227,8 +240,8 @@ export default class Constant {
 
       textFont: `${this.canvas.height / 18}px sans-serif`,
 
-      imageWidth: 50,
-      imageHeight: 50,
+      imageWidth: 50 * this.dpr,
+      imageHeight: 50 * this.dpr,
     }
   }
 }

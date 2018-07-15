@@ -191,8 +191,15 @@ export default class Player extends Sprite{
     this.angleDelta = this.constant.turnAngle;
   }
 
-  turn(ratio){
-    this.angleDelta = this.constant.turnAngle * ratio;
+  turn(angle){
+    //this.angleDelta = this.constant.turnAngle * ratio;
+    let delta = angle-this.angle;
+    while (delta > Math.PI) delta -= 2*Math.PI;
+    while (delta < -Math.PI) delta += 2*Math.PI;
+    let tmp = delta;
+    if (Math.abs(delta) > this.constant.turnAngle)
+      tmp = delta > 0 ? this.constant.turnAngle : -this.constant.turnAngle;
+    this.angleDelta = tmp;
   }
 
   accelerate(){

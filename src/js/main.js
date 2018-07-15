@@ -23,8 +23,8 @@ export default class Main {
     this.gameStatus = undefined;
     let width = canvas.width;
     let height = canvas.height;
-    canvas.width = (width > height) ? width : height;
-    canvas.height = (width < height) ? width : height;
+    canvas.width = 2 * ((width > height) ? width : height);
+    canvas.height = 2 * ((width < height) ? width : height);
     this.canvas = canvas;
     this.openDataContext = wx.getOpenDataContext();
     this.sharedCanvas = this.openDataContext.canvas;
@@ -76,7 +76,7 @@ export default class Main {
     if (this.over) {
       delete this.over;
     }
-    this.slideRatio = 0;
+    this.playerAngle = 0;
     this.player = new Player(this.constant, this.constant.gameCor.width / 2, this.constant.gameCor.height / 2, this.constant.playerStyle.r0);
     this.bullets = new LinkedList();
     this.enemys = new LinkedList();
@@ -213,7 +213,7 @@ export default class Main {
   }
 
   react(){
-    this.player.turn(this.slideRatio);
+    this.player.turn(this.playerAngle);
     if (this.clickShoot && this.shootCount === 0) {
       let bul = this.player.shoot();
       this.bullets.push(bul);
@@ -297,6 +297,12 @@ export default class Main {
       let itr2 = list2.head;
       let hasCollision = false;
       while (itr2 !== null) {
+        if (Math.abs(itr2.data.getX() - this.player.getX()) > this.canvas.width / 2 ||
+          Math.abs(itr2.data.getY() - this.player.getY()) > this.canvas.height / 2) {
+          itr2 = itr2.next;
+          continue;
+          }
+
         if (itr1.data.checkCollision(this.constant, itr2.data)) {
           let tmpitr = itr1.next;
           list1.delete(itr1);
@@ -341,6 +347,12 @@ export default class Main {
       return;
     let itr = list.head;
     while (itr !== null) {
+      if (Math.abs(itr.data.getX() - player.getX()) > this.canvas.width / 2 ||
+          Math.abs(itr.data.getY() - player.getY()) > this.canvas.height / 2)
+          {
+            itr = itr.next;
+            continue;
+          }
       if (player.checkCollision(this.constant, itr.data)){
         player.loseonelife();
         list.delete(itr);
