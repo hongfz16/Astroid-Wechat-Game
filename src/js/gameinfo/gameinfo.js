@@ -10,8 +10,10 @@ export default class gameInfo{
     this.main = mainclass;
     this.score = 0;
     this.constant = constant;
-    this.slideHandleCenterX = this.constant.slideHandlePos.centerx;
-    this.slideHandleCenterY = this.constant.slideHandlePos.centery;
+    // this.slideHandleCenterX = this.constant.slideHandlePos.centerx;
+    // this.slideHandleCenterY = this.constant.slideHandlePos.centery;
+    this.handlex = this.constant.handle2dStyle.x;
+    this.handley = this.constant.handle2dStyle.y;
     this.initEvent();
     this.accFlag = {isTouched: false, id: -1};
     this.shootFlag = {isTouched: false, id: -1};
@@ -67,6 +69,17 @@ export default class gameInfo{
     ctx.fill();
   }
 
+  drawHandle2d(ctx, circlex, circley, handlex, handley, circleR, handleR) {
+    ctx.beginPath();
+    ctx.fillStyle = this.constant.handle2dStyle.backcolor;
+    ctx.arc(circlex, circley, circleR, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.beginPath();
+    ctx.fillStyle = this.constant.handle2dStyle.frontcolor;
+    ctx.arc(handlex, handley, handleR, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
   drawAcc(ctx, x, y, r) {
     this.drawCircle(ctx, x, y, r);
     ctx.beginPath();
@@ -82,23 +95,10 @@ export default class gameInfo{
 
   drawShoot(ctx, x, y, r) {
     this.drawCircle(ctx, x, y, r);
-    // ctx.beginPath();
-    // ctx.strokeStyle = 'rgba(255, 255, 255, 100)';
-    // ctx.lineWidth = this.constant.buttonStyle.strokeSize;
-    // ctx.arc(x, y, r, 0, Math.PI * 2);
-    // ctx.stroke();
-
-    // ctx.beginPath();
-    // ctx.strokeStyle = this.constant.buttonStyle.strokeColor;
-    // ctx.lineWidth = this.constant.buttonStyle.strokeSize;
-    // ctx.arc(x, y, r, -Math.PI / 2, Math.PI * 2 * (30 - this.main.shootCount) / 30 - Math.PI / 2);
-    // ctx.stroke();
-
     if(this.main.shootCount !== 0) {
       ctx.beginPath();
       ctx.fillStyle = 'rgba(255, 255, 255, 100)';
       ctx.moveTo(x, y);
-      // ctx.lineTo(x, y - r);
       ctx.arc(x, y, r, Math.PI * 2 * (30 - this.main.shootCount) / 30 - Math.PI / 2, Math.PI * 3 / 2);
       ctx.closePath();
       ctx.fill();
@@ -121,7 +121,8 @@ export default class gameInfo{
   drawtoCanvas(ctx){
     // this.drawTri(ctx, this.constant.leftButtonPos.x, this.constant.leftButtonPos.y, this.constant.leftButtonPos.r, Math.PI / 3);
     // this.drawTri(ctx, this.constant.rightButtonPos.x, this.constant.rightButtonPos.y, this.constant.rightButtonPos.r, 0);
-    this.drawSlideHandle(ctx, this.slideHandleCenterX, this.slideHandleCenterY, this.constant.slideHandlePos.centerx, this.constant.slideHandlePos.centery, this.constant.slideHandlePos.r, this.constant.slideHandlePos.width);
+    // this.drawSlideHandle(ctx, this.slideHandleCenterX, this.slideHandleCenterY, this.constant.slideHandlePos.centerx, this.constant.slideHandlePos.centery, this.constant.slideHandlePos.r, this.constant.slideHandlePos.width);
+    this.drawHandle2d(ctx, this.constant.handle2dStyle.x, this.constant.handle2dStyle.y, this.handlex, this.handley, this.constant.handle2dStyle.circleR, this.constant.handle2dStyle.handleR);
     this.drawAcc(ctx, this.constant.accButtonPos.x, this.constant.accButtonPos.y, this.constant.accButtonPos.r);
     this.drawShoot(ctx, this.constant.shootButtonPos.x, this.constant.shootButtonPos.y, this.constant.shootButtonPos.r);
     this.drawScore(ctx, this.constant.scorePos.x, this.constant.scorePos.y);
@@ -135,8 +136,8 @@ export default class gameInfo{
       this.main.clickShoot = false;
       this.main.clickAcc = false;
       for (let i = 0; i < e.touches.length; ++i){
-        let x = e.touches[i].clientX;
-        let y = e.touches[i].clientY;
+        let x = e.touches[i].clientX * this.constant.dpr;
+        let y = e.touches[i].clientY * this.constant.dpr;
       // if (this.checkinLeft(x, y)){
       //   //this.main.player.turnleft();
       //   this.main.clickLeft = true;
@@ -158,12 +159,20 @@ export default class gameInfo{
           this.accFlag.id = e.touches[i].identifier;
         }
         else {
-          let handleRes = this.checkinHandle(x, y);
-          if(handleRes !== -2) {
-            this.main.slideRatio = handleRes;
+          // let handleRes = this.checkinHandle(x, y);
+          // if(handleRes !== -2) {
+          //   this.main.slideRatio = handleRes;
+          //   this.slideFlag.isTouched = true;
+          //   this.slideFlag.id = e.touches[i].identifier;
+          //   this.slideHandleCenterX = this.constant.slideHandlePos.centerx + handleRes * (this.constant.slideHandlePos.width / 2);
+          // }
+          let handle2dInfo = this.checkinHandle2d(x, y);
+          if(handle2dInfo.dist !== -1) {
+            this.main.playerAngle = handle2dInfo.theta;
             this.slideFlag.isTouched = true;
             this.slideFlag.id = e.touches[i].identifier;
-            this.slideHandleCenterX = this.constant.slideHandlePos.centerx + handleRes * (this.constant.slideHandlePos.width / 2);
+            this.handlex = handle2dInfo.x;
+            this.handley = handle2dInfo.y;
           }
         }
       }
@@ -172,8 +181,8 @@ export default class gameInfo{
     this.constant.canvas.addEventListener('touchmove', ((e) => {
       e.preventDefault();
       for(let i = 0; i < e.changedTouches.length; i += 1) {
-        let x = e.changedTouches[i].clientX;
-        let y = e.changedTouches[i].clientY;
+        let x = e.changedTouches[i].clientX * this.constant.dpr;
+        let y = e.changedTouches[i].clientY * this.constant.dpr;
         let id = e.changedTouches[i].identifier;
         if(id === this.shootFlag.id) {
           if(!(this.checkinShoot(x, y))) {
@@ -190,20 +199,21 @@ export default class gameInfo{
           }
         }
         else if(id === this.slideFlag.id) {
-          let handleRes = this.checkinHandle(x, y);
-          if(handleRes === -2) {
-            let dist = Math.min(this.constant.slideHandlePos.width / 2, Math.abs(this.constant.slideHandlePos.centerx - x));
-            this.main.slideRatio = dist / ((this.constant.slideHandlePos.width / 2) * ((x < this.constant.slideHandlePos.centerx) ? -1 : 1));
-            this.slideHandleCenterX = this.constant.slideHandlePos.centerx + this.main.slideRatio * (this.constant.slideHandlePos.width / 2);
-            // this.main.slideRatio = 0;
-            // this.slideFlag.isTouched = false;
-            // this.slideFlag.id = -1;
-            // this.slideHandleCenterX = this.constant.slideHandlePos.centerx;
-          }
-          else {
-            this.main.slideRatio = handleRes;
-            this.slideHandleCenterX = this.constant.slideHandlePos.centerx + handleRes * (this.constant.slideHandlePos.width / 2);
-          }
+          // let handleRes = this.checkinHandle(x, y);
+          // if(handleRes === -2) {
+          //   let dist = Math.min(this.constant.slideHandlePos.width / 2, Math.abs(this.constant.slideHandlePos.centerx - x));
+          //   this.main.slideRatio = dist / ((this.constant.slideHandlePos.width / 2) * ((x < this.constant.slideHandlePos.centerx) ? -1 : 1));
+          //   this.slideHandleCenterX = this.constant.slideHandlePos.centerx + this.main.slideRatio * (this.constant.slideHandlePos.width / 2);
+          // }
+          // else {
+          //   this.main.slideRatio = handleRes;
+          //   this.slideHandleCenterX = this.constant.slideHandlePos.centerx + handleRes * (this.constant.slideHandlePos.width / 2);
+          // }
+          let handle2dInfo = this.checkinHandle2d(x, y);
+          this.main.playerAngle = handle2dInfo.theta;
+          this.handlex = handle2dInfo.x;
+          this.handley = handle2dInfo.y;
+          console.log(handle2dInfo.theta);
         }
       }
     }).bind(this));
@@ -215,8 +225,8 @@ export default class gameInfo{
       //this.main.clickShoot = false;
       //this.main.clickAcc = false;
       for (let i = 0; i < e.changedTouches.length; ++i) {
-        let x = e.changedTouches[i].clientX;
-        let y = e.changedTouches[i].clientY;
+        let x = e.changedTouches[i].clientX * this.constant.dpr;
+        let y = e.changedTouches[i].clientY * this.constant.dpr;
 // <<<<<<< HEAD
         let id = e.changedTouches[i].identifier;
         // if (this.checkinLeft(x, y)) {
@@ -240,10 +250,14 @@ export default class gameInfo{
             //console.log('Click Acc button');
         }
         else if (id === this.slideFlag.id) {
-          this.main.slideRatio = 0;
+          // this.main.slideRatio = 0;
+          // this.slideFlag.isTouched = false;
+          // this.slideFlag.id = -1;
+          // this.slideHandleCenterX = this.constant.slideHandlePos.centerx;
           this.slideFlag.isTouched = false;
           this.slideFlag.id = -1;
-          this.slideHandleCenterX = this.constant.slideHandlePos.centerx;
+          this.handlex = this.constant.handle2dStyle.x;
+          this.handley = this.constant.handle2dStyle.y;
         }
 // =======
 
@@ -270,6 +284,31 @@ export default class gameInfo{
     }).bind(this));
   }
   
+  checkinHandle2d(x, y) {
+    let cx = this.constant.handle2dStyle.x;
+    let cy = this.constant.handle2dStyle.y;
+    let circleR = this.constant.handle2dStyle.circleR;
+    let handleR = this.constant.handle2dStyle.handleR;
+    let dist = Math.sqrt(Math.pow(x - cx, 2) + Math.pow(y - cy, 2));
+    let deltax = x - cx;
+    let deltay = y - cy;
+    let theta = Math.atan2(deltay, deltax);
+    let margin = this.constant.handle2dStyle.margin;
+    if(dist <= circleR - margin) {
+      return {dist: dist, theta: theta, x: x, y: y};
+    }
+    else if (dist >= circleR - margin && dist <= circleR) {
+      let tx = cx + deltax * (circleR - margin) / dist;
+      let ty = cy + deltay * (circleR - margin) / dist;
+      return {dist: circleR - margin, theta: theta, x: tx, y: ty};
+    }
+    else {
+      let tx = cx + deltax * (circleR - margin) / dist;
+      let ty = cy + deltay * (circleR - margin) / dist;
+      return {dist: -1, theta: theta, x: tx, y: ty};
+    }
+  }
+
   checkinHandle(x, y) {
     let cx = this.constant.slideHandlePos.centerx;
     let cy = this.constant.slideHandlePos.centery;

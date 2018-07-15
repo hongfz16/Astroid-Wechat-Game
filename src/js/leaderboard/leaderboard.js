@@ -22,8 +22,8 @@ export default class LeaderBoard{
     this.main.canvas.addEventListener("touchstart", ((e)=>{
       e.preventDefault();
       if (this.hasTouched === false){
-        let x = e.touches[0].clientX;
-        let y = e.touches[0].clientY;
+        let x = e.touches[0].clientX * this.main.constant.dpr;
+        let y = e.touches[0].clientY * this.main.constant.dpr;
         //console.log("checkBack");
         if (this.checkBack(x, y)){
           setTimeout(this.main.welcome.bind(this.main), 100);

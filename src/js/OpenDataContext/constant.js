@@ -4,6 +4,8 @@ export default class Constant {
     this.canvas = canvas;
     // console.log(canvas);
 
+    this.dpr = wx.getSystemInfoSync().pixelRatio;
+    console.log(this.dpr);
     this.astroidSize = {
       small: 0.04 * canvas.height,
       medium: 0.07 * canvas.height,
@@ -185,14 +187,14 @@ export default class Constant {
       textFont: `${this.canvas.height * 1 / 10}px sans-serif`,
     };
 
-    let pp = Math.floor(this.canvas.height / 60) - 2;
+    let pp = Math.floor(this.canvas.height / (60 * this.dpr)) - 2;
     let wi = this.canvas.width * 2 / 3;
     //leaderboard constants
     this.leaderboard = {
-      perheight: 60,
+      perheight: 60*this.dpr,
       perpage: pp,
       width: wi,
-      blankheight: (this.canvas.height-(pp+2)*60)/2,
+      blankheight: (this.canvas.height - (pp + 2) * (60 * this.dpr))/2,
 
       idWidth: wi / 6,
       nickWidth: wi * 4 / 6,
@@ -203,8 +205,8 @@ export default class Constant {
 
       textFont: `${this.canvas.height / 18}px sans-serif`,
 
-      imageWidth: 50,
-      imageHeight: 50,
+      imageWidth: 50*this.dpr,
+      imageHeight: 50*this.dpr,
     }
   }
 }
