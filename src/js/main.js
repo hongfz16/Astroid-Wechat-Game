@@ -23,8 +23,9 @@ export default class Main {
     this.gameStatus = undefined;
     let width = canvas.width;
     let height = canvas.height;
-    canvas.width = 2 * ((width > height) ? width : height);
-    canvas.height = 2 * ((width < height) ? width : height);
+    let dpr = wx.getSystemInfoSync().pixelRatio;
+    canvas.width = dpr * ((width > height) ? width : height);
+    canvas.height = dpr * ((width < height) ? width : height);
     this.canvas = canvas;
     this.openDataContext = wx.getOpenDataContext();
     this.sharedCanvas = this.openDataContext.canvas;
@@ -297,8 +298,8 @@ export default class Main {
       let itr2 = list2.head;
       let hasCollision = false;
       while (itr2 !== null) {
-        if (Math.abs(itr2.data.getX() - this.player.getX()) > this.canvas.width / 2 ||
-          Math.abs(itr2.data.getY() - this.player.getY()) > this.canvas.height / 2) {
+        if (Math.abs(itr2.data.getX() - this.player.getX()) > this.canvas.width / 2 + itr2.data.getRadius() ||
+          Math.abs(itr2.data.getY() - this.player.getY()) > this.canvas.height / 2 + itr2.data.getRadius()) {
           itr2 = itr2.next;
           continue;
           }
@@ -347,8 +348,8 @@ export default class Main {
       return;
     let itr = list.head;
     while (itr !== null) {
-      if (Math.abs(itr.data.getX() - player.getX()) > this.canvas.width / 2 ||
-          Math.abs(itr.data.getY() - player.getY()) > this.canvas.height / 2)
+      if (Math.abs(itr.data.getX() - player.getX()) > this.canvas.width / 2 + itr.data.getRadius() ||
+          Math.abs(itr.data.getY() - player.getY()) > this.canvas.height / 2 + itr.data.getRadius())
           {
             itr = itr.next;
             continue;
