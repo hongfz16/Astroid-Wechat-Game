@@ -13,11 +13,14 @@ export default class Over {
     this.openDataContext.postMessage({
       type: 'newScore',
       score: this.score,
-    })
+    });
     //console.log(this.score);
     this.openDataContext.postMessage({
       type: 'drawHighest',
       curscore: this.score
+    });
+    this.openDataContext.postMessage({
+      type: 'updateFriends',
     });
     this.currHighest = undefined;
   }
