@@ -20,7 +20,7 @@ export default class Constant {
       strokeSize: 1,
       strokeColor: '#ffffff'
     };
-    this.astroidLimit = 20;
+    this.astroidLimit = 25;
     this.astroidSplitAngle = Math.PI * 3 / 36;
 
     //bullet constants

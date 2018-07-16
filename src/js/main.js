@@ -282,6 +282,8 @@ export default class Main {
     if (this.astroidCount > 0){
       this.astroidCount -= 1;
     }
+    console.log(this.constant.astroidLimit);
+    //console.log(this.astroids.size);
     if (this.astroidCount === 0 && this.astroids.size < this.constant.astroidLimit){
       //console.log("astroidCount = 0");
       let astroid = this.initAstroid(true);
