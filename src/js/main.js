@@ -287,9 +287,27 @@ export default class Main {
   }
 
   canShoot(enemy){
-    return (Math.abs(enemy.getX()-this.player.getX()) < this.canvas.width/2) &&
-           (Math.abs(enemy.getY() - this.player.getY()) < this.canvas.height / 2);
+    let dx = Math.abs(enemy.getX() - this.player.getX());
+    let dy = Math.abs(enemy.getY() - this.player.getY());
+    if (dx > this.constant.gameCor.width / 2)
+      dx = this.constant.gameCor.width - dx;
+    if (dy > this.constant.gameCor.height / 2)
+      dy = this.constant.gameCor.height - dy;
+    return dx < this.canvas.width / 2 &&
+           dy < this.canvas.height / 2;
   }
+
+  inScreen(obj){
+    let dx = Math.abs(obj.getX() - this.player.getX());
+    let dy = Math.abs(obj.getY() - this.player.getY());
+    if (dx > this.constant.gameCor.width / 2)
+      dx = this.constant.gameCor.width - dx;
+    if (dy > this.constant.gameCor.height / 2)
+      dy = this.constant.gameCor.height - dy;
+    return dx < this.canvas.width / 2 + obj.getRadius() &&
+           dy < this.canvas.height / 2 + obj.getRadius();
+  }
+  
 
   checkCollisioninLists(list1, list2, flag = false){
     let itr1 = list1.head;
@@ -298,11 +316,15 @@ export default class Main {
       let itr2 = list2.head;
       let hasCollision = false;
       while (itr2 !== null) {
-        if (Math.abs(itr2.data.getX() - this.player.getX()) > this.canvas.width / 2 + itr2.data.getRadius() ||
-          Math.abs(itr2.data.getY() - this.player.getY()) > this.canvas.height / 2 + itr2.data.getRadius()) {
+        // if (Math.abs(itr2.data.getX() - this.player.getX()) > this.canvas.width / 2 + itr2.data.getRadius() ||
+        //   Math.abs(itr2.data.getY() - this.player.getY()) > this.canvas.height / 2 + itr2.data.getRadius()) {
+        //   itr2 = itr2.next;
+        //   continue;
+        //   }
+        if (this.inScreen(itr2.data) === false){
           itr2 = itr2.next;
           continue;
-          }
+        }
 
         if (itr1.data.checkCollision(this.constant, itr2.data)) {
           let tmpitr = itr1.next;
@@ -348,12 +370,16 @@ export default class Main {
       return;
     let itr = list.head;
     while (itr !== null) {
-      if (Math.abs(itr.data.getX() - player.getX()) > this.canvas.width / 2 + itr.data.getRadius() ||
-          Math.abs(itr.data.getY() - player.getY()) > this.canvas.height / 2 + itr.data.getRadius())
-          {
-            itr = itr.next;
-            continue;
-          }
+      // if (Math.abs(itr.data.getX() - player.getX()) > this.canvas.width / 2 + itr.data.getRadius() ||
+      //     Math.abs(itr.data.getY() - player.getY()) > this.canvas.height / 2 + itr.data.getRadius())
+      //     {
+      //       itr = itr.next;
+      //       continue;
+      //     }
+      if (this.inScreen(itr.data) === false){
+        itr = itr.next;
+        continue;
+      }
       if (player.checkCollision(this.constant, itr.data)){
         player.loseonelife();
         list.delete(itr);
@@ -460,8 +486,6 @@ export default class Main {
       //cnt += 1;
       itr = itr.next;
     }
-    // if (list === this.bullets)
-    //   console.log(cnt);
   }
 
   GameOver() {
