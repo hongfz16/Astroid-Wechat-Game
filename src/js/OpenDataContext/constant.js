@@ -5,7 +5,7 @@ export default class Constant {
     // console.log(canvas);
 
     this.dpr = wx.getSystemInfoSync().pixelRatio;
-    console.log(this.dpr);
+    //console.log(this.dpr);
     this.astroidSize = {
       small: 0.04 * canvas.height,
       medium: 0.07 * canvas.height,
@@ -20,6 +20,7 @@ export default class Constant {
       strokeSize: 1,
       strokeColor: '#ffffff'
     };
+    this.astroidLimit = 20;
     this.astroidSplitAngle = Math.PI * 3 / 36;
 
     //bullet constants

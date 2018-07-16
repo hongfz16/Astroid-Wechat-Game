@@ -2,9 +2,11 @@ import listElement from "./listElement"
 
 export default class LinkedList{
   constructor(){
+    this.size = 0;
     this.head = null;
   }
   push(data){
+    this.size += 1;
     let le = new listElement(data);
     le.next = this.head;
     if (this.head !== null)
@@ -12,6 +14,7 @@ export default class LinkedList{
     this.head = le;
   }
   delete(itr){
+    this.size -= 1;
     if (itr.prev === null){
       this.head = this.head.next;
     } else

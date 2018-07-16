@@ -279,8 +279,10 @@ export default class Main {
     /*-------------------------*/
     /*    random add astroid   */
     //console.log("random add astroid");
-    this.astroidCount -= 1;
-    if (this.astroidCount === 0){
+    if (this.astroidCount > 0){
+      this.astroidCount -= 1;
+    }
+    if (this.astroidCount === 0 && this.astroids.size < this.constant.astroidLimit){
       //console.log("astroidCount = 0");
       let astroid = this.initAstroid(true);
       this.astroids.push(astroid);
@@ -374,12 +376,6 @@ export default class Main {
       return;
     let itr = list.head;
     while (itr !== null) {
-      // if (Math.abs(itr.data.getX() - player.getX()) > this.canvas.width / 2 + itr.data.getRadius() ||
-      //     Math.abs(itr.data.getY() - player.getY()) > this.canvas.height / 2 + itr.data.getRadius())
-      //     {
-      //       itr = itr.next;
-      //       continue;
-      //     }
       if (this.inScreen(itr.data) === false){
         itr = itr.next;
         continue;
