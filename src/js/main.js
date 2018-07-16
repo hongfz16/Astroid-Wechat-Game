@@ -159,12 +159,16 @@ export default class Main {
   getRandompos(){
     let ret = new Point();
     ret.x = Math.random() * this.constant.gameCor.width;
-    while (Math.abs(ret.x-this.player.getX()) < this.canvas.width / 2){
+    let t = Math.abs(ret.x - this.player.getX());
+    while (Math.min(t, this.constant.gameCor.width-t) < this.canvas.width / 2){
       ret.x = Math.random() * this.constant.gameCor.width;
+      t = Math.abs(ret.x - this.player.getX());
     }
     ret.y = Math.random() * this.constant.gameCor.height;
-    while (Math.abs(ret.y - this.player.getY()) < this.canvas.height / 2) {
+    t = Math.abs(ret.y - this.player.getY());
+    while (Math.min(t, this.constant.gameCor.height-t) < this.canvas.height / 2) {
       ret.y = Math.random() * this.constant.gameCor.height;
+      t = Math.abs(ret.y - this.player.getY());
     }
     return ret;
   }
