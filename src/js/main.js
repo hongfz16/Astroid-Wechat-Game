@@ -430,10 +430,10 @@ export default class Main {
   drawBackground(ctx) {
     let x = [];
     let y = [];
-    for(let i = 1; i < this.constant.gameCor.width; i += 100) {
+    for(let i = 1; i < this.constant.gameCor.width; i += this.constant.gameStyle.lineWidth) {
       x.push(i);
     }
-    for (let i = 1; i < this.constant.gameCor.height; i += 100) {
+    for (let i = 1; i < this.constant.gameCor.height; i += this.constant.gameStyle.lineWidth) {
       y.push(i);
     }
     ctx.beginPath();

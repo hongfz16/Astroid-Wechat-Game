@@ -146,7 +146,8 @@ export default class Constant {
     this.gameStyle = {
       background: '#000000',
       backline: 'rgb(50, 50, 50)',
-      lineSize: 1
+      lineSize: 2,
+      lineWidth: canvas.height / 4 
     };
 
     //welcome constants
