@@ -388,8 +388,8 @@ export default class Main {
         if (player.life === 0){
           setTimeout(this.GameOver.bind(this), 100);
           //this.GameOver();
-          break;
         }
+        break;
       }
       itr = itr.next;
     }

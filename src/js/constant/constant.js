@@ -154,7 +154,7 @@ export default class Constant {
       textColor: '#ffffff',
       textAlign: 'center',
       textBaseline: 'middle',
-      textFont: `${this.canvas.height * 1 / 5}px sans-serif`
+      textFont: `bold ${this.canvas.height * 1 / 5}px sans-serif`
     };
     this.startButton = {
       x0: canvas.width * 3 / 10.0,
@@ -180,7 +180,7 @@ export default class Constant {
       textColor: '#ffffff',
       textAlign: 'center',
       textBaseline: 'middle',
-      textFont: `${this.canvas.height * 1 / 10}px kaiti`,
+      textFont: `${this.canvas.height * 1 / 10}px sans-serif`,
     };
 
     //Over constants
@@ -188,7 +188,7 @@ export default class Constant {
       textColor: '#ffffff',
       textAlign: 'center',
       textBaseline: 'middle',
-      textFont: `${this.canvas.height * 1 / 5}px sans-serif`
+      textFont: `bold ${this.canvas.height * 1 / 5}px sans-serif`
     };
     this.oversmallTitle = {
       textColor: '#ffffff',
@@ -220,7 +220,7 @@ export default class Constant {
       textColor: '#ffffff',
       textAlign: 'center',
       textBaseline: 'middle',
-      textFont: `${this.canvas.height * 1 / 10}px kaiti`,
+      textFont: `${this.canvas.height * 1 / 10}px sans-serif`,
     };
 
     let pp = Math.floor(this.canvas.height / (60 * this.dpr)) - 2;

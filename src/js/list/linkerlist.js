@@ -24,5 +24,8 @@ export default class LinkedList{
     if (itr.next !== null){
       itr.next.prev = itr.prev;
     }
+    //itr.destroy();
+    //Destroy(itr);
+    itr = null;
   }
 }
