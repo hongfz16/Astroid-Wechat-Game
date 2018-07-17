@@ -8,6 +8,9 @@ class Point{
   distance(pos){
     return Math.sqrt((this.x-pos.x)*(this.x-pos.x) + (this.y-pos.y)*(this.y-pos.y));
   }
+  sqrDistance(pos){
+    return (this.x - pos.x) * (this.x - pos.x) + (this.y - pos.y) * (this.y - pos.y);
+  }
   rotate(angle = 0) {
     [this.x, this.y] = [this.x * Math.cos(angle) - this.y * Math.sin(angle),
                         this.x * Math.sin(angle) + this.y * Math.cos(angle)];
@@ -55,7 +58,8 @@ class Circle{
       p1.y += constant.gameCor.height;
     else if (p1.y - p0.y > constant.gameCor.height / 2)
       p0.y += constant.gameCor.height;
-    return (p0.distance(p1) < this.radius + cir.radius);
+    //return (p0.distance(p1) < this.radius + cir.radius);
+    return (p0.sqrDistance(p1) < (this.radius + cir.radius) * (this.radius + cir.radius));
   }
 }
 
