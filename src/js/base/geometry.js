@@ -53,7 +53,7 @@ class Circle{
     
     if (p0.y - p1.y > constant.gameCor.height / 2)
       p1.y += constant.gameCor.height;
-    else if (p1.x - p0.x > constant.gameCor.height / 2)
+    else if (p1.y - p0.y > constant.gameCor.height / 2)
       p0.y += constant.gameCor.height;
     return (p0.distance(p1) < this.radius + cir.radius);
   }
