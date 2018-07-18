@@ -1,6 +1,4 @@
 import Sprite from '../base/sprite';
-// import gameCor from '../constant/constant';
-// import enemySize from '../constant/constant';
 import Bullet from '../bullet/bullet';
 import {Point, Vector2d} from '../base/geometry';
 // import enemyShootFrame from '../constant/constant';
