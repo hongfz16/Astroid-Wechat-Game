@@ -25,12 +25,12 @@ export default class Constant {
       strokeSize: 1,
       strokeColor: '#ffffff'
     };
-    this.astroidLimit = 25;
+    this.astroidLimit = 20;
     this.astroidSplitAngle = Math.PI * 3 / 36;
 
     //life constants
-    this.lifeStyle = {
-      radius: 0.04 * canvas.height,
+    this.heartStyle = {
+      radius: 0.03 * canvas.height,
       lineWidth: 1,
       fillStyle: '#ffffff',
       strokeStyle: '#ffffff',

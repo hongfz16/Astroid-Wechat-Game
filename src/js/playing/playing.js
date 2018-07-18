@@ -31,7 +31,7 @@ export default class Playing {
       let enemy = this.initEnemy();
       this.enemys.push(enemy);
     }
-    for (let i = 0; i < 20; ++i) {
+    for (let i = 0; i < 8; ++i) {
       let astroid = this.initAstroid();
       this.astroids.push(astroid);
     }
@@ -42,7 +42,7 @@ export default class Playing {
       }
     }
     {
-      let life = this.initLife(this.canvas.width/2, this.canvas.height/2);
+      let life = this.initLife(this.constant.gameCor.width/2, this.constant.gameCor.height/2);
       this.lifes.push(life);
     }
     this.enemyCount = 1000;

@@ -44,9 +44,9 @@ export default class Astroid extends Sprite {
   drawAstroid(ctx, x, y, r) {
     ctx.beginPath();
     // ctx.moveTo(x + r, y);
-    // let theta = Math.PI / 6;
-    // let delta = Math.PI / 6;
-    // for (let i = 1; i < 12; i += 1) {
+    // let theta = Math.PI / 3;
+    // let delta = Math.PI / 3;
+    // for (let i = 1; i < 6; i += 1) {
     //   ctx.lineTo(x + r * Math.cos(theta), y + r * Math.sin(theta));
     //   theta += delta;
     // }
