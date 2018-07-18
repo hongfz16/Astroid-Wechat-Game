@@ -2,22 +2,26 @@ import Constant from "../constant/constant"
 import Main from "../main"
 
 export default class Over {
-  constructor(main, score) {
+  constructor(main, score, time, mode = 'adventure') {
     this.canvas = main.canvas;
     this.ctx = main.ctx;
     this.main = main;
     this.hasTouched = false;
     this.score = score;
+    this.time = time;
     this.initEvent();
     this.openDataContext = wx.getOpenDataContext();
     this.openDataContext.postMessage({
       type: 'newScore',
       score: this.score,
+      time: this.time
     });
     //console.log(this.score);
     this.openDataContext.postMessage({
       type: 'drawHighest',
-      curscore: this.score
+      curscore: this.score,
+      curtime: this.time,
+      mode: this.mode
     });
     this.openDataContext.postMessage({
       type: 'updateFriends',

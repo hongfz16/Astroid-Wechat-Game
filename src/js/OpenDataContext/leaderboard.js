@@ -6,16 +6,23 @@ export default class LeaderBoard{
     this.usergameDataArray = usergameData;
     this.curpage = 0;
     this.constant = constant;
+    this.mode = 'adventure';
 
     this.userData = [];
     for (let i = 0; i < this.usergameDataArray.length; i+=1){
       let tmp = {};
       this.downloadImage(this.usergameDataArray[i], tmp);
       tmp.nickname = this.usergameDataArray[i].nickname;
-      if (this.usergameDataArray[i].KVDataList[0] === undefined)
-        tmp.score = 0;
-      else
-        tmp.score = parseInt(this.usergameDataArray[i].KVDataList[0].value);
+      tmp.score = 0;
+      tmp.time = 0;
+      let arr = this.usergameDataArray[i].KVDataList;
+      for (let i = 0; i < arr.length; i += 1) {
+        tmp[arr[i].key] = Number(arr[i].value);
+      }
+      // if (this.usergameDataArray[i].KVDataList[0] === undefined)
+      //   tmp.score = 0;
+      // else
+      //   tmp.score = parseInt(this.usergameDataArray[i].KVDataList[0].value);
       this.userData.push(tmp);
     }
 
@@ -42,6 +49,22 @@ export default class LeaderBoard{
       this.curpage -= 1;
   }
 
+  changeMode() {
+    this.curpage = 0;
+    if (this.mode === 'adventure') {
+      this.mode = 'survival';
+      this.userData.sort(function (a, b) {
+        return b.time - a.time;
+      });
+    } else
+    if (this.mode === 'survival'){
+      this.mode = 'adventure';
+      this.userData.sort(function (a, b) {
+        return b.score - a.score;
+      });
+    }
+  }
+
   drawtoCanvas(canvas){
     let ctx = canvas.getContext('2d');
     ctx.clearRect(0, 0, this.constant.canvas.width, this.constant.canvas.height);
@@ -66,9 +89,14 @@ export default class LeaderBoard{
     this.drawLine(x, s, x, t - this.constant.leaderboard.perheight, ctx);
     x += this.constant.leaderboard.nickWidth;
     this.drawLine(x, s, x, t - this.constant.leaderboard.perheight, ctx);
-    this.drawLine(this.constant.canvas.width / 2,
+    this.drawLine(this.constant.canvas.width / 2 - this.constant.leaderboard.width / 6,
                   t - this.constant.leaderboard.perheight,
-                  this.constant.canvas.width / 2,
+                  this.constant.canvas.width / 2 - this.constant.leaderboard.width / 6,
+                  t,
+                  ctx);
+    this.drawLine(this.constant.canvas.width / 2 + this.constant.leaderboard.width / 6,
+                  t - this.constant.leaderboard.perheight,
+                  this.constant.canvas.width / 2 + this.constant.leaderboard.width / 6,
                   t,
                   ctx);
   }
@@ -89,7 +117,7 @@ export default class LeaderBoard{
                   y + this.constant.leaderboard.perheight / 2,
                   ctx);
     x += this.constant.leaderboard.nickWidth;
-    this.drawText("SCORE",
+    this.drawText(this.mode === 'adventure' ? "SCORE" : "TIME",
                   x + this.constant.leaderboard.scoreWidth / 2,
                   y + this.constant.leaderboard.perheight / 2,
                   ctx);
@@ -116,7 +144,7 @@ export default class LeaderBoard{
                     y + this.constant.leaderboard.perheight / 2,
                     ctx);
       x += this.constant.leaderboard.nickWidth;
-      this.drawText(this.userData[index].score,
+      this.drawText(this.mode === 'adventure' ? this.userData[index].score : this.userData[index].time,
                     x + this.constant.leaderboard.scoreWidth / 2,
                     y + this.constant.leaderboard.perheight / 2,
                     ctx);
@@ -125,12 +153,17 @@ export default class LeaderBoard{
     x = (this.constant.canvas.width - this.constant.leaderboard.width) / 2;
     y = this.constant.canvas.height - this.constant.leaderboard.blankheight - this.constant.leaderboard.perheight;
     this.drawText("Prev",
-                  x + this.constant.leaderboard.width / 4,
+                  x + this.constant.leaderboard.width / 6,
                   y + this.constant.leaderboard.perheight / 2,
                   ctx);
-    x += this.constant.leaderboard.width / 2;
+    x += this.constant.leaderboard.width / 3;
+    this.drawText(this.mode === 'adventure' ? "Survival" : "Adventure",
+                  x + this.constant.leaderboard.width / 6,
+                  y + this.constant.leaderboard.perheight / 2,
+                  ctx);
+    x += this.constant.leaderboard.width / 3;
     this.drawText("Next",
-                  x + this.constant.leaderboard.width / 4,
+                  x + this.constant.leaderboard.width / 6,
                   y + this.constant.leaderboard.perheight / 2,
                   ctx);
   }

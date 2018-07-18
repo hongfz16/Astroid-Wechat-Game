@@ -42,6 +42,11 @@ export default class LeaderBoard{
             type: "prevPage",
           });
           //this.hasTouched = true;
+        } else
+        if (this.checkinChangeMode(x, y)) {
+          this.main.openDataContext.postMessage({
+            type: "changeMode",
+          });
         }
       }
     }).bind(this));
@@ -50,15 +55,23 @@ export default class LeaderBoard{
   checkinPrevious(x, y){
     let x0 = (this.main.canvas.width - this.main.constant.leaderboard.width) / 2;
     let y0 = this.main.canvas.height - this.main.constant.leaderboard.blankheight - this.main.constant.leaderboard.perheight;
-    let x1 = this.main.canvas.width / 2;
+    let x1 = this.main.canvas.width / 2 - this.main.constant.leaderboard.width / 6;
     let y1 = y0 + this.main.constant.leaderboard.perheight;
     return (x > x0 && x < x1 && y > y0 && y < y1);
   }
 
   checkinNext(x, y){
-    let x0 = this.main.canvas.width / 2;
+    let x0 = this.main.canvas.width / 2 + this.main.constant.leaderboard.width / 6;
     let y0 = this.main.canvas.height - this.main.constant.leaderboard.blankheight - this.main.constant.leaderboard.perheight;
     let x1 = (this.main.canvas.width + this.main.constant.leaderboard.width) / 2;
+    let y1 = y0 + this.main.constant.leaderboard.perheight;
+    return (x > x0 && x < x1 && y > y0 && y < y1);
+  }
+
+  checkinChangeMode(x, y){
+    let x0 = this.main.canvas.width / 2 - this.main.constant.leaderboard.width / 6;
+    let y0 = this.main.canvas.height - this.main.constant.leaderboard.blankheight - this.main.constant.leaderboard.perheight;
+    let x1 = this.main.canvas.width / 2 + this.main.constant.leaderboard.width / 6;
     let y1 = y0 + this.main.constant.leaderboard.perheight;
     return (x > x0 && x < x1 && y > y0 && y < y1);
   }

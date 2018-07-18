@@ -13,9 +13,9 @@ export default class Constant {
       large: 0.1 * canvas.height
     };
     this.astroidSpeed = {
-      small: 0.02 * canvas.height,
-      medium: 0.015 * canvas.height,
-      large: 0.01 * canvas.height
+      small: 0.009 * canvas.height,
+      medium: 0.007 * canvas.height,
+      large: 0.005 * canvas.height
     };
     this.astroidSpeedRatio = {
       small: 1.25,

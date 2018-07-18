@@ -10,7 +10,7 @@ import Music from "../music/music"
 import gameInfo from "../gameinfo/gameinfo"
 import Life from "../life/Life"
 
-export default class Playing {
+export default class survivalPlaying{
   constructor(constant, main){
     this.main = main;
     this.constant = constant;
@@ -22,36 +22,31 @@ export default class Playing {
     });
 
     this.player = new Player(this.constant, this.constant.gameCor.width / 2, this.constant.gameCor.height / 2, this.constant.playerStyle.r0);
-    this.bullets = new LinkedList();
+    // this.bullets = new LinkedList();
     this.enemys = new LinkedList();
     this.enemysBullet = new LinkedList();
     this.astroids = new LinkedList();
     this.lifes = new LinkedList();
-    for (let i = 0; i < 1; ++i) {
+    for (let i = 0; i < 3; ++i) {
       let enemy = this.initEnemy();
       this.enemys.push(enemy);
     }
-    for (let i = 0; i < 6; ++i) {
+    for (let i = 0; i < 10; ++i) {
       let astroid = this.initAstroid();
       this.astroids.push(astroid);
     }
     {
-      for (let i = 0; i < 3; ++i) {
+      for (let i = 0; i < 5; ++i) {
         let astroid = this.initAstroid(true);
         this.astroids.push(astroid);
       }
     }
-    // {
-    //   let life = this.initLife(this.constant.gameCor.width/2, this.constant.gameCor.height/2);
-    //   this.lifes.push(life);
-    // }
+
     this.enemyCount = 1000;
     this.astroidCount = 1000;
-    this.shootCount = 0;
     this.playerAngle = 0;
-    this.clickShoot = false;
     this.clickAcc = false;
-    this.gameInfo = new gameInfo(this.constant, this);
+    this.gameInfo = new gameInfo(this.constant, this, 'survival');
   }
 
   getRandompos() {
@@ -94,8 +89,22 @@ export default class Playing {
     } else {
       vel = new Vector2d(Math.random() * 2 - 1, Math.random() * 2 - 1);
     }
-    vel.normalize((Math.random() + 0.5) * this.constant.canvas.height / 300);
-    let ret = new Astroid(this.constant, pos.x, pos.y, vel.x, vel.y, "large");
+    let ret;
+    if (Math.random() < 0.33){
+      //vel.normalize((Math.random() + 0.5) * this.constant.canvas.height / 300);
+      vel.normalize(this.constant.astroidSpeed.large);
+      ret = new Astroid(this.constant, pos.x, pos.y, vel.x, vel.y, "large");
+    } else
+    {
+      if (Math.random() < 0.5){
+        vel.normalize(this.constant.astroidSpeed.medium);
+        ret = new Astroid(this.constant, pos.x, pos.y, vel.x, vel.y, "medium");
+      } else
+      {
+        vel.normalize(this.constant.astroidSpeed.small);
+        ret = new Astroid(this.constant, pos.x, pos.y, vel.x, vel.y, "small");
+      }
+    }
     return ret;
   }
 
@@ -110,7 +119,7 @@ export default class Playing {
     this.checkTimer();
     this.checkCollision();
     this.player.update();
-    this.updateList(this.bullets);
+    // this.updateList(this.bullets);
     this.updateList(this.enemysBullet);
     this.updateList(this.enemys);
     this.updateList(this.astroids);
@@ -118,12 +127,12 @@ export default class Playing {
 
   react() {
     this.player.turn(this.playerAngle);
-    if (this.clickShoot && this.shootCount === 0) {
-      let bul = this.player.shoot();
-      this.bullets.push(bul);
-      this.shootCount = 30;
-      this.main.music.playShoot();
-    }
+    // if (this.clickShoot && this.shootCount === 0) {
+    //   let bul = this.player.shoot();
+    //   this.bullets.push(bul);
+    //   this.shootCount = 30;
+    //   this.main.music.playShoot();
+    // }
     if (this.clickAcc) { this.player.accelerate(); }
   }
 
@@ -152,7 +161,7 @@ export default class Playing {
     if (this.shootCount > 0)
       this.shootCount -= 1;
     /* check bullet's life span */
-    this.checkBulletLife(this.bullets);
+    // this.checkBulletLife(this.bullets);
     this.checkBulletLife(this.enemysBullet);
     /*-------------------------*/
     /*    random add enemy    */
@@ -243,7 +252,7 @@ export default class Playing {
             this.gameInfo.scorepp();
             if (itr2.data instanceof Enemy) { //score += 2 if hit enemy
               this.gameInfo.scorepp();
-              if (Math.random() < 0.5 && this.lifes.size < 1){
+              if (Math.random() < 0.5 && this.lifes.size < 1) {
                 let life = this.initLife(itr2.data.getX(), itr2.data.getY());
                 this.lifes.push(life);
               }
@@ -282,8 +291,9 @@ export default class Playing {
         if (itr.data instanceof Life) {
           player.addonelife();
         }
-        else
-        {
+        else {
+          let cur = new Date();
+          this.gameInfo.Time = ((cur - this.gameInfo.startTime)/1000).toFixed(1);
           player.loseonelife();
           if (player.life === 0) {
             setTimeout(this.main.GameOver.bind(this.main), 100);
@@ -298,13 +308,12 @@ export default class Playing {
 
   checkCollision() {
     //bullet and astroid
-    this.checkCollisioninLists(this.bullets, this.astroids, true);
+    // this.checkCollisioninLists(this.bullets, this.astroids, true);
     this.checkCollisioninLists(this.enemysBullet, this.astroids);
     //bullet and enemy
-    this.checkCollisioninLists(this.bullets, this.enemys, true);
+    // this.checkCollisioninLists(this.bullets, this.enemys, true);
     //this.checkCollisioninLists(this.enemysBullet, this.enemys);
     //bullet and player
-    //checkCollisionwithPlayer(this.bullet, this.player);
     this.checkCollisionwithPlayer(this.enemysBullet, this.player);
     //enemy and player
     this.checkCollisionwithPlayer(this.enemys, this.player);
@@ -322,7 +331,7 @@ export default class Playing {
     this.drawBackground(this.ctx);
     this.player.drawtoCanvas(this.ctx, this.player.getX(), this.player.getY());
     this.drawList(this.enemys, this.ctx);
-    this.drawList(this.bullets, this.ctx);
+    // this.drawList(this.bullets, this.ctx);
     this.drawList(this.enemysBullet, this.ctx);
     this.drawList(this.astroids, this.ctx);
     this.drawList(this.lifes, this.ctx);

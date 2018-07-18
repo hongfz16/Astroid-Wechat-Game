@@ -1,9 +1,15 @@
 import Main from '../main'
 
 export default class gameInfo{
-  constructor(constant, mainclass){
+  constructor(constant, mainclass, mode='adventure'){
     this.main = mainclass;
-    this.score = 0;
+    this.mode = mode;
+    if (this.mode === 'adventure') {
+      this.score = 0;
+    } else
+    if (this.mode === 'survival') {
+      this.startTime = new Date();
+    }
     this.constant = constant;
     this.handlex = this.constant.handle2dStyle.x;
     this.handley = this.constant.handle2dStyle.y;
@@ -14,7 +20,11 @@ export default class gameInfo{
   }
 
   scorepp(){
-    this.score += 1;
+    if (this.mode === 'adventure'){
+      this.score += 1;
+    }
+    else
+      console.log("wrong score++");
   }
 
   drawTri(ctx, x, y, r, theta) {
@@ -44,6 +54,15 @@ export default class gameInfo{
     ctx.textAlign = this.constant.scoreStyle.textAlign;
     ctx.textBaseline = this.constant.scoreStyle.textBaseline;
     ctx.fillText(`Score: ${this.score}`, x, y);
+  }
+
+  drawTime(ctx, x, y) {
+    ctx.fillStyle = this.constant.scoreStyle.color;
+    ctx.font = this.constant.scoreStyle.font;
+    ctx.textAlign = this.constant.scoreStyle.textAlign;
+    ctx.textBaseline = this.constant.scoreStyle.textBaseline;
+    let now = new Date();
+    ctx.fillText(`Survive: ${((now-this.startTime)/1000).toFixed(1)}s`, x, y);
   }
 
   drawLife(ctx, x, y){
@@ -96,11 +115,19 @@ export default class gameInfo{
 
   drawShoot(ctx, x, y, r) {
     this.drawCircle(ctx, x, y, r);
-    if (this.main.shootCount !== 0) {
+    if (this.mode === 'adventure' && this.main.shootCount !== 0) {
       ctx.beginPath();
       ctx.fillStyle = 'rgba(255, 255, 255, 100)';
       ctx.moveTo(x, y);
       ctx.arc(x, y, r, Math.PI * 2 * (30 - this.main.shootCount) / 30 - Math.PI / 2, Math.PI * 3 / 2);
+      ctx.closePath();
+      ctx.fill();
+    } else
+    if (this.mode === 'survival') {
+      ctx.beginPath();
+      ctx.fillStyle = 'rgba(255, 255, 255, 100)';
+      ctx.moveTo(x, y);
+      ctx.arc(x, y, r, 0, Math.PI * 2);
       ctx.closePath();
       ctx.fill();
     }
@@ -126,34 +153,30 @@ export default class gameInfo{
     this.drawHandle2d(ctx, this.constant.handle2dStyle.x, this.constant.handle2dStyle.y, this.handlex, this.handley, this.constant.handle2dStyle.circleR, this.constant.handle2dStyle.handleR);
     this.drawAcc(ctx, this.constant.accButtonPos.x, this.constant.accButtonPos.y, this.constant.accButtonPos.r);
     this.drawShoot(ctx, this.constant.shootButtonPos.x, this.constant.shootButtonPos.y, this.constant.shootButtonPos.r);
-    this.drawScore(ctx, this.constant.scorePos.x, this.constant.scorePos.y);
+    if (this.mode === 'adventure') {
+      this.drawScore(ctx, this.constant.scorePos.x, this.constant.scorePos.y);
+    } else
+    if (this.mode === 'survival') {
+      this.drawTime(ctx, this.constant.scorePos.x, this.constant.scorePos.y);
+    }
     this.drawLife(ctx, this.constant.lifePos.x, this.constant.lifePos.y);
   }
 
   initEvent(){
     this.constant.canvas.addEventListener("touchstart",((e)=>{
       e.preventDefault();
-      // this.main.clickLeft = false;
-      // this.main.clickRight = false;
+
       this.main.clickShoot = false;
       this.main.clickAcc = false;
       for (let i = 0; i < e.touches.length; ++i){
         let x = e.touches[i].clientX * this.constant.dpr;
         let y = e.touches[i].clientY * this.constant.dpr;
-      // if (this.checkinLeft(x, y)){
-      //   //this.main.player.turnleft();
-      //   this.main.clickLeft = true;
-      //   //console.log('Click Left button');
-      // } else
-      // if (this.checkinRight(x, y)){
-      //   // this.main.player.turnright();
-      //   this.main.clickRight = true;
-      //   //console.log('Click Right button');
-      // } else
-        if (this.checkinShoot(x, y)){
-          this.main.clickShoot = true;
-          this.shootFlag.isTouched = true;
-          this.shootFlag.id = e.touches[i].identifier;
+        if (this.checkinShoot(x, y)) {
+          if (this.mode === 'adventure') {
+            this.main.clickShoot = true;
+            this.shootFlag.isTouched = true;
+            this.shootFlag.id = e.touches[i].identifier;
+          }
         }
         else if (this.checkinAcc(x, y)){
           this.main.clickAcc = true;
@@ -229,7 +252,7 @@ export default class gameInfo{
       for (let i = 0; i < e.changedTouches.length; ++i) {
         let x = e.changedTouches[i].clientX * this.constant.dpr;
         let y = e.changedTouches[i].clientY * this.constant.dpr;
-// <<<<<<< HEAD
+
         let id = e.changedTouches[i].identifier;
         // if (this.checkinLeft(x, y)) {
         //   this.main.clickLeft = false;
@@ -261,27 +284,6 @@ export default class gameInfo{
           this.handlex = this.constant.handle2dStyle.x;
           this.handley = this.constant.handle2dStyle.y;
         }
-// =======
-
-//         // console.log(i, x, y);
-
-//         if (this.checkinLeft(x, y)) {
-//           this.main.clickLeft = false;
-//           //console.log('Click Left button');
-//         } else
-//           if (this.checkinRight(x, y)) {
-//             this.main.clickRight = false;
-//             //console.log('Click Right button');
-//           } else
-//             if (this.checkinShoot(x, y)) {
-//               this.main.clickShoot = false;
-//               //console.log('Click Shoot button');
-//             } else
-//               if (this.checkinAcc(x, y)) {
-//                 this.main.clickAcc = false;
-//                 //console.log('Click Acc button');
-//               }
-// >>>>>>> scoreboard
       }
     }).bind(this));
   }

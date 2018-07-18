@@ -2,8 +2,12 @@ import Constant from "./constant.js"
 import LeaderBoard from "./leaderboard.js"
 
 let constant;
-let highest;
+let record = {
+  highestScore: 0,
+  longestTime: 0
+};
 let friends;
+let mode = 'adventure';
 function drawRoundRect(x0, y0, x1, y1, r, ctx) {
   ctx.strokeStyle = constant.startButton.strokeColor;
   ctx.lineWidth = constant.startButton.strokeSize;
@@ -24,25 +28,45 @@ function drawText(data, x, y, textColor, textAlign, textBaseline, textFont, ctx)
   ctx.fillText(data, x, y);
 }
 
-function render(canvas, highestScore, curscore){
+function render(canvas, record, curscore, curtime){
   let ctx = canvas.getContext('2d');
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  drawText(`Score: ${curscore}`,
-                canvas.width / 2,
-                canvas.height / 4,
-                constant.overTitle.textColor,
-                constant.overTitle.textAlign,
-                constant.overTitle.textBaseline,
-                constant.overTitle.textFont,
-                ctx);
-  drawText(`Highest Score: ` + highestScore,
-                canvas.width / 2,
-                canvas.height * 2 / 5,
-                constant.oversmallTitle.textColor,
-                constant.oversmallTitle.textAlign,
-                constant.oversmallTitle.textBaseline,
-                constant.oversmallTitle.textFont,
-                ctx);
+  if (mode === 'adventure') {
+    drawText(`Score: ${curscore}`,
+                  canvas.width / 2,
+                  canvas.height / 4,
+                  constant.overTitle.textColor,
+                  constant.overTitle.textAlign,
+                  constant.overTitle.textBaseline,
+                  constant.overTitle.textFont,
+                  ctx);
+    drawText(`Highest Score: ` + record.highestScore,
+                  canvas.width / 2,
+                  canvas.height * 2 / 5,
+                  constant.oversmallTitle.textColor,
+                  constant.oversmallTitle.textAlign,
+                  constant.oversmallTitle.textBaseline,
+                  constant.oversmallTitle.textFont,
+                  ctx);
+  } else
+  {
+    drawText(`Survive: ${curtime}s`,
+             canvas.width / 2,
+             canvas.height / 4,
+             constant.overTitle.textColor,
+             constant.overTitle.textAlign,
+             constant.overTitle.textBaseline,
+             constant.overTitle.textFont,
+             ctx);
+    drawText(`Longest Time: ` + record.longestTime,
+             canvas.width / 2,
+             canvas.height * 2 / 5,
+             constant.oversmallTitle.textColor,
+             constant.oversmallTitle.textAlign,
+             constant.oversmallTitle.textBaseline,
+             constant.oversmallTitle.textFont,
+             ctx);
+  }
   drawRoundRect(constant.restartButton.x0,
                      constant.restartButton.y0,
                      constant.restartButton.x1,
@@ -79,17 +103,22 @@ wx.onMessage(data => {
     let sharedCanvas = wx.getSharedCanvas();
     constant = new Constant(sharedCanvas);
 
-    let keys = ['highestScore'];
+    let keys = ['highestScore', 'longestTime'];
     wx.getUserCloudStorage({
       keyList: keys,
       success: res => {
-        if (res.KVDataList.length === 0) {
-          highest = 0;
+        console.log(res.KVDataList);
+        // if (res.KVDataList.length === 0) {
+        //   highest = 0;
+        // }
+        // else
+        // {
+        //   highest = parseInt(res.KVDataList[0].value);
+        // }
+        for (let i = 0; i < res.KVDataList.length; i += 1) {
+          record[res.KVDataList[i].key] = Number(res.KVDataList[i].value);
         }
-        else
-        {
-          highest = parseInt(res.KVDataList[0].value);
-        }
+        console.log(record);
       },
       fail() {
         console.log('Fail to get user cloud storage');
@@ -98,16 +127,29 @@ wx.onMessage(data => {
   } else
   if (data.type === 'drawHighest') {
     //let keys = ['highestScore'];
+    mode = data.mode;
     let sharedCanvas = wx.getSharedCanvas();
-    render(sharedCanvas, highest, data.curscore);
+    render(sharedCanvas, record, data.curscore, data.curtime);
   }
   else
   if (data.type === 'newScore') {
-    //console.log(data);
-    if (highest < data.score){
-      highest = data.score;
+    console.log(data);
+    if (record.longestTime < Number(data.time)){
+      record.longestTime = Number(data.time);
       wx.setUserCloudStorage({
-        KVDataList: [{ key: 'highestScore', value: `${data.score}` }],
+        KVDataList: [{ key: 'longestTime', value: data.time }],
+        success: res => {
+          console.log(res);
+        },
+        fail: res => {
+          console.log(res);
+        }
+      });
+    }
+    if (record.highestScore < Number(data.score)) {
+      record.highestScore = Number(data.score);
+      wx.setUserCloudStorage({
+        KVDataList: [{ key: 'highestScore', value: data.score }],
         success: res => {
           console.log(res);
         },
@@ -119,7 +161,7 @@ wx.onMessage(data => {
   } else
   if (data.type === 'updateFriends') {
     wx.getFriendCloudStorage({
-      keyList: ['highestScore'],
+      keyList: ['highestScore', 'longestTime'],
       success: res => {
         console.log(res.data);
         friends = new LeaderBoard(res.data, constant);
@@ -149,6 +191,13 @@ wx.onMessage(data => {
     if (friends !== undefined){
       console.log("prevPage");
       friends.pageminus();
+      friends.drawtoCanvas(sharedCanvas);
+    }
+  } else
+  if (data.type === 'changeMode') {
+    if (friends !== undefined) {
+      console.log("changeMode");
+      friends.changeMode();
       friends.drawtoCanvas(sharedCanvas);
     }
   }
