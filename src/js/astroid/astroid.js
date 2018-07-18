@@ -17,6 +17,7 @@ export default class Astroid extends Sprite {
     this.image = new Image();
     this.image.src = 'pics/astroid.png';
     this.rotateCounter = 0;
+    this.rotateCounterLife = 1600 + Math.random() * 400;
   }
 
   update() {
@@ -59,8 +60,8 @@ export default class Astroid extends Sprite {
     // ctx.lineWidth = this.constant.astroidStyle.strokeSize;
     // ctx.stroke();
     this.rotateCounter += 1;
-    this.rotateCounter %= 1600;
-    let theta = (this.rotateCounter / 1600) * Math.PI * 2;
+    this.rotateCounter %= this.rotateCounterLife;
+    let theta = (this.rotateCounter / this.rotateCounterLife) * Math.PI * 2;
     ctx.translate(x, y);
     ctx.rotate(theta);
     ctx.drawImage(this.image, -r, -r, 2 * r, 2 * r);

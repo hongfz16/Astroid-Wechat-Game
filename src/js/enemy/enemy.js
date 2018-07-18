@@ -15,6 +15,8 @@ export default class Enemy extends Sprite {
     this.constant = constant;
     this.setVel();
     this.velTimer = Math.random() * this.constant.enemyVelTimer;
+    this.image = new Image();
+    this.image.src = 'pics/enemy.png';
   }
 
   setVel() {
@@ -62,23 +64,24 @@ export default class Enemy extends Sprite {
   }
 
   drawEnemy(ctx, x, y, r) {
-    let theta = Math.PI / 12;
-    ctx.strokeStyle = this.constant.enemyStyle.strokeColor;
-    ctx.lineWidth = this.constant.enemyStyle.strokeSize;
-    ctx.beginPath();
-    // ctx.moveTo(x - 2 * r, y + r);
-    // ctx.arc(x, y + r, 2 * r, Math.PI, Math.PI * 2);
-    ctx.arc(x, y + r, 2 * r, Math.PI + theta, Math.PI * 2 - theta);
-    ctx.moveTo(x - r * 2 * (Math.cos(theta) + Math.sin(theta)), y + r);
-    ctx.arc(x - r * 2 * Math.cos(theta), y + r, r * 2 * Math.sin(theta), Math.PI, Math.PI * 3 / 2);
-    ctx.arc(x + r * 2 * Math.cos(theta), y + r, r * 2 * Math.sin(theta), Math.PI * 3 / 2, Math.PI * 2);
-    ctx.moveTo(x - r * 2 * Math.cos(theta), y + r - r * 2 * Math.sin(theta));
-    ctx.lineTo(x + r * 2 * Math.cos(theta), y + r - r * 2 * Math.sin(theta));
-    // ctx.stroke();
+    // let theta = Math.PI / 12;
+    // ctx.strokeStyle = this.constant.enemyStyle.strokeColor;
+    // ctx.lineWidth = this.constant.enemyStyle.strokeSize;
     // ctx.beginPath();
-    ctx.moveTo(x - r * 2 * (Math.cos(theta) + Math.sin(theta)), y + r);
-    ctx.lineTo(x + r * 2 * (Math.cos(theta) + Math.sin(theta)), y + r);
-    ctx.stroke();
+    // // ctx.moveTo(x - 2 * r, y + r);
+    // // ctx.arc(x, y + r, 2 * r, Math.PI, Math.PI * 2);
+    // ctx.arc(x, y + r, 2 * r, Math.PI + theta, Math.PI * 2 - theta);
+    // ctx.moveTo(x - r * 2 * (Math.cos(theta) + Math.sin(theta)), y + r);
+    // ctx.arc(x - r * 2 * Math.cos(theta), y + r, r * 2 * Math.sin(theta), Math.PI, Math.PI * 3 / 2);
+    // ctx.arc(x + r * 2 * Math.cos(theta), y + r, r * 2 * Math.sin(theta), Math.PI * 3 / 2, Math.PI * 2);
+    // ctx.moveTo(x - r * 2 * Math.cos(theta), y + r - r * 2 * Math.sin(theta));
+    // ctx.lineTo(x + r * 2 * Math.cos(theta), y + r - r * 2 * Math.sin(theta));
+    // // ctx.stroke();
+    // // ctx.beginPath();
+    // ctx.moveTo(x - r * 2 * (Math.cos(theta) + Math.sin(theta)), y + r);
+    // ctx.lineTo(x + r * 2 * (Math.cos(theta) + Math.sin(theta)), y + r);
+    // ctx.stroke();
+    ctx.drawImage(this.image, x - (3 * r / 2), y - r, 3 * r, 2 * r);
   }
 
   drawtoCanvas(ctx, px, py) {

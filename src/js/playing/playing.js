@@ -243,7 +243,7 @@ export default class Playing {
             this.gameInfo.scorepp();
             if (itr2.data instanceof Enemy) { //score += 2 if hit enemy
               this.gameInfo.scorepp();
-              if (Math.random() < 1 && this.lifes.size < 1){
+              if (Math.random() < 0.5 && this.lifes.size < 1){
                 let life = this.initLife(itr2.data.getX(), itr2.data.getY());
                 this.lifes.push(life);
               }

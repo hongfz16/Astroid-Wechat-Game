@@ -21,12 +21,42 @@ export default class Player extends Sprite{
     this.constant = constant;
 
     let cor = this.getCor();
-    this.smallCircle = new Circle(cor.p[1].x, cor.p[1].y, cor.r1);
+    this.smallCircle = new Circle(cor.p[1].x, cor.p[1].y, cor.r0);
+
+    this.image_notail = new Image();
+    this.image_notail.src = 'pics/newrocket_notail.png';
+    this.image_withtail = new Image();
+    this.image_withtail.src = 'pics/newrocket.png';
   }
 
   drawtoCanvas(ctx){
+
     let cor = this.getCor(true);
+    let image = this.image_notail;
+    if(this.isboosting) {
+      image = this.image_withtail;
+    }
     if (this.immortalCount === 0 || (this.immortalCount%30)<20){
+
+      let r = this.constant.playerStyle.r0;
+
+      ctx.translate(this.constant.canvas.width / 2, this.constant.canvas.height / 2);
+      ctx.rotate(this.angle + Math.PI / 2);
+      ctx.drawImage(image, -r * 2, -r * 2.8, this.constant.playerStyle.r0 * 4, this.constant.playerStyle.r0 * 6);
+      ctx.rotate(-this.angle - Math.PI / 2);
+      ctx.translate(-this.constant.canvas.width / 2, -this.constant.canvas.height / 2);
+
+      // ctx.beginPath();
+      // ctx.arc(canvas.width / 2, canvas.height / 2, cor.r0, 0, Math.PI * 2);
+      // ctx.strokeStyle = '#ffffff';
+      // ctx.lineWidth = 1;
+      // ctx.stroke();
+
+      // ctx.beginPath();
+      // ctx.arc(cor.p[1].x, cor.p[1].y, cor.r0, 0, Math.PI * 2);
+      // ctx.strokeStyle = '#ffffff';
+      // ctx.lineWidth = 1;
+      // ctx.stroke();
 
       // for (let i = 0; i <= 9; ++i) {
       //   cor.p[i].x -= this.constant.gameCor.width;
@@ -66,7 +96,7 @@ export default class Player extends Sprite{
       // for (let i = 0; i <= 9; ++i) {
       //   cor.p[i].x += this.constant.gameCor.width;
       // }
-      this.drawtoCanvasOneCorner(cor, ctx);
+      // this.drawtoCanvasOneCorner(cor, ctx);
     }
   }
 
@@ -150,7 +180,7 @@ export default class Player extends Sprite{
 
   update(){
     let cor = this.getCor();
-    this.smallCircle = new Circle(cor.p[1].x, cor.p[1].y, cor.r1);
+    this.smallCircle = new Circle(cor.p[1].x, cor.p[1].y, cor.r0);
     if (this.immortalCount > 0)
       this.immortalCount -= 1;
     let posx = this.getX() + this.vel.x;
