@@ -24,6 +24,14 @@ export default class Constant {
     this.astroidLimit = 25;
     this.astroidSplitAngle = Math.PI * 3 / 36;
 
+    //life constants
+    this.lifeStyle = {
+      radius: 0.04 * canvas.height,
+      lineWidth: 1,
+      fillStyle: '#ffffff',
+      strokeStyle: '#ffffff',
+    }
+
     //bullet constants
     this.bulletStyle = {
       strokeSize: 1,
@@ -61,6 +69,16 @@ export default class Constant {
     };
 
     //gameinfo constants
+    this.lifePos = {
+      x: canvas.width * 0.02,
+      y: canvas.height * 0.11
+    };
+    this.lifeStyle = {
+      textAlign: 'left',
+      textBaseline: 'middle',
+      font: `${this.canvas.height * 0.05}px sans-serif`,
+      color: '#ffffff'
+    }
     this.scorePos = {
       x: canvas.width * 0.02,
       y: canvas.height * 0.05
@@ -247,8 +265,3 @@ export default class Constant {
     }
   }
 }
-
-// export {gameCor, gameStyle, astroidStyle, astroidSpeed, astroidSplitAngle, astroidSize, 
-//         bulletStyle, bulletLife, bulletSpeed, bulletRadius, enemySize, enemyShootFrames,
-//         enemyStyle, turnAngle, playerStyle, scorePos, leftButtonPos, rightButtonPos,
-//         accButtonPos, shootButtonPos, buttonStyle}

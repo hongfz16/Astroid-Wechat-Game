@@ -8,6 +8,7 @@ import Enemy from '../enemy/enemy.js'
 import { Point, Circle, Vector2d } from "../base/geometry"
 import Music from "../music/music"
 import gameInfo from "../gameinfo/gameinfo"
+import Life from "../life/Life"
 
 export default class Playing {
   constructor(constant, main){
@@ -25,6 +26,7 @@ export default class Playing {
     this.enemys = new LinkedList();
     this.enemysBullet = new LinkedList();
     this.astroids = new LinkedList();
+    this.lifes = new LinkedList();
     for (let i = 0; i < 1; ++i) {
       let enemy = this.initEnemy();
       this.enemys.push(enemy);
@@ -39,11 +41,13 @@ export default class Playing {
         this.astroids.push(astroid);
       }
     }
+    {
+      let life = this.initLife(this.canvas.width/2, this.canvas.height/2);
+      this.lifes.push(life);
+    }
     this.enemyCount = 1000;
     this.astroidCount = 1000;
     this.shootCount = 0;
-    // this.clickLeft = false;
-    // this.clickRight = false;
     this.playerAngle = 0;
     this.clickShoot = false;
     this.clickAcc = false;
@@ -92,6 +96,11 @@ export default class Playing {
     }
     vel.normalize((Math.random() + 0.5) * this.constant.canvas.height / 300);
     let ret = new Astroid(this.constant, pos.x, pos.y, vel.x, vel.y, "large");
+    return ret;
+  }
+
+  initLife(x, y){
+    let ret = new Life(this.constant, this, x, y, this.constant.radius);
     return ret;
   }
 
@@ -313,8 +322,6 @@ export default class Playing {
 
   render() {
     //clear all contexts
-    // console.log(this.player.getX(),this.player.getY());
-    // console.log(this.constant.gameCor.width,this.constant.gameCor.height);
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.ctx.fillStyle = this.constant.gameStyle.background;
     this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
@@ -324,6 +331,7 @@ export default class Playing {
     this.drawList(this.bullets, this.ctx);
     this.drawList(this.enemysBullet, this.ctx);
     this.drawList(this.astroids, this.ctx);
+    this.drawList(this.lifes, this.ctx);
     this.gameInfo.drawtoCanvas(this.ctx);
   }
 

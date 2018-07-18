@@ -9,7 +9,7 @@ import Bullet from "../bullet/bullet.js"
 import { Point, Circle, Vector2d } from "../base/geometry.js"
 
 export default class Player extends Sprite{
-  constructor(constant, x = 0, y = 0, r = 5, angle = 0, life = 1){
+  constructor(constant, x = 0, y = 0, r = 5, angle = 0, life = 10){
     super(x, y, r);
     this.vel = new Vector2d();
     this.acc = new Vector2d();
@@ -213,6 +213,10 @@ export default class Player extends Sprite{
     this.life -= 1;
     this.immortalCount = 120;
     this.circle = new Circle(this.constant.gameCor.width / 2, this.constant.gameCor.height / 2, this.constant.playerStyle.r0);
+    this.vel = new Vector2d();
+    this.acc = new Vector2d();
+    this.angle = 0;
+    this.angleDelta = 0;
   }
 
   checkCollision(constant, sprite){

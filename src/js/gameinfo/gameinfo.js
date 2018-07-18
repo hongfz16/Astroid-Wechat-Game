@@ -48,6 +48,14 @@ export default class gameInfo{
     ctx.fillText(`Score: ${this.score}`, x, y);
   }
 
+  drawLife(ctx, x, y){
+    ctx.fillStyle = this.constant.lifeStyle.color;
+    ctx.font = this.constant.lifeStyle.font;
+    ctx.textAlign = this.constant.lifeStyle.textAlign;
+    ctx.textBaseline = this.constant.lifeStyle.textBaseline;
+    ctx.fillText(`Life: ${this.main.player.life}`, x, y);
+  }
+
   drawSlideHandle(ctx, circlex, circley, handlex, handley, r, handlewidth) {
     ctx.beginPath();
     ctx.moveTo(handlex - 0.5 * handlewidth, handley - r);
@@ -121,6 +129,7 @@ export default class gameInfo{
     this.drawAcc(ctx, this.constant.accButtonPos.x, this.constant.accButtonPos.y, this.constant.accButtonPos.r);
     this.drawShoot(ctx, this.constant.shootButtonPos.x, this.constant.shootButtonPos.y, this.constant.shootButtonPos.r);
     this.drawScore(ctx, this.constant.scorePos.x, this.constant.scorePos.y);
+    this.drawLife(ctx, this.constant.lifePos.x, this.constant.lifePos.y);
   }
 
   initEvent(){
