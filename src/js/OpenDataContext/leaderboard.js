@@ -17,7 +17,13 @@ export default class LeaderBoard{
       tmp.time = 0;
       let arr = this.usergameDataArray[i].KVDataList;
       for (let i = 0; i < arr.length; i += 1) {
-        tmp[arr[i].key] = Number(arr[i].value);
+        if (arr[i].key === 'highestScore') {
+          tmp.score = Number(arr[i].value);
+        }
+        else
+        if (arr[i].key === 'longestTime'){
+          tmp.time = Number(arr[i].value);
+        }
       }
       // if (this.usergameDataArray[i].KVDataList[0] === undefined)
       //   tmp.score = 0;
