@@ -2,12 +2,12 @@ import Constant from "../constant/constant"
 import Main from "../main"
 
 export default class Over {
-  constructor(main) {
+  constructor(main, score) {
     this.canvas = main.canvas;
     this.ctx = main.ctx;
     this.main = main;
     this.hasTouched = false;
-    this.score = main.gameInfo.score;
+    this.score = score;
     this.initEvent();
     this.openDataContext = wx.getOpenDataContext();
     this.openDataContext.postMessage({

@@ -12,7 +12,10 @@ export default class LeaderBoard{
       let tmp = {};
       this.downloadImage(this.usergameDataArray[i], tmp);
       tmp.nickname = this.usergameDataArray[i].nickname;
-      tmp.score = parseInt(this.usergameDataArray[i].KVDataList[0].value);
+      if (this.usergameDataArray[i].KVDataList[0] === undefined)
+        tmp.score = 0;
+      else
+        tmp.score = parseInt(this.usergameDataArray[i].KVDataList[0].value);
       this.userData.push(tmp);
     }
 

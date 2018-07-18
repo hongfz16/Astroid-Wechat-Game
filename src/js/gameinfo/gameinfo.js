@@ -1,9 +1,4 @@
 import Main from '../main'
-// import leftButtonPos from '../constant/constant'
-// import rightButtonPos from '../constant/constant'
-// import accButtonPos from '../constant/constant'
-// import shootButtonPos from '../constant/constant'
-// import buttonStyle from '../constant/constant'
 
 export default class gameInfo{
   constructor(constant, mainclass){
@@ -84,7 +79,7 @@ export default class gameInfo{
     this.drawCircle(ctx, x, y, r);
     ctx.beginPath();
     ctx.moveTo(x + this.constant.accButtonDesign[0][0], y + this.constant.accButtonDesign[0][1]);
-    for(let i = 1; i < this.constant.accButtonDesign.length; i += 1) {
+    for (let i = 1; i < this.constant.accButtonDesign.length; i += 1) {
       ctx.lineTo(x + this.constant.accButtonDesign[i][0], y + this.constant.accButtonDesign[i][1]);
     }
     ctx.closePath();
@@ -95,7 +90,7 @@ export default class gameInfo{
 
   drawShoot(ctx, x, y, r) {
     this.drawCircle(ctx, x, y, r);
-    if(this.main.shootCount !== 0) {
+    if (this.main.shootCount !== 0) {
       ctx.beginPath();
       ctx.fillStyle = 'rgba(255, 255, 255, 100)';
       ctx.moveTo(x, y);
