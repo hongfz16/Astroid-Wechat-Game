@@ -1,6 +1,3 @@
-// import Circle from "./geometry";
-// import Point from "./geometry";
-// import Vector2d from "./geometry";
 import {Circle, Point, Vector2d} from './geometry'
 import Constant from '../constant/constant.js'
 

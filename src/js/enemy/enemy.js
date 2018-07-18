@@ -1,10 +1,6 @@
 import Sprite from '../base/sprite';
 import Bullet from '../bullet/bullet';
 import {Point, Vector2d} from '../base/geometry';
-// import enemyShootFrame from '../constant/constant';
-// import enemyStyle from '../constant/constant';
-// import bulletSpeed from '../constant/constant';
-// import bulletRadius from '../constant/constant';
 
 export default class Enemy extends Sprite {
   constructor(constant, x = 0, y = 0, type = 'large') {

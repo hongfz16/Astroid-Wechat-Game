@@ -31,7 +31,7 @@ export default class Playing {
       let enemy = this.initEnemy();
       this.enemys.push(enemy);
     }
-    for (let i = 0; i < 8; ++i) {
+    for (let i = 0; i < 6; ++i) {
       let astroid = this.initAstroid();
       this.astroids.push(astroid);
     }
@@ -41,10 +41,10 @@ export default class Playing {
         this.astroids.push(astroid);
       }
     }
-    {
-      let life = this.initLife(this.constant.gameCor.width/2, this.constant.gameCor.height/2);
-      this.lifes.push(life);
-    }
+    // {
+    //   let life = this.initLife(this.constant.gameCor.width/2, this.constant.gameCor.height/2);
+    //   this.lifes.push(life);
+    // }
     this.enemyCount = 1000;
     this.astroidCount = 1000;
     this.shootCount = 0;
@@ -100,7 +100,7 @@ export default class Playing {
   }
 
   initLife(x, y){
-    let ret = new Life(this.constant, this, x, y, this.constant.radius);
+    let ret = new Life(this.constant, this, x, y, this.constant.heartStyle.radius);
     return ret;
   }
 
@@ -182,9 +182,7 @@ export default class Playing {
       this.astroidCount -= 1;
     }
     // console.log(this.astroidCount);
-    //console.log(this.astroids.size);
     if (this.astroidCount === 0 && this.astroids.size < this.constant.astroidLimit) {
-      //console.log("astroidCount = 0");
       let astroid = this.initAstroid(true);
       this.astroids.push(astroid);
       this.astroidCount = Math.max(100, Math.floor(1000 - this.main.aniId / 10));
@@ -245,6 +243,10 @@ export default class Playing {
             this.gameInfo.scorepp();
             if (itr2.data instanceof Enemy) { //score += 2 if hit enemy
               this.gameInfo.scorepp();
+              if (Math.random() < 1 && this.lifes.size < 1){
+                let life = this.initLife(itr2.data.getX(), itr2.data.getY());
+                this.lifes.push(life);
+              }
             }
             this.main.music.playExplosion();
           }
@@ -277,11 +279,17 @@ export default class Playing {
         continue;
       }
       if (player.checkCollision(this.constant, itr.data)) {
-        player.loseonelife();
-        list.delete(itr);
-        if (player.life === 0) {
-          setTimeout(this.main.GameOver.bind(this.main), 100);
+        if (itr.data instanceof Life) {
+          player.addonelife();
         }
+        else
+        {
+          player.loseonelife();
+          if (player.life === 0) {
+            setTimeout(this.main.GameOver.bind(this.main), 100);
+          }
+        }
+        list.delete(itr);
         break;
       }
       itr = itr.next;
@@ -318,6 +326,8 @@ export default class Playing {
     this.checkCollisionwithPlayer(this.enemys, this.player);
     //astroid and player
     this.checkCollisionwithPlayer(this.astroids, this.player);
+    //life and player
+    this.checkCollisionwithPlayer(this.lifes, this.player);
   }
 
   render() {

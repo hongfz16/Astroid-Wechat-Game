@@ -7,11 +7,27 @@ export default class Life extends Sprite{
     this.main = main;
   }
 
-  drawtoCanvas(ctx, x, y){
+  drawtoCanvas(ctx, px, py){
     //console.log(x+' '+y);
     //console.log(this.constant.heartStyle.radius / 16);
-    let newCor = this.corTrans(this.getX(), this.getY(), x, y, this.constant.gameCor.width, this.constant.gameCor.height, this.constant.canvas.width, this.constant.canvas.height);
-    this.drawHeart(ctx, newCor.x, newCor.y, this.constant.heartStyle.radius/16);
+    let x = this.getX();
+    let y = this.getY();
+    let x2 = x + this.constant.gameCor.width;
+    let y2 = y + this.constant.gameCor.height;
+    let x3 = x - this.constant.gameCor.width;
+    let y3 = y - this.constant.gameCor.height;
+    let arrx = [x, x2, x3];
+    let arry = [y, y2, y3];
+    for (let i = 0; i < 3; i += 1) {
+      for (let j = 0; j < 3; j += 1) {
+        let newCor = this.corTrans(arrx[i], arry[j], px, py, 
+                                   this.constant.gameCor.width, this.constant.gameCor.height,
+                                   this.constant.canvas.width, this.constant.canvas.height);
+        this.drawHeart(ctx, newCor.x, newCor.y, this.constant.heartStyle.radius / 16);
+      }
+    }
+    // let newCor = this.corTrans(this.getX(), this.getY(), x, y, this.constant.gameCor.width, this.constant.gameCor.height, this.constant.canvas.width, this.constant.canvas.height);
+    // this.drawHeart(ctx, newCor.x, newCor.y, this.constant.heartStyle.radius/16*0.8);
   }
 
   drawHeart(ctx, x, y, k){

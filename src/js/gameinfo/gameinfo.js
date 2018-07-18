@@ -5,8 +5,6 @@ export default class gameInfo{
     this.main = mainclass;
     this.score = 0;
     this.constant = constant;
-    // this.slideHandleCenterX = this.constant.slideHandlePos.centerx;
-    // this.slideHandleCenterY = this.constant.slideHandlePos.centery;
     this.handlex = this.constant.handle2dStyle.x;
     this.handley = this.constant.handle2dStyle.y;
     this.initEvent();
