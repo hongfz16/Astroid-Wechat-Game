@@ -14,6 +14,9 @@ export default class Astroid extends Sprite {
     this.type = type;
     this.setVelocity(velx, vely);
     this.constant = constant;
+    this.image = new Image();
+    this.image.src = 'pics/astroid.png';
+    this.rotateCounter = 0;
   }
 
   update() {
@@ -42,19 +45,27 @@ export default class Astroid extends Sprite {
   }
 
   drawAstroid(ctx, x, y, r) {
-    ctx.beginPath();
-    // ctx.moveTo(x + r, y);
-    // let theta = Math.PI / 3;
-    // let delta = Math.PI / 3;
-    // for (let i = 1; i < 6; i += 1) {
-    //   ctx.lineTo(x + r * Math.cos(theta), y + r * Math.sin(theta));
-    //   theta += delta;
-    // }
-    // ctx.closePath();
-    ctx.arc(x, y, r, 0, Math.PI * 2);
-    ctx.strokeStyle = this.constant.astroidStyle.strokeColor;
-    ctx.lineWidth = this.constant.astroidStyle.strokeSize;
-    ctx.stroke();
+    // ctx.beginPath();
+    // // ctx.moveTo(x + r, y);
+    // // let theta = Math.PI / 3;
+    // // let delta = Math.PI / 3;
+    // // for (let i = 1; i < 6; i += 1) {
+    // //   ctx.lineTo(x + r * Math.cos(theta), y + r * Math.sin(theta));
+    // //   theta += delta;
+    // // }
+    // // ctx.closePath();
+    // ctx.arc(x, y, r, 0, Math.PI * 2);
+    // ctx.strokeStyle = this.constant.astroidStyle.strokeColor;
+    // ctx.lineWidth = this.constant.astroidStyle.strokeSize;
+    // ctx.stroke();
+    this.rotateCounter += 1;
+    this.rotateCounter %= 1600;
+    let theta = (this.rotateCounter / 1600) * Math.PI * 2;
+    ctx.translate(x, y);
+    ctx.rotate(theta);
+    ctx.drawImage(this.image, -r, -r, 2 * r, 2 * r);
+    ctx.rotate(-theta);
+    ctx.translate(-x, -y);
   }
 
   drawtoCanvas(ctx, px, py) {
