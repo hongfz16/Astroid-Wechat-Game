@@ -295,10 +295,26 @@ export default class Playing {
     this.checkCollisionwithPlayer(this.astroids, this.player);
   }
 
+  checkCollision() {
+    //bullet and astroid
+    this.checkCollisioninLists(this.bullets, this.astroids, true);
+    this.checkCollisioninLists(this.enemysBullet, this.astroids);
+    //bullet and enemy
+    this.checkCollisioninLists(this.bullets, this.enemys, true);
+    //this.checkCollisioninLists(this.enemysBullet, this.enemys);
+    //bullet and player
+    //checkCollisionwithPlayer(this.bullet, this.player);
+    this.checkCollisionwithPlayer(this.enemysBullet, this.player);
+    //enemy and player
+    this.checkCollisionwithPlayer(this.enemys, this.player);
+    //astroid and player
+    this.checkCollisionwithPlayer(this.astroids, this.player);
+  }
+
   render() {
+    //clear all contexts
     // console.log(this.player.getX(),this.player.getY());
     // console.log(this.constant.gameCor.width,this.constant.gameCor.height);
-    //clear all contexts
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.ctx.fillStyle = this.constant.gameStyle.background;
     this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
@@ -314,10 +330,10 @@ export default class Playing {
   drawBackground(ctx) {
     let x = [];
     let y = [];
-    for (let i = 1; i < this.constant.gameCor.width; i += 100) {
+    for (let i = 1; i < this.constant.gameCor.width; i += this.constant.gameStyle.lineWidth) {
       x.push(i);
     }
-    for (let i = 1; i < this.constant.gameCor.height; i += 100) {
+    for (let i = 1; i < this.constant.gameCor.height; i += this.constant.gameStyle.lineWidth) {
       y.push(i);
     }
     ctx.beginPath();

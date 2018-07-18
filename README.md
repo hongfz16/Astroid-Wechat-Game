@@ -8,7 +8,8 @@ Classic game Astroid in Wechat-Game platform
 - AI
 - 换个音乐？
 - 可以吃的道具：升级武器或者添加一条命
-- 优化游戏常数
+- 传送门
+- 优化游戏常数:小陨石得分更高，小外星人得分更高，小陨石移动速度更快
 - 添加暂停
 
 ## Finished Features

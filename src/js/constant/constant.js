@@ -134,10 +134,10 @@ export default class Constant {
     let gameCorWidth = 0;
     let gameCorHeight = 0;
     while(gameCorWidth < this.canvas.width * 2) {
-      gameCorWidth += 100;
+      gameCorWidth += canvas.height / 4;
     }
     while(gameCorHeight < this.canvas.height * 2) {
-      gameCorHeight += 100;
+      gameCorHeight += canvas.height / 4;
     }
     this.gameCor = {
       width: gameCorWidth,
@@ -146,7 +146,8 @@ export default class Constant {
     this.gameStyle = {
       background: '#000000',
       backline: 'rgb(50, 50, 50)',
-      lineSize: 1
+      lineSize: 2,
+      lineWidth: canvas.height / 4 
     };
 
     //welcome constants
