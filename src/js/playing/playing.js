@@ -29,7 +29,7 @@ export default class Playing {
       let enemy = this.initEnemy();
       this.enemys.push(enemy);
     }
-    for (let i = 0; i < 5; ++i) {
+    for (let i = 0; i < 20; ++i) {
       let astroid = this.initAstroid();
       this.astroids.push(astroid);
     }

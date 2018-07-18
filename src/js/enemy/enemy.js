@@ -120,8 +120,8 @@ export default class Enemy extends Sprite {
   }
 
   shoot(x, y) {
-    x = Math.random() * this.constant.gameCor.width;
-    y = Math.random() * this.constant.gameCor.height;
+    x += (Math.random() - 0.5) * this.constant.gameCor.width / 8;
+    y += (Math.random() - 0.5) * this.constant.gameCor.width / 8;
     this.resetShootTimer();
     let cx = this.getX();
     let cy = this.getY();

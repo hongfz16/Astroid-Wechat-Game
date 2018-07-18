@@ -28,13 +28,14 @@ export default class Astroid extends Sprite {
   split() {
     let childList = [];
     let childstyle = '';
+    let ratio = 1;
     if(this.type === 'small') return childList;
-    if(this.type === 'large') childstyle = 'medium';
-    if(this.type === 'medium') childstyle = 'small';
+    if(this.type === 'large') {childstyle = 'medium'; ratio = this.constant.astroidSpeedRatio.medium;}
+    if(this.type === 'medium') {childstyle = 'small'; ratio = this.constant.astroidSpeedRatio.small;}
     this.vel.rotate(this.constant.astroidSplitAngle);
-    let child1 = new Astroid(this.constant, this.getX(), this.getY(), this.vel.x, this.vel.y, childstyle);
+    let child1 = new Astroid(this.constant, this.getX(), this.getY(), this.vel.x * ratio, this.vel.y * ratio, childstyle);
     this.vel.rotate(-2 * this.constant.astroidSplitAngle);
-    let child2 = new Astroid(this.constant, this.getX(), this.getY(), this.vel.x, this.vel.y, childstyle);
+    let child2 = new Astroid(this.constant, this.getX(), this.getY(), this.vel.x * ratio, this.vel.y * ratio, childstyle);
     childList.push(child1);
     childList.push(child2);
     return childList;
@@ -42,14 +43,15 @@ export default class Astroid extends Sprite {
 
   drawAstroid(ctx, x, y, r) {
     ctx.beginPath();
-    ctx.moveTo(x + r, y);
-    let theta = Math.PI / 6;
-    let delta = Math.PI / 6;
-    for (let i = 1; i < 12; i += 1) {
-      ctx.lineTo(x + r * Math.cos(theta), y + r * Math.sin(theta));
-      theta += delta;
-    }
-    ctx.closePath();
+    // ctx.moveTo(x + r, y);
+    // let theta = Math.PI / 6;
+    // let delta = Math.PI / 6;
+    // for (let i = 1; i < 12; i += 1) {
+    //   ctx.lineTo(x + r * Math.cos(theta), y + r * Math.sin(theta));
+    //   theta += delta;
+    // }
+    // ctx.closePath();
+    ctx.arc(x, y, r, 0, Math.PI * 2);
     ctx.strokeStyle = this.constant.astroidStyle.strokeColor;
     ctx.lineWidth = this.constant.astroidStyle.strokeSize;
     ctx.stroke();

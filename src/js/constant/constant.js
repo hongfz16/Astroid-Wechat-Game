@@ -17,6 +17,10 @@ export default class Constant {
       medium: 0.015 * canvas.height,
       large: 0.01 * canvas.height
     };
+    this.astroidSpeedRatio = {
+      small: 1.5,
+      medium: 1.2
+    };
     this.astroidStyle = {
       strokeSize: 1,
       strokeColor: '#ffffff'
