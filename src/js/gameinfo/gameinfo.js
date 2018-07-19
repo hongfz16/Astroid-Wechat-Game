@@ -53,7 +53,7 @@ export default class gameInfo{
     ctx.font = this.constant.scoreStyle.font;
     ctx.textAlign = this.constant.scoreStyle.textAlign;
     ctx.textBaseline = this.constant.scoreStyle.textBaseline;
-    ctx.fillText(`Score: ${this.score}`, x, y);
+    ctx.fillText(`分数: ${this.score}`, x, y);
   }
 
   drawTime(ctx, x, y) {
@@ -62,7 +62,7 @@ export default class gameInfo{
     ctx.textAlign = this.constant.scoreStyle.textAlign;
     ctx.textBaseline = this.constant.scoreStyle.textBaseline;
     let now = new Date();
-    ctx.fillText(`Survive: ${((now-this.startTime)/1000).toFixed(1)}s`, x, y);
+    ctx.fillText(`存活: ${((now-this.startTime)/1000).toFixed(1)}s`, x, y);
   }
 
   drawLife(ctx, x, y){
@@ -70,7 +70,7 @@ export default class gameInfo{
     ctx.font = this.constant.lifeStyle.font;
     ctx.textAlign = this.constant.lifeStyle.textAlign;
     ctx.textBaseline = this.constant.lifeStyle.textBaseline;
-    ctx.fillText(`Life: ${this.main.player.life}`, x, y);
+    ctx.fillText(`剩余生命: ${this.main.player.life}`, x, y);
   }
 
   drawSlideHandle(ctx, circlex, circley, handlex, handley, r, handlewidth) {
