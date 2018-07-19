@@ -24,9 +24,9 @@ export default class Player extends Sprite{
     this.smallCircle = new Circle(cor.p[1].x, cor.p[1].y, cor.r0);
 
     this.image_notail = new Image();
-    this.image_notail.src = 'pics/newrocket_notail.png';
+    this.image_notail.src = 'pics/rocket_notail.png';
     this.image_withtail = new Image();
-    this.image_withtail.src = 'pics/newrocket.png';
+    this.image_withtail.src = 'pics/rocket.png';
   }
 
   drawtoCanvas(ctx){
@@ -42,7 +42,7 @@ export default class Player extends Sprite{
 
       ctx.translate(this.constant.canvas.width / 2, this.constant.canvas.height / 2);
       ctx.rotate(this.angle + Math.PI / 2);
-      ctx.drawImage(image, -r * 2, -r * 2.8, this.constant.playerStyle.r0 * 4, this.constant.playerStyle.r0 * 6);
+      ctx.drawImage(image, -r * 1.5, -r * 3.4, this.constant.playerStyle.r0 * 3, this.constant.playerStyle.r0 * 7);
       ctx.rotate(-this.angle - Math.PI / 2);
       ctx.translate(-this.constant.canvas.width / 2, -this.constant.canvas.height / 2);
 
