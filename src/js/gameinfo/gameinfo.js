@@ -9,6 +9,14 @@ export default class gameInfo{
     } else
     if (this.mode === 'survival') {
       this.startTime = new Date();
+      this.Time = 0;
+      wx.onHide((()=>{
+        let cur = new Date();
+        this.Time += (cur-this.startTime)/1000;
+      }).bind(this));
+      wx.onShow((()=>{
+        this.startTime = new Date();
+      }).bind(this));
     }
     this.constant = constant;
     this.handlex = this.constant.handle2dStyle.x;
@@ -62,7 +70,9 @@ export default class gameInfo{
     ctx.textAlign = this.constant.scoreStyle.textAlign;
     ctx.textBaseline = this.constant.scoreStyle.textBaseline;
     let now = new Date();
-    ctx.fillText(`Survive: ${((now-this.startTime)/1000).toFixed(1)}s`, x, y);
+    let tmp = Number(((now - this.startTime) / 1000).toFixed(1)) + this.Time;
+    //console.log((now - this.startTime) / 1000);
+    ctx.fillText(`Survive: ${tmp.toFixed(1)}s`, x, y);
   }
 
   drawLife(ctx, x, y){

@@ -308,7 +308,8 @@ export default class survivalPlaying{
         }
         else {
           let cur = new Date();
-          this.gameInfo.Time = ((cur - this.gameInfo.startTime)/1000).toFixed(1);
+          this.gameInfo.Time += (cur - this.gameInfo.startTime)/1000;
+          this.gameInfo.startTime = cur;
           player.loseonelife();
           if (player.life === 0) {
             setTimeout(this.main.GameOver.bind(this.main), 100);
