@@ -16,13 +16,17 @@ export default class Welcome{
       if (this.hasTouched === false){
         let x = e.touches[0].clientX * this.main.constant.dpr;
         let y = e.touches[0].clientY * this.main.constant.dpr;
-        if (this.checkinStart(x, y)){
+        if (this.checkinStart(x, y)) {
           setTimeout(this.main.start.bind(this.main), 100);
           this.hasTouched = true;
-        }
-        if (this.checkinLeader(x, y)){
+        } else
+        if (this.checkinLeader(x, y)) {
           //showLeaderBoard
           setTimeout(this.main.showLeaderBoard.bind(this.main), 100);
+          this.hasTouched = true;
+        } else
+        if (this.checkinSurvivalStart(x, y)) {
+          setTimeout(this.main.survivalstart.bind(this.main), 100);
           this.hasTouched = true;
         }
       }
@@ -35,7 +39,7 @@ export default class Welcome{
     //this.drawBackground(ctx);
     this.drawText("Astroid",
                   this.canvas.width/2,
-                  this.canvas.height/4,
+                  this.canvas.height/6,
                   this.main.constant.welcomeTitle.textColor,
                   this.main.constant.welcomeTitle.textAlign,
                   this.main.constant.welcomeTitle.textBaseline,
@@ -47,19 +51,33 @@ export default class Welcome{
                        this.main.constant.startButton.y1,
                        this.main.constant.startButton.r,
                        ctx);
+    this.drawRoundRect(this.main.constant.survivalButton.x0,
+                       this.main.constant.survivalButton.y0,
+                       this.main.constant.survivalButton.x1,
+                       this.main.constant.survivalButton.y1,
+                       this.main.constant.survivalButton.r,
+                       ctx);
     this.drawRoundRect(this.main.constant.stageButton.x0,
                        this.main.constant.stageButton.y0,
                        this.main.constant.stageButton.x1,
                        this.main.constant.stageButton.y1,
                        this.main.constant.stageButton.r,
                        ctx);
-    this.drawText("Start",
+    this.drawText("Adventure",
                   (this.main.constant.startButton.x0 + this.main.constant.startButton.x1) / 2,
                   (this.main.constant.startButton.y0 + this.main.constant.startButton.y1) / 2,
                   this.main.constant.startButton.textColor,
                   this.main.constant.startButton.textAlign,
                   this.main.constant.startButton.textBaseline,
                   this.main.constant.startButton.textFont,
+                  ctx);
+    this.drawText("Survival",
+                  (this.main.constant.survivalButton.x0 + this.main.constant.survivalButton.x1) / 2,
+                  (this.main.constant.survivalButton.y0 + this.main.constant.survivalButton.y1) / 2,
+                  this.main.constant.survivalButton.textColor,
+                  this.main.constant.survivalButton.textAlign,
+                  this.main.constant.survivalButton.textBaseline,
+                  this.main.constant.survivalButton.textFont,
                   ctx);
     this.drawText("Leader Board",
                   (this.main.constant.stageButton.x0 + this.main.constant.stageButton.x1) / 2,
@@ -97,11 +115,18 @@ export default class Welcome{
     ctx.fillText(data, x, y);
   }
 
-  checkinStart(x, y){
+  checkinStart(x, y) {
     return x >= this.main.constant.startButton.x0 &&
       x <= this.main.constant.startButton.x1 &&
       y >= this.main.constant.startButton.y0 &&
       y <= this.main.constant.startButton.y1;
+  }
+
+  checkinSurvivalStart(x, y) {
+    return x >= this.main.constant.survivalButton.x0 &&
+      x <= this.main.constant.survivalButton.x1 &&
+      y >= this.main.constant.survivalButton.y0 &&
+      y <= this.main.constant.survivalButton.y1;
   }
 
   checkinLeader(x, y) {

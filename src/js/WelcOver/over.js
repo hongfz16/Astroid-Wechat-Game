@@ -9,6 +9,7 @@ export default class Over {
     this.hasTouched = false;
     this.score = score;
     this.time = time;
+    this.mode = mode;
     this.initEvent();
     this.openDataContext = wx.getOpenDataContext();
     this.openDataContext.postMessage({
@@ -21,7 +22,7 @@ export default class Over {
       type: 'drawHighest',
       curscore: this.score,
       curtime: this.time,
-      mode: this.mode
+      mode: this.mode,
     });
     this.openDataContext.postMessage({
       type: 'updateFriends',
@@ -36,9 +37,14 @@ export default class Over {
         let x = e.touches[0].clientX * this.main.constant.dpr;
         let y = e.touches[0].clientY * this.main.constant.dpr;
         if (this.checkinRestart(x, y)) {
-          setTimeout(this.main.start.bind(this.main), 100);
+          if (this.mode === 'adventure') {
+            setTimeout(this.main.start.bind(this.main), 100);
+          } else
+          {
+            setTimeout(this.main.survivalstart.bind(this.main), 100);
+          }
           this.hasTouched = true;
-        }
+        } else
         if (this.checkinBack(x, y)) {
           setTimeout(this.main.welcome.bind(this.main), 100);
           this.hasTouched = true;

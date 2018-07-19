@@ -49,7 +49,7 @@ function render(canvas, record, curscore, curtime){
                   constant.oversmallTitle.textFont,
                   ctx);
   } else
-  {
+  if (mode === 'survival') {
     drawText(`Survive: ${curtime}s`,
              canvas.width / 2,
              canvas.height / 4,
@@ -79,7 +79,7 @@ function render(canvas, record, curscore, curtime){
                      constant.backButton.y1,
                      constant.backButton.r,
                      ctx);
-  drawText("Restart",
+  drawText("Replay",
                 (constant.restartButton.x0 + constant.restartButton.x1) / 2,
                 (constant.restartButton.y0 + constant.restartButton.y1) / 2,
                 constant.restartButton.textColor,
@@ -127,6 +127,7 @@ wx.onMessage(data => {
   } else
   if (data.type === 'drawHighest') {
     //let keys = ['highestScore'];
+    console.log(data);
     mode = data.mode;
     let sharedCanvas = wx.getSharedCanvas();
     render(sharedCanvas, record, data.curscore, data.curtime);

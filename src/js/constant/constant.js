@@ -181,9 +181,22 @@ export default class Constant {
     };
     this.startButton = {
       x0: canvas.width * 3 / 10.0,
-      y0: canvas.height / 2.0,
+      y0: canvas.height * 1 / 3.0,
       x1: canvas.width * 7 / 10.0,
-      y1: canvas.height * 2 / 3.0,
+      y1: canvas.height * 1 / 2.0,
+      r: canvas.width / 30.0,
+      strokeSize: 2,
+      strokeColor: '#ffffff',
+      textColor: '#ffffff',
+      textAlign: 'center',
+      textBaseline: 'middle',
+      textFont: `${this.canvas.height * 1 / 10}px sans-serif`,
+    };
+    this.survivalButton = {
+      x0: canvas.width * 3 / 10.0,
+      y0: canvas.height * 13 / 24.0,
+      x1: canvas.width * 7 / 10.0,
+      y1: canvas.height * 17 / 24.0,
       r: canvas.width / 30.0,
       strokeSize: 2,
       strokeColor: '#ffffff',

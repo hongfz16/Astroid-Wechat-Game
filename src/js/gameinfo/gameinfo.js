@@ -238,7 +238,7 @@ export default class gameInfo{
           this.main.playerAngle = handle2dInfo.theta;
           this.handlex = handle2dInfo.x;
           this.handley = handle2dInfo.y;
-          console.log(handle2dInfo.theta);
+          //console.log(handle2dInfo.theta);
         }
       }
     }).bind(this));

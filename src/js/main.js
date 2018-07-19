@@ -72,37 +72,7 @@ export default class Main {
     this.openDataContext.postMessage({
       type: 'updateFriends',
     });
-
-    // this.playerAngle = 0;
-    // this.player = new Player(this.constant, this.constant.gameCor.width / 2, this.constant.gameCor.height / 2, this.constant.playerStyle.r0);
-    // this.bullets = new LinkedList();
-    // this.enemys = new LinkedList();
-    // this.enemysBullet = new LinkedList();
-    // this.astroids = new LinkedList();
-    // for (let i = 0; i < 1; ++i){
-    //   let enemy = this.initEnemy();
-    //   this.enemys.push(enemy);
-    // }
-    // for (let i = 0; i < 5; ++i){
-    //   let astroid = this.initAstroid();
-    //   this.astroids.push(astroid);
-    // }
-    // {
-    //   for (let i = 0; i < 3; ++i) {
-    //     let astroid = this.initAstroid(true);
-    //     this.astroids.push(astroid);
-    //   }
-    // }
-    // this.enemyCount = 1000;
-    // this.astroidCount = 1000;
-    // //this.bulletCount = 0;
-    // this.shootCount = 0;
-    // this.clickLeft = false;
-    // this.clickRight = false;
-    // this.clickShoot = false;
-    // this.clickAcc = false;
-    // this.gameInfo = new gameInfo(this.constant, this);
-    this.game = new survivalPlaying(this.constant, this);
+    this.game = new Playing(this.constant, this);
 
     this.gameStatus = "playing";
 
@@ -113,6 +83,34 @@ export default class Main {
       delete this.over;
     }
     
+    this.bindLoop = this.loop.bind(this);
+
+    //cancel last animation frame
+    window.cancelAnimationFrame(this.aniId);
+
+    //set the callback of next frame
+    this.aniId = window.requestAnimationFrame(
+      this.bindLoop,
+      this.canvas
+    );
+  }
+
+  survivalstart(){
+    //init some other data
+    this.openDataContext.postMessage({
+      type: 'updateFriends',
+    });
+    this.game = new survivalPlaying(this.constant, this);
+
+    this.gameStatus = "playing";
+
+    if (this.wel) {
+      delete this.wel;
+    }
+    if (this.over) {
+      delete this.over;
+    }
+
     this.bindLoop = this.loop.bind(this);
 
     //cancel last animation frame
@@ -157,6 +155,7 @@ export default class Main {
     let time = 0;
     let mode = 'adventure';
     if (this.game){
+      // console.log(this.game.gameInfo.mode)
       if (this.game instanceof survivalPlaying) {
         mode = 'survival';
         time = this.game.gameInfo.Time;
@@ -165,6 +164,7 @@ export default class Main {
       {
         mode = 'adventure';
         score = this.game.gameInfo.score;
+        // console.log(score);
       }
       delete this.game;
     }
