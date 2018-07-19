@@ -158,7 +158,7 @@ export default class Main {
       // console.log(this.game.gameInfo.mode)
       if (this.game instanceof survivalPlaying) {
         mode = 'survival';
-        time = this.game.gameInfo.Time;
+        time = (this.game.gameInfo.Time).toFixed(1);
       } 
       else
       {

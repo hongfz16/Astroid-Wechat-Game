@@ -44,6 +44,7 @@ export default class survivalPlaying{
 
     this.enemyCount = 1000;
     this.astroidCount = 1000;
+    this.lifeCount = 1000;
     this.playerAngle = 0;
     this.clickAcc = false;
     this.gameInfo = new gameInfo(this.constant, this, 'survival');
@@ -198,6 +199,20 @@ export default class survivalPlaying{
       // console.log(`astroidCount ${this.astroidCount}`);
     }
     /*-------------------------*/
+    /*     random add life     */
+    //console.log("random add astroid");
+    if (this.lifeCount > 0) {
+      this.lifeCount -= 1;
+    }
+    // console.log(this.astroidCount);
+    if (this.lifeCount === 0 && this.lifes.size < this.constant.lifeLimit) {
+      let pos = this.getRandompos();
+      let life = this.initLife(pos.x, pos.y);
+      this.lifes.push(life);
+      this.lifeCount = 1000;//Math.max(100, Math.floor(1000 - this.main.aniId / 10));
+      // console.log(`astroidCount ${this.astroidCount}`);
+    }
+    /*-------------------------*/
   }
 
   canShoot(enemy) {
@@ -293,7 +308,8 @@ export default class survivalPlaying{
         }
         else {
           let cur = new Date();
-          this.gameInfo.Time = ((cur - this.gameInfo.startTime)/1000).toFixed(1);
+          this.gameInfo.Time += (cur - this.gameInfo.startTime)/1000;
+          this.gameInfo.startTime = cur;
           player.loseonelife();
           if (player.life === 0) {
             setTimeout(this.main.GameOver.bind(this.main), 100);
