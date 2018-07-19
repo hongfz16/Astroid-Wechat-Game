@@ -8,6 +8,7 @@ export default class Enemy extends Sprite {
     super(x, y, size);
     let sr = size / 2;
     let sy = y + size / 2;
+    this.type = type;
     let deltasx = size * Math.sqrt(2);
     this.circle.addSubCircle(x + deltasx, sy, sr);
     this.circle.addSubCircle(x - deltasx, sy, sr);
@@ -17,6 +18,7 @@ export default class Enemy extends Sprite {
     this.velTimer = Math.random() * this.constant.enemyVelTimer;
     this.image = new Image();
     this.image.src = 'pics/enemy.png';
+    this.score = this.constant.enemyScore[this.type];
   }
 
   setVel() {

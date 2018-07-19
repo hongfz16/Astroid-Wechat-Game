@@ -19,9 +19,9 @@ export default class gameInfo{
     this.slideFlag = {isTouched: false, id: -1};
   }
 
-  scorepp(){
+  scorepp(add = 1){
     if (this.mode === 'adventure'){
-      this.score += 1;
+      this.score += add;
     }
     else
       console.log("wrong score++");

@@ -79,7 +79,7 @@ function render(canvas, record, curscore, curtime){
                      constant.backButton.y1,
                      constant.backButton.r,
                      ctx);
-  drawText("Replay",
+  drawText("Restart",
                 (constant.restartButton.x0 + constant.restartButton.x1) / 2,
                 (constant.restartButton.y0 + constant.restartButton.y1) / 2,
                 constant.restartButton.textColor,

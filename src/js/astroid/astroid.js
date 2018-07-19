@@ -18,6 +18,8 @@ export default class Astroid extends Sprite {
     this.image.src = 'pics/astroid.png';
     this.rotateCounter = 0;
     this.rotateCounterLife = 1600 + Math.random() * 400;
+    this.score = this.constant.astroidScore[this.type];
+    // console.log(this.score);
   }
 
   update() {

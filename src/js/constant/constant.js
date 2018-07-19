@@ -17,6 +17,11 @@ export default class Constant {
       medium: 0.007 * canvas.height,
       large: 0.005 * canvas.height
     };
+    this.astroidScore = {
+      small: 3,
+      medium: 2,
+      large: 1
+    };
     this.astroidSpeedRatio = {
       small: 1.25,
       medium: 1.2
@@ -50,6 +55,11 @@ export default class Constant {
       small: 0.018 * canvas.height,
       medium: 0.025 * canvas.height,
       large: 0.030 * canvas.height
+    };
+    this.enemyScore = {
+      small: 4,
+      medium: 3,
+      large: 2
     };
     this.enemyShootFrame = 300;
     this.enemyStyle = {
