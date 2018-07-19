@@ -93,6 +93,7 @@ export default class Constant {
       font: `${this.canvas.height * 0.05}px sans-serif`,
       color: '#ffffff'
     }
+    this.lifeLimit = 2;
     this.scorePos = {
       x: canvas.width * 0.02,
       y: canvas.height * 0.05
