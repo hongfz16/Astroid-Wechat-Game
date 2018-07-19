@@ -37,7 +37,7 @@ export default class Welcome{
     let ctx = this.ctx;
     ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     //this.drawBackground(ctx);
-    this.drawText("Astroid",
+    this.drawText("太空求生",
                   this.canvas.width/2,
                   this.canvas.height/6,
                   this.main.constant.welcomeTitle.textColor,
@@ -63,7 +63,7 @@ export default class Welcome{
                        this.main.constant.stageButton.y1,
                        this.main.constant.stageButton.r,
                        ctx);
-    this.drawText("Adventure",
+    this.drawText("冒险模式",
                   (this.main.constant.startButton.x0 + this.main.constant.startButton.x1) / 2,
                   (this.main.constant.startButton.y0 + this.main.constant.startButton.y1) / 2,
                   this.main.constant.startButton.textColor,
@@ -71,7 +71,7 @@ export default class Welcome{
                   this.main.constant.startButton.textBaseline,
                   this.main.constant.startButton.textFont,
                   ctx);
-    this.drawText("Survival",
+    this.drawText("生存模式",
                   (this.main.constant.survivalButton.x0 + this.main.constant.survivalButton.x1) / 2,
                   (this.main.constant.survivalButton.y0 + this.main.constant.survivalButton.y1) / 2,
                   this.main.constant.survivalButton.textColor,
@@ -79,7 +79,7 @@ export default class Welcome{
                   this.main.constant.survivalButton.textBaseline,
                   this.main.constant.survivalButton.textFont,
                   ctx);
-    this.drawText("Leader Board",
+    this.drawText("排行榜",
                   (this.main.constant.stageButton.x0 + this.main.constant.stageButton.x1) / 2,
                   (this.main.constant.stageButton.y0 + this.main.constant.stageButton.y1) / 2,
                   this.main.constant.stageButton.textColor,

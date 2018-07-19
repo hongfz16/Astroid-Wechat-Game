@@ -19,6 +19,7 @@ export default class Enemy extends Sprite {
     this.image = new Image();
     this.image.src = 'pics/enemy.png';
     this.score = this.constant.enemyScore[this.type];
+    this.shootAcc = this.constant.gameCor.width;
   }
 
   setVel() {
@@ -119,8 +120,9 @@ export default class Enemy extends Sprite {
   }
 
   shoot(x, y) {
-    x += (Math.random() - 0.5) * this.constant.gameCor.width / 8;
-    y += (Math.random() - 0.5) * this.constant.gameCor.width / 8;
+    x += (Math.random() - 0.5) * this.shootAcc;
+    y += (Math.random() - 0.5) * this.shootAcc;
+    this.shootAcc *= 0.9;
     this.resetShootTimer();
     let cx = this.getX();
     let cy = this.getY();
@@ -129,7 +131,7 @@ export default class Enemy extends Sprite {
     let dist = Math.sqrt(Math.pow(deltax, 2) + Math.pow(deltay, 2));
     let velx = deltax * this.constant.bulletSpeed / dist;
     let vely = deltay * this.constant.bulletSpeed / dist;
-    let bullet = new Bullet(this.constant, cx, cy, this.constant.bulletRadius, velx, vely);
+    let bullet = new Bullet(this.constant, cx, cy, this.constant.bulletRadius, velx / 2, vely / 2);
     return bullet;
   }
 }

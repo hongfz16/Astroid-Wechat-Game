@@ -113,17 +113,17 @@ export default class LeaderBoard{
     let x = (this.constant.canvas.width - this.constant.leaderboard.width) / 2;
     let y = this.constant.leaderboard.blankheight;
     //console.log(x, y);
-    this.drawText("RANK",
+    this.drawText("排名",
                   x + this.constant.leaderboard.idWidth / 2,
                   y + this.constant.leaderboard.perheight / 2,
                   ctx);
     x += this.constant.leaderboard.idWidth;
-    this.drawText("NAME",
+    this.drawText("好友",
                   x + this.constant.leaderboard.nickWidth / 2,
                   y + this.constant.leaderboard.perheight / 2,
                   ctx);
     x += this.constant.leaderboard.nickWidth;
-    this.drawText(this.mode === 'adventure' ? "SCORE" : "TIME",
+    this.drawText(this.mode === 'adventure' ? "分数" : "时间",
                   x + this.constant.leaderboard.scoreWidth / 2,
                   y + this.constant.leaderboard.perheight / 2,
                   ctx);
@@ -158,17 +158,17 @@ export default class LeaderBoard{
 
     x = (this.constant.canvas.width - this.constant.leaderboard.width) / 2;
     y = this.constant.canvas.height - this.constant.leaderboard.blankheight - this.constant.leaderboard.perheight;
-    this.drawText("Prev",
+    this.drawText("上一页",
                   x + this.constant.leaderboard.width / 6,
                   y + this.constant.leaderboard.perheight / 2,
                   ctx);
     x += this.constant.leaderboard.width / 3;
-    this.drawText(this.mode === 'adventure' ? "Survival" : "Adventure",
+    this.drawText(this.mode === 'adventure' ? "生存模式" : "冒险模式",
                   x + this.constant.leaderboard.width / 6,
                   y + this.constant.leaderboard.perheight / 2,
                   ctx);
     x += this.constant.leaderboard.width / 3;
-    this.drawText("Next",
+    this.drawText("下一页",
                   x + this.constant.leaderboard.width / 6,
                   y + this.constant.leaderboard.perheight / 2,
                   ctx);

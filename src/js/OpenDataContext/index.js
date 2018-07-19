@@ -32,7 +32,7 @@ function render(canvas, record, curscore, curtime){
   let ctx = canvas.getContext('2d');
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   if (mode === 'adventure') {
-    drawText(`Score: ${curscore}`,
+    drawText(`分数: ${curscore}`,
                   canvas.width / 2,
                   canvas.height / 4,
                   constant.overTitle.textColor,
@@ -40,7 +40,7 @@ function render(canvas, record, curscore, curtime){
                   constant.overTitle.textBaseline,
                   constant.overTitle.textFont,
                   ctx);
-    drawText(`Highest Score: ` + record.highestScore,
+    drawText(`最高分: ` + record.highestScore,
                   canvas.width / 2,
                   canvas.height * 2 / 5,
                   constant.oversmallTitle.textColor,
@@ -50,7 +50,7 @@ function render(canvas, record, curscore, curtime){
                   ctx);
   } else
   if (mode === 'survival') {
-    drawText(`Survive: ${curtime}s`,
+    drawText(`存活: ${curtime}秒`,
              canvas.width / 2,
              canvas.height / 4,
              constant.overTitle.textColor,
@@ -58,7 +58,7 @@ function render(canvas, record, curscore, curtime){
              constant.overTitle.textBaseline,
              constant.overTitle.textFont,
              ctx);
-    drawText(`Longest Time: ` + record.longestTime,
+    drawText(`最长存活时间: ${record.longestTime}秒`,
              canvas.width / 2,
              canvas.height * 2 / 5,
              constant.oversmallTitle.textColor,
@@ -79,7 +79,7 @@ function render(canvas, record, curscore, curtime){
                      constant.backButton.y1,
                      constant.backButton.r,
                      ctx);
-  drawText("Restart",
+  drawText("重新开始",
                 (constant.restartButton.x0 + constant.restartButton.x1) / 2,
                 (constant.restartButton.y0 + constant.restartButton.y1) / 2,
                 constant.restartButton.textColor,
@@ -87,7 +87,7 @@ function render(canvas, record, curscore, curtime){
                 constant.restartButton.textBaseline,
                 constant.restartButton.textFont,
                 ctx);
-  drawText("Back",
+  drawText("返回",
                 (constant.backButton.x0 + constant.backButton.x1) / 2,
                 (constant.backButton.y0 + constant.backButton.y1) / 2,
                 constant.backButton.textColor,
