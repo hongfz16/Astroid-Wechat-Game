@@ -138,7 +138,7 @@ wx.onMessage(data => {
     if (record.longestTime < Number(data.time)){
       record.longestTime = Number(data.time);
       wx.setUserCloudStorage({
-        KVDataList: [{ key: 'longestTime', value: data.time }],
+        KVDataList: [{ key: 'longestTime', value: `${data.time}` }],
         success: res => {
           console.log(res);
         },
@@ -150,7 +150,7 @@ wx.onMessage(data => {
     if (record.highestScore < Number(data.score)) {
       record.highestScore = Number(data.score);
       wx.setUserCloudStorage({
-        KVDataList: [{ key: 'highestScore', value: data.score }],
+        KVDataList: [{ key: 'highestScore', value: `${data.score}` }],
         success: res => {
           console.log(res);
         },

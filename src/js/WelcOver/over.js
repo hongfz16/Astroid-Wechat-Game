@@ -3,6 +3,7 @@ import Main from "../main"
 
 export default class Over {
   constructor(main, score, time, mode = 'adventure') {
+    console.log(mode);
     this.canvas = main.canvas;
     this.ctx = main.ctx;
     this.main = main;
