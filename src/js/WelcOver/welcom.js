@@ -111,7 +111,6 @@ export default class Welcome{
     ctx.textAlign = textAlign;
     ctx.textBaseline = textBaseline;
     ctx.font = textFont;
-    //ctx['font-family'] = 'A.C.M.E.Secret Agent';
     ctx.fillText(data, x, y);
   }
 

@@ -18,7 +18,6 @@ export default class Over {
       score: this.score,
       time: this.time
     });
-    //console.log(this.score);
     this.openDataContext.postMessage({
       type: 'drawHighest',
       curscore: this.score,

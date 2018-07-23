@@ -1,11 +1,6 @@
 import Sprite from "../base/sprite";
 import Constant from "../constant/constant.js"
 import Bullet from "../bullet/bullet.js"
-// import this.constant.bulletRadius from "../constant/constant.js";
-// import bulletSpeed from "../constant/constant.js"
-// import this.constant.turnAngle from "../constant/constant.js"
-// import this.constant.gameCor from "../constant/constant.js"
-// import this.constant.playerStyle from "../constant/constant.js"
 import { Point, Circle, Vector2d } from "../base/geometry.js"
 
 export default class Player extends Sprite{
@@ -121,8 +116,6 @@ export default class Player extends Sprite{
     let ret = new Object();
     ret.r0 = this.circle.radius;
     ret.r1 = ret.r0 * (1 - Math.sin(this.constant.playerStyle.theta)) / (1 + Math.sin(this.constant.playerStyle.theta));
-    // console.log(ret.r0);
-    // console.log(ret.r1);
     ret.x0 = 0;
     ret.y0 = 0;
     ret.x1 = ret.r0+ret.r1;
@@ -203,7 +196,6 @@ export default class Player extends Sprite{
     this.isboosting  = (this.acc.x !== 0 || this.acc.y !== 0);
     this.setAcceleration(0, 0);
     
-    //this.vel.rotate(this.angle);
     this.angle += this.angleDelta;
     this.angleDelta = 0;
   }
@@ -222,7 +214,6 @@ export default class Player extends Sprite{
   }
 
   turn(angle){
-    //this.angleDelta = this.constant.turnAngle * ratio;
     let delta = angle-this.angle;
     while (delta > Math.PI) delta -= 2*Math.PI;
     while (delta < -Math.PI) delta += 2*Math.PI;
