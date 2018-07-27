@@ -1,7 +1,11 @@
+/**
+ * Intro: Bullet class derived from Sprite base class
+ * Author: Hong Fangzhou
+ * Email: hongfz16@163.com
+ * Date: 2018.7.11
+ */
+
 import Sprite from '../base/sprite';
-// import bulletStyle from '../constant/constant'
-// import bulletLife from '../constant/constant'
-// import gameCor from '../constant/constant'
 
 export default class Bullet extends Sprite {
   constructor(constant, x = 0, y = 0, r = 0, velx = 0, vely = 0) {
@@ -46,9 +50,5 @@ export default class Bullet extends Sprite {
     if (flag === false) {
       this.life = 0;
     }
-    // console.log(this.getX(), this.getY());
-    // console.log(newCor);
-    // console.log(px,py);
-    // console.log(canvas.width, canvas.height);
   }
 }

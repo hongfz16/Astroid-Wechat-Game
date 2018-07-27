@@ -1,3 +1,10 @@
+/**
+ * Intro: Store basic game-info and draw game-info to screen
+ * Author: Hong Fangzhou
+ * Email: hongfz16@163.com
+ * Date: 2018.7.11
+ */
+
 import Main from '../main'
 
 export default class gameInfo{
@@ -71,7 +78,6 @@ export default class gameInfo{
     ctx.textBaseline = this.constant.scoreStyle.textBaseline;
     let now = new Date();
     let tmp = Number(((now - this.startTime) / 1000).toFixed(1)) + this.Time;
-    //console.log((now - this.startTime) / 1000);
     ctx.fillText(`存活: ${tmp.toFixed(1)}s`, x, y);
   }
 
@@ -157,9 +163,6 @@ export default class gameInfo{
   }
 
   drawtoCanvas(ctx){
-    // this.drawTri(ctx, this.constant.leftButtonPos.x, this.constant.leftButtonPos.y, this.constant.leftButtonPos.r, Math.PI / 3);
-    // this.drawTri(ctx, this.constant.rightButtonPos.x, this.constant.rightButtonPos.y, this.constant.rightButtonPos.r, 0);
-    // this.drawSlideHandle(ctx, this.slideHandleCenterX, this.slideHandleCenterY, this.constant.slideHandlePos.centerx, this.constant.slideHandlePos.centery, this.constant.slideHandlePos.r, this.constant.slideHandlePos.width);
     this.drawHandle2d(ctx, this.constant.handle2dStyle.x, this.constant.handle2dStyle.y, this.handlex, this.handley, this.constant.handle2dStyle.circleR, this.constant.handle2dStyle.handleR);
     this.drawAcc(ctx, this.constant.accButtonPos.x, this.constant.accButtonPos.y, this.constant.accButtonPos.r);
     this.drawShoot(ctx, this.constant.shootButtonPos.x, this.constant.shootButtonPos.y, this.constant.shootButtonPos.r);
@@ -194,13 +197,6 @@ export default class gameInfo{
           this.accFlag.id = e.touches[i].identifier;
         }
         else {
-          // let handleRes = this.checkinHandle(x, y);
-          // if(handleRes !== -2) {
-          //   this.main.slideRatio = handleRes;
-          //   this.slideFlag.isTouched = true;
-          //   this.slideFlag.id = e.touches[i].identifier;
-          //   this.slideHandleCenterX = this.constant.slideHandlePos.centerx + handleRes * (this.constant.slideHandlePos.width / 2);
-          // }
           let handle2dInfo = this.checkinHandle2d(x, y);
           if(handle2dInfo.dist !== -1) {
             this.main.playerAngle = handle2dInfo.theta;
@@ -234,61 +230,32 @@ export default class gameInfo{
           }
         }
         else if(id === this.slideFlag.id) {
-          // let handleRes = this.checkinHandle(x, y);
-          // if(handleRes === -2) {
-          //   let dist = Math.min(this.constant.slideHandlePos.width / 2, Math.abs(this.constant.slideHandlePos.centerx - x));
-          //   this.main.slideRatio = dist / ((this.constant.slideHandlePos.width / 2) * ((x < this.constant.slideHandlePos.centerx) ? -1 : 1));
-          //   this.slideHandleCenterX = this.constant.slideHandlePos.centerx + this.main.slideRatio * (this.constant.slideHandlePos.width / 2);
-          // }
-          // else {
-          //   this.main.slideRatio = handleRes;
-          //   this.slideHandleCenterX = this.constant.slideHandlePos.centerx + handleRes * (this.constant.slideHandlePos.width / 2);
-          // }
           let handle2dInfo = this.checkinHandle2d(x, y);
           this.main.playerAngle = handle2dInfo.theta;
           this.handlex = handle2dInfo.x;
           this.handley = handle2dInfo.y;
-          //console.log(handle2dInfo.theta);
         }
       }
     }).bind(this));
 
     this.constant.canvas.addEventListener("touchend", ((e)=>{
       e.preventDefault();
-      //this.main.clickLeft = false;
-      //this.main.clickRight = false;
-      //this.main.clickShoot = false;
-      //this.main.clickAcc = false;
       for (let i = 0; i < e.changedTouches.length; ++i) {
         let x = e.changedTouches[i].clientX * this.constant.dpr;
         let y = e.changedTouches[i].clientY * this.constant.dpr;
 
         let id = e.changedTouches[i].identifier;
-        // if (this.checkinLeft(x, y)) {
-        //   this.main.clickLeft = false;
-        //   //console.log('Click Left button');
-        // } else
-        //   if (this.checkinRight(x, y)) {
-        //     this.main.clickRight = false;
-        //     //console.log('Click Right button');
-        //   } else
         if (id === this.shootFlag.id) {
           this.main.clickShoot = false;
           this.shootFlag.isTouched = false;
           this.shootFlag.id = -1;
-          //console.log('Click Shoot button');
         }
         else if (id === this.accFlag.id) {
             this.main.clickAcc = false;
             this.accFlag.isTouched = false;
             this.accFlag.id = -1;
-            //console.log('Click Acc button');
         }
         else if (id === this.slideFlag.id) {
-          // this.main.slideRatio = 0;
-          // this.slideFlag.isTouched = false;
-          // this.slideFlag.id = -1;
-          // this.slideHandleCenterX = this.constant.slideHandlePos.centerx;
           this.slideFlag.isTouched = false;
           this.slideFlag.id = -1;
           this.handlex = this.constant.handle2dStyle.x;

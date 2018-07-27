@@ -1,3 +1,10 @@
+/**
+ * Intro: Enemy class derived from Sprite class
+ * Author: Hong Fangzhou
+ * Email: hongfz16@163.com
+ * Date: 2018.7.11
+ */
+
 import Sprite from '../base/sprite';
 import Bullet from '../bullet/bullet';
 import {Point, Vector2d} from '../base/geometry';
@@ -45,12 +52,6 @@ export default class Enemy extends Sprite {
     for(let i = 0; i < this.circle.subcircle.length; i += 1) {
       this.mupdate(this.circle.subcircle[i]);
     }
-    // this.circle.center.x += this.vel.x;
-    // this.circle.center.y += this.vel.y;
-    // this.circle.center.x += this.constant.gameCor.width;
-    // this.circle.center.y += this.constant.gameCor.height;
-    // this.circle.center.x %= this.constant.gameCor.width;
-    // this.circle.center.y %= this.constant.gameCor.height;
     if(this.shootTimer > 0) {
       this.shootTimer -= 1;
     }
@@ -67,23 +68,6 @@ export default class Enemy extends Sprite {
   }
 
   drawEnemy(ctx, x, y, r) {
-    // let theta = Math.PI / 12;
-    // ctx.strokeStyle = this.constant.enemyStyle.strokeColor;
-    // ctx.lineWidth = this.constant.enemyStyle.strokeSize;
-    // ctx.beginPath();
-    // // ctx.moveTo(x - 2 * r, y + r);
-    // // ctx.arc(x, y + r, 2 * r, Math.PI, Math.PI * 2);
-    // ctx.arc(x, y + r, 2 * r, Math.PI + theta, Math.PI * 2 - theta);
-    // ctx.moveTo(x - r * 2 * (Math.cos(theta) + Math.sin(theta)), y + r);
-    // ctx.arc(x - r * 2 * Math.cos(theta), y + r, r * 2 * Math.sin(theta), Math.PI, Math.PI * 3 / 2);
-    // ctx.arc(x + r * 2 * Math.cos(theta), y + r, r * 2 * Math.sin(theta), Math.PI * 3 / 2, Math.PI * 2);
-    // ctx.moveTo(x - r * 2 * Math.cos(theta), y + r - r * 2 * Math.sin(theta));
-    // ctx.lineTo(x + r * 2 * Math.cos(theta), y + r - r * 2 * Math.sin(theta));
-    // // ctx.stroke();
-    // // ctx.beginPath();
-    // ctx.moveTo(x - r * 2 * (Math.cos(theta) + Math.sin(theta)), y + r);
-    // ctx.lineTo(x + r * 2 * (Math.cos(theta) + Math.sin(theta)), y + r);
-    // ctx.stroke();
     ctx.drawImage(this.image, x - (3 * r / 2), y - r, 3 * r, 2 * r);
   }
 
@@ -91,11 +75,6 @@ export default class Enemy extends Sprite {
     let x = this.getX();
     let y = this.getY();
     let r = this.getRadius();
-    // if (x >= r && x <= this.constant.gameCor.width - r && y >= r && y <= this.constant.gameCor.height - r) {
-    //   let newCor = this.corTrans(x, y, px, py, this.constant.gameCor.width, this.constant.gameCor.height, this.constant.canvas.width, this.constant.canvas.height);
-    //   this.drawEnemy(ctx, newCor.x, newCor.y, r);
-    //   return;
-    // }
     let x2 = x + this.constant.gameCor.width;
     let y2 = y + this.constant.gameCor.height;
     let x3 = x - this.constant.gameCor.width;
@@ -108,15 +87,6 @@ export default class Enemy extends Sprite {
         this.drawEnemy(ctx, newCor.x, newCor.y, r);
       }
     }
-    // this.drawEnemy(ctx, x, y, r);
-    // this.drawEnemy(ctx, x, y2, r);
-    // this.drawEnemy(ctx, x, y3, r);
-    // this.drawEnemy(ctx, x2, y, r);
-    // this.drawEnemy(ctx, x2, y2, r);
-    // this.drawEnemy(ctx, x2, y3, r);
-    // this.drawEnemy(ctx, x3, y, r);
-    // this.drawEnemy(ctx, x3, y2, r);
-    // this.drawEnemy(ctx, x3, y3, r);
   }
 
   shoot(x, y) {

@@ -1,10 +1,12 @@
-import Vector2d from '../base/geometry'
+/**
+ * Intro: Asteroid class derived from Sprite base class
+ * Author: Hong Fangzhou
+ * Email: hongfz16@163.com
+ * Date: 2018.7.11
+ */
+
+import Vector2d from '../base/geometry';
 import Sprite from '../base/sprite';
-// import astroidSize from '../constant/constant';
-// import astroidSpeed from '../constant/constant';
-// import astroidStyle from '../constant/constant';
-// import astroidSplitAngle from '../constant/constant';
-// import gameCor from '../constant/constant';
 
 export default class Astroid extends Sprite {
   constructor(constant, x = 0, y = 0, velx = 0, vely = 0, type = 'large') {
@@ -19,7 +21,6 @@ export default class Astroid extends Sprite {
     this.rotateCounter = 0;
     this.rotateCounterLife = 1600 + Math.random() * 400;
     this.score = this.constant.astroidScore[this.type];
-    // console.log(this.score);
   }
 
   update() {
@@ -48,19 +49,6 @@ export default class Astroid extends Sprite {
   }
 
   drawAstroid(ctx, x, y, r) {
-    // ctx.beginPath();
-    // // ctx.moveTo(x + r, y);
-    // // let theta = Math.PI / 3;
-    // // let delta = Math.PI / 3;
-    // // for (let i = 1; i < 6; i += 1) {
-    // //   ctx.lineTo(x + r * Math.cos(theta), y + r * Math.sin(theta));
-    // //   theta += delta;
-    // // }
-    // // ctx.closePath();
-    // ctx.arc(x, y, r, 0, Math.PI * 2);
-    // ctx.strokeStyle = this.constant.astroidStyle.strokeColor;
-    // ctx.lineWidth = this.constant.astroidStyle.strokeSize;
-    // ctx.stroke();
     this.rotateCounter += 1;
     this.rotateCounter %= this.rotateCounterLife;
     let theta = (this.rotateCounter / this.rotateCounterLife) * Math.PI * 2;
@@ -75,11 +63,6 @@ export default class Astroid extends Sprite {
     let r = this.getRadius();
     let x = this.getX();
     let y = this.getY();
-    // if (x >= r && x <= this.constant.gameCor.width - r && y >= r && y <= this.constant.gameCor.height - r) {
-    //   let newCor = this.corTrans(x, y, px, py, this.constant.gameCor.width, this.constant.gameCor.height, this.constant.canvas.width, this.constant.canvas.height);
-    //   this.drawAstroid(ctx, newCor.x, newCor.y, r);
-    //   return;
-    // }
     let x2 = x + this.constant.gameCor.width;
     let y2 = y + this.constant.gameCor.height;
     let x3 = x - this.constant.gameCor.width;
@@ -92,14 +75,5 @@ export default class Astroid extends Sprite {
         this.drawAstroid(ctx, newCor.x, newCor.y, r);
       }
     }
-    // this.drawAstroid(ctx, x, y, r);
-    // this.drawAstroid(ctx, x2, y2, r);
-    // this.drawAstroid(ctx, x, y2, r);
-    // this.drawAstroid(ctx, x2, y, r);
-    // this.drawAstroid(ctx, x3, y3, r);
-    // this.drawAstroid(ctx, x, y3, r);
-    // this.drawAstroid(ctx, x3, y, r);
-    // this.drawAstroid(ctx, x2, y3, r);
-    // this.drawAstroid(ctx, x3, y2, r);
   }
 }
