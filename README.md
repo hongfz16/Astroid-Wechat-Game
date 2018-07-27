@@ -1,4 +1,4 @@
-# Astroid-Wechat-Game
+# Asteroid-Wechat-Game
 ## Introduction
 Classic game [Asteroid](https://en.wikipedia.org/wiki/Asteroid) in Wechat-Game platform. To find out more, please read our document.
 
