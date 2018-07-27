@@ -1,15 +1,16 @@
 # Astroid-Wechat-Game
-Classic game Astroid in Wechat-Game platform
+## Introduction
+Classic game [Asteroid](https://en.wikipedia.org/wiki/Asteroid) in Wechat-Game platform. To find out more, please read our document.
+
+## Document
+Click [here](https://shimo.im/docs/LenE6xfIKykCwnc6) for our online document. Or you can find our document in `doc` folder.
 
 ## Bugs
 
 ## Todo List
 - 多人对战可以尝试
 - AI
-- 换个音乐？
-- 可以吃的道具：升级武器或者添加一条命
 - 传送门
-- 优化游戏常数:小陨石得分更高，小外星人得分更高，小陨石移动速度更快
 - 添加暂停
 
 ## Finished Features
@@ -19,3 +20,12 @@ Classic game Astroid in Wechat-Game platform
 - 碰撞检测：多个圆填充三角形
 - 安卓手机闪屏问题：安卓上绘制透明度性能差
 - 提高iphone上游戏分辨率
+
+## Author
+### 王泽宇
+- 学校：清华大学软件学院
+- Email：
+
+### 洪方舟
+- 学校：清华大学软件学院
+- Email：hongfz16@163.com
