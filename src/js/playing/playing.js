@@ -1,3 +1,10 @@
+/**
+ * Intro: Playing class for drawing adventure mode game
+ * Author: Wang Zeyu
+ * Email: ycdfwzy@outlook.com
+ * Date: 2018.7.11
+ */
+
 import Main from '../main.js';
 import LinkedList from '../list/linkerlist.js';
 import Player from '../player/player.js';
@@ -161,7 +168,6 @@ export default class Playing {
     /*       enemy shoot       */
     let itr = this.enemys.head;
     while (itr !== null) {
-      // console.log(itr.data.shootTimer);
       if (itr.data.shootTimer === 0 && this.canShoot(itr.data)) {
         const bul = itr.data.shoot(this.player.getX(), this.player.getY());
         this.enemysBullet.push(bul);
@@ -228,7 +234,6 @@ export default class Playing {
           if (flag === true) { // is player's bullet
             this.gameInfo.scorepp(itr2.data.score);
             if (itr2.data instanceof Enemy) {
-              // this.gameInfo.scorepp();
               if (Math.random() < 0.5 && this.lifes.size < 1) {
                 const life = this.initLife(itr2.data.getX(), itr2.data.getY());
                 this.lifes.push(life);

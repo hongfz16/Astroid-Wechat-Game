@@ -1,3 +1,10 @@
+/**
+ * Intro: Player class derived from Sprite class
+ * Author: Wang Zeyu
+ * Email: ycdfwzy@outlook.com
+ * Date: 2018.7.11
+ */
+
 import Sprite from '../base/sprite';
 import Constant from '../constant/constant.js';
 import Bullet from '../bullet/bullet.js';
@@ -38,58 +45,6 @@ export default class Player extends Sprite {
       ctx.drawImage(image, -r * 1.5, -r * 3.4, this.constant.playerStyle.r0 * 3, this.constant.playerStyle.r0 * 7);
       ctx.rotate(-this.angle - Math.PI / 2);
       ctx.translate(-this.constant.canvas.width / 2, -this.constant.canvas.height / 2);
-
-      // ctx.beginPath();
-      // ctx.arc(canvas.width / 2, canvas.height / 2, cor.r0, 0, Math.PI * 2);
-      // ctx.strokeStyle = '#ffffff';
-      // ctx.lineWidth = 1;
-      // ctx.stroke();
-
-      // ctx.beginPath();
-      // ctx.arc(cor.p[1].x, cor.p[1].y, cor.r0, 0, Math.PI * 2);
-      // ctx.strokeStyle = '#ffffff';
-      // ctx.lineWidth = 1;
-      // ctx.stroke();
-
-      // for (let i = 0; i <= 9; ++i) {
-      //   cor.p[i].x -= this.constant.gameCor.width;
-      //   cor.p[i].y -= this.constant.gameCor.height;
-      // }
-      // this.drawtoCanvasOneCorner(cor, ctx);
-      // for (let i = 0; i <= 9; ++i) {
-      //   cor.p[i].x += this.constant.gameCor.width;
-      // }
-      // this.drawtoCanvasOneCorner(cor, ctx);
-      // for (let i = 0; i <= 9; ++i) {
-      //   cor.p[i].x += this.constant.gameCor.width;
-      // }
-      // this.drawtoCanvasOneCorner(cor, ctx);
-      // for (let i = 0; i <= 9; ++i) {
-      //   //cor.p[i].x -= this.constant.gameCor.width;
-      //   cor.p[i].y += this.constant.gameCor.height;
-      // }
-      // this.drawtoCanvasOneCorner(cor, ctx);
-      // for (let i = 0; i <= 9; ++i) {
-      //   cor.p[i].x -= this.constant.gameCor.width;
-      // }
-      // this.drawtoCanvasOneCorner(cor, ctx);
-      // for (let i = 0; i <= 9; ++i) {
-      //   cor.p[i].x -= this.constant.gameCor.width;
-      // }
-      // this.drawtoCanvasOneCorner(cor, ctx);
-      // for (let i = 0; i <= 9; ++i) {
-      //   //cor.p[i].x += this.constant.gameCor.width;
-      //   cor.p[i].y += this.constant.gameCor.height;
-      // }
-      // this.drawtoCanvasOneCorner(cor, ctx);
-      // for (let i = 0; i <= 9; ++i) {
-      //   cor.p[i].x += this.constant.gameCor.width;
-      // }
-      // this.drawtoCanvasOneCorner(cor, ctx);
-      // for (let i = 0; i <= 9; ++i) {
-      //   cor.p[i].x += this.constant.gameCor.width;
-      // }
-      // this.drawtoCanvasOneCorner(cor, ctx);
     }
   }
 

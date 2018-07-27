@@ -1,3 +1,10 @@
+/**
+ * Intro: opendatacontext index
+ * Author: Wang Zeyu
+ * Email: ycdfwzy@outlook.com
+ * Date: 2018.7.11
+ */
+
 import Constant from './constant.js';
 import LeaderBoard from './leaderboard.js';
 

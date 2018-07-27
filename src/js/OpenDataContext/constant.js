@@ -1,3 +1,10 @@
+/**
+ * Intro: Game constants in OpendataContext
+ * Author: Hong Fangzhou
+ * Email: hongfz16@163.com
+ * Date: 2018.7.11
+ */
+
 export default class Constant {
   constructor(canvas) {
     this.canvas = canvas;

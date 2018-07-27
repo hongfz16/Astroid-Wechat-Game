@@ -1,3 +1,10 @@
+/**
+ * Intro: Welcome class for drawing welcome page
+ * Author: Wang Zeyu
+ * Email: ycdfwzy@outlook.com
+ * Date: 2018.7.11
+ */
+
 import Constant from '../constant/constant';
 import Main from '../main';
 

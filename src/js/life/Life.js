@@ -1,3 +1,10 @@
+/**
+ * Intro: New Life class derived from Sprite class
+ * Author: Wang Zeyu
+ * Email: ycdfwzy@outlook.com
+ * Date: 2018.7.11
+ */
+
 import Sprite from '../base/sprite.js';
 
 export default class Life extends Sprite {
@@ -8,8 +15,6 @@ export default class Life extends Sprite {
   }
 
   drawtoCanvas(ctx, px, py) {
-    // console.log(x+' '+y);
-    // console.log(this.constant.heartStyle.radius / 16);
     const x = this.getX();
     const y = this.getY();
     const x2 = x + this.constant.gameCor.width;
@@ -26,8 +31,6 @@ export default class Life extends Sprite {
         this.drawHeart(ctx, newCor.x, newCor.y, this.constant.heartStyle.radius / 16);
       }
     }
-    // let newCor = this.corTrans(this.getX(), this.getY(), x, y, this.constant.gameCor.width, this.constant.gameCor.height, this.constant.canvas.width, this.constant.canvas.height);
-    // this.drawHeart(ctx, newCor.x, newCor.y, this.constant.heartStyle.radius/16*0.8);
   }
 
   drawHeart(ctx, x, y, k) {
@@ -37,12 +40,8 @@ export default class Life extends Sprite {
       const t = i * 2 * Math.PI / 15;
       x_.push(k * 16 * Math.pow(Math.sin(t), 3) + x);
       y_.push(-k * (13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t)) + y);
-      // console.log((x_[i] - x)+' '+(y_[i] - y));
     }
 
-    // console.log(this.constant.heartStyle.lineWidth);
-    // console.log(this.constant.heartStyle.fillStyle);
-    // console.log(this.constant.heartStyle.strokeStyle);
     ctx.beginPath();
     ctx.moveTo(x_[0], y_[0]);
     for (let i = 1; i < 15; i += 1) {
@@ -53,6 +52,5 @@ export default class Life extends Sprite {
     ctx.lineWidth = this.constant.heartStyle.lineWidth;
     ctx.fillStyle = this.constant.heartStyle.fillStyle;
     ctx.fill();
-    // ctx.stroke();
   }
 }

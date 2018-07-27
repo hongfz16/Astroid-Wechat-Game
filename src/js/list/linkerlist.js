@@ -1,3 +1,10 @@
+/**
+ * Intro: LinkedList class: a simple implementation for list
+ * Author: Wang Zeyu
+ * Email: ycdfwzy@outlook.com
+ * Date: 2018.7.11
+ */
+
 import listElement from './listElement';
 
 export default class LinkedList {
@@ -24,8 +31,6 @@ export default class LinkedList {
     if (itr.next !== null) {
       itr.next.prev = itr.prev;
     }
-    // itr.destroy();
-    // Destroy(itr);
     itr = null;
   }
 }

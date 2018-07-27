@@ -1,3 +1,10 @@
+/**
+ * Intro: Main class for game logic
+ * Author: Hong Fangzhou & Wang Zeyu
+ * Email: hongfz16@163.com  ycdfwzy@outlook.com
+ * Date: 2018.7.11
+ */
+
 // import bunch of things
 import { Point, Circle, Vector2d } from './base/geometry';
 import Player from './player/player';
@@ -44,7 +51,6 @@ export default class Main {
     });
     this.music = new Music();
     this.welcome();
-    // wx.getSystemInfo({success(res) { console.log(res.system); }});
   }
 
   welcome() {
@@ -154,7 +160,6 @@ export default class Main {
     let time = 0;
     let mode = 'adventure';
     if (this.game) {
-      // console.log(this.game.gameInfo.mode)
       if (this.game instanceof survivalPlaying) {
         mode = 'survival';
         time = (this.game.gameInfo.Time).toFixed(1);

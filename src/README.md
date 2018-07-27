@@ -18,12 +18,12 @@
 │   ├── symbol.js                          // ES6 Symbol简易兼容
 │   └── weapp-adapter.js                   // 小游戏适配器
 ├── OpenDataContext
-│   ├── constant.js                        //
-│   ├── index.js                           //
-│   └── leaderboard.js                     //
+│   ├── constant.js                        // 开放数据域游戏常数
+│   ├── index.js                           // 开放数据域监听主域消息
+│   └── leaderboard.js                     // 开放数据域中绘制排行榜类
 ├── WelcOver
-│   ├── over.js                            //
-│   └── welcome.js                         //
+│   ├── over.js                            // 游戏结束界面类
+│   └── welcome.js                         // 欢迎界面类
 ├── astroid
 │   └── astroid.js                         // 陨石类
 ├── bullet
@@ -39,13 +39,13 @@
 ├── life
 │   └── life.js                            // 生命信息类
 ├── list
-│   ├── linkerlist.js                      //
-│   └── listElement.js                     //
+│   ├── linkerlist.js                      // 双向链表类
+│   └── listElement.js                     // 链表节点类
 ├── music
 │   └── music.js                           // 播放音乐类
 ├── playing
-│   ├── playing.js                         //
-│   └── survivalplaying.js                 //
+│   ├── playing.js                         // 冒险模式界面类
+│   └── survivalplaying.js                 // 生存模式界面类
 ├── player
 │   └── player.js                          // 玩家类
 └── main.js                                // 游戏入口主函数

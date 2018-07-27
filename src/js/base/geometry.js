@@ -1,3 +1,10 @@
+/**
+ * Intro: some gemoetry classes: Point, Circle, Vector2d
+ * Author: Hong Fangzhou & Wang Zeyu
+ * Email: hongfz16@163.com  ycdfwzy@outlook.com
+ * Date: 2018.7.11
+ */
+
 import Constant from '../constant/constant.js';
 
 class Point {

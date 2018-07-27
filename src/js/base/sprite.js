@@ -1,3 +1,10 @@
+/**
+ * Intro: Sprite class: base class for objects in game
+ * Author: Hong Fangzhou & Wang Zeyu
+ * Email: hongfz16@163.com  ycdfwzy@outlook.com
+ * Date: 2018.7.11
+ */
+
 import { Circle, Point, Vector2d } from './geometry';
 import Constant from '../constant/constant.js';
 

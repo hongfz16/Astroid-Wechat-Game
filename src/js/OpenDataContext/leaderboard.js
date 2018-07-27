@@ -1,3 +1,10 @@
+/**
+ * Intro: LeaderBoard class in OpenDataContext for drawing leaderboard page
+ * Author: Wang Zeyu
+ * Email: ycdfwzy@outlook.com
+ * Date: 2018.7.11
+ */
+
 import Constant from './constant.js';
 
 export default class LeaderBoard {

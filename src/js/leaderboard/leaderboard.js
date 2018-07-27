@@ -1,17 +1,21 @@
+/**
+ * Intro: LeaderBoard class for drawing leaderboard page
+ * Author: Wang Zeyu
+ * Email: ycdfwzy@outlook.com
+ * Date: 2018.7.11
+ */
+
 export default class LeaderBoard {
   constructor(main) {
     this.main = main;
-    // this.curpage = 0;
     this.hasTouched = false;
     this.main.openDataContext.postMessage({
       type: 'drawLeaderBoard',
-      // page: this.curpage
     });
     this.initEvent();
   }
 
   drawtoCanvas() {
-    // console.log("main leaderboard drawtoCanvas");
     const ctx = this.main.canvas.getContext('2d');
     ctx.clearRect(0, 0, this.main.canvas.width, this.main.canvas.height);
     this.main.sharedCanvas = this.main.openDataContext.canvas;
@@ -24,24 +28,19 @@ export default class LeaderBoard {
       if (this.hasTouched === false) {
         const x = e.touches[0].clientX * this.main.constant.dpr;
         const y = e.touches[0].clientY * this.main.constant.dpr;
-        // console.log("checkBack");
         if (this.checkBack(x, y)) {
           setTimeout(this.main.welcome.bind(this.main), 100);
           this.hasTouched = true;
         } else
         if (this.checkinNext(x, y)) {
-          // console.log("inNext");
           this.main.openDataContext.postMessage({
             type: 'nextPage',
           });
-          // this.hasTouched = true;
         } else
         if (this.checkinPrevious(x, y)) {
-          // console.log("inPrev");
           this.main.openDataContext.postMessage({
             type: 'prevPage',
           });
-          // this.hasTouched = true;
         } else
         if (this.checkinChangeMode(x, y)) {
           this.main.openDataContext.postMessage({
@@ -77,9 +76,6 @@ export default class LeaderBoard {
   }
 
   checkBack(x, y) {
-    // console.log(x+' '+y);
-    // console.log((this.main.constant.canvas.width - this.main.constant.leaderboard.width) / 2);
-    // console.log((this.main.constant.canvas.width + this.main.constant.leaderboard.width) / 2);
     return (x < (this.main.constant.canvas.width - this.main.constant.leaderboard.width) / 2
       || x > (this.main.constant.canvas.width + this.main.constant.leaderboard.width) / 2);
   }

@@ -1,3 +1,10 @@
+/**
+ * Intro: survivalPlaying class for drawing survival mode game
+ * Author: Wang Zeyu
+ * Email: ycdfwzy@outlook.com
+ * Date: 2018.7.11
+ */
+
 import Main from '../main.js';
 import LinkedList from '../list/linkerlist.js';
 import Player from '../player/player.js';
