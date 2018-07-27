@@ -24,7 +24,7 @@ Click [here](https://shimo.im/docs/LenE6xfIKykCwnc6) for our online document. Or
 ## Author
 ### 王泽宇
 - 学校：清华大学软件学院
-- Email：
+- Email：ycdfwzy@outlook.com
 
 ### 洪方舟
 - 学校：清华大学软件学院
