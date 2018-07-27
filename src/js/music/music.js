@@ -2,8 +2,7 @@ let instance;
 
 export default class Music {
   constructor() {
-    if (instance)
-      return instance;
+    if (instance) return instance;
 
     instance = this;
 
@@ -19,9 +18,9 @@ export default class Music {
     this.boomAudio.src = 'audio/boom.mp3';
 
     this.playBgm();
-    wx.onShow((()=> {
+    wx.onShow((() => {
       this.playBgm();
-    }).bind(this));
+    }));
   }
 
   playBgm() {

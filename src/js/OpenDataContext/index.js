@@ -1,10 +1,10 @@
-import Constant from "./constant.js"
-import LeaderBoard from "./leaderboard.js"
+import Constant from './constant.js';
+import LeaderBoard from './leaderboard.js';
 
 let constant;
-let record = {
+const record = {
   highestScore: 0,
-  longestTime: 0
+  longestTime: 0,
 };
 let friends;
 let mode = 'adventure';
@@ -28,85 +28,85 @@ function drawText(data, x, y, textColor, textAlign, textBaseline, textFont, ctx)
   ctx.fillText(data, x, y);
 }
 
-function render(canvas, record, curscore, curtime){
-  let ctx = canvas.getContext('2d');
+function render(canvas, record, curscore, curtime) {
+  const ctx = canvas.getContext('2d');
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   if (mode === 'adventure') {
     drawText(`分数: ${curscore}`,
-                  canvas.width / 2,
-                  canvas.height / 4,
-                  constant.overTitle.textColor,
-                  constant.overTitle.textAlign,
-                  constant.overTitle.textBaseline,
-                  constant.overTitle.textFont,
-                  ctx);
-    drawText(`最高分: ` + record.highestScore,
-                  canvas.width / 2,
-                  canvas.height * 2 / 5,
-                  constant.oversmallTitle.textColor,
-                  constant.oversmallTitle.textAlign,
-                  constant.oversmallTitle.textBaseline,
-                  constant.oversmallTitle.textFont,
-                  ctx);
+      canvas.width / 2,
+      canvas.height / 4,
+      constant.overTitle.textColor,
+      constant.overTitle.textAlign,
+      constant.overTitle.textBaseline,
+      constant.overTitle.textFont,
+      ctx);
+    drawText(`最高分: ${record.highestScore}`,
+      canvas.width / 2,
+      canvas.height * 2 / 5,
+      constant.oversmallTitle.textColor,
+      constant.oversmallTitle.textAlign,
+      constant.oversmallTitle.textBaseline,
+      constant.oversmallTitle.textFont,
+      ctx);
   } else
   if (mode === 'survival') {
     drawText(`存活: ${curtime}秒`,
-             canvas.width / 2,
-             canvas.height / 4,
-             constant.overTitle.textColor,
-             constant.overTitle.textAlign,
-             constant.overTitle.textBaseline,
-             constant.overTitle.textFont,
-             ctx);
+      canvas.width / 2,
+      canvas.height / 4,
+      constant.overTitle.textColor,
+      constant.overTitle.textAlign,
+      constant.overTitle.textBaseline,
+      constant.overTitle.textFont,
+      ctx);
     drawText(`最长存活时间: ${record.longestTime}秒`,
-             canvas.width / 2,
-             canvas.height * 2 / 5,
-             constant.oversmallTitle.textColor,
-             constant.oversmallTitle.textAlign,
-             constant.oversmallTitle.textBaseline,
-             constant.oversmallTitle.textFont,
-             ctx);
+      canvas.width / 2,
+      canvas.height * 2 / 5,
+      constant.oversmallTitle.textColor,
+      constant.oversmallTitle.textAlign,
+      constant.oversmallTitle.textBaseline,
+      constant.oversmallTitle.textFont,
+      ctx);
   }
   drawRoundRect(constant.restartButton.x0,
-                     constant.restartButton.y0,
-                     constant.restartButton.x1,
-                     constant.restartButton.y1,
-                     constant.restartButton.r,
-                     ctx);
+    constant.restartButton.y0,
+    constant.restartButton.x1,
+    constant.restartButton.y1,
+    constant.restartButton.r,
+    ctx);
   drawRoundRect(constant.backButton.x0,
-                     constant.backButton.y0,
-                     constant.backButton.x1,
-                     constant.backButton.y1,
-                     constant.backButton.r,
-                     ctx);
-  drawText("重新开始",
-                (constant.restartButton.x0 + constant.restartButton.x1) / 2,
-                (constant.restartButton.y0 + constant.restartButton.y1) / 2,
-                constant.restartButton.textColor,
-                constant.restartButton.textAlign,
-                constant.restartButton.textBaseline,
-                constant.restartButton.textFont,
-                ctx);
-  drawText("返回",
-                (constant.backButton.x0 + constant.backButton.x1) / 2,
-                (constant.backButton.y0 + constant.backButton.y1) / 2,
-                constant.backButton.textColor,
-                constant.backButton.textAlign,
-                constant.backButton.textBaseline,
-                constant.backButton.textFont,
-                ctx);
+    constant.backButton.y0,
+    constant.backButton.x1,
+    constant.backButton.y1,
+    constant.backButton.r,
+    ctx);
+  drawText('重新开始',
+    (constant.restartButton.x0 + constant.restartButton.x1) / 2,
+    (constant.restartButton.y0 + constant.restartButton.y1) / 2,
+    constant.restartButton.textColor,
+    constant.restartButton.textAlign,
+    constant.restartButton.textBaseline,
+    constant.restartButton.textFont,
+    ctx);
+  drawText('返回',
+    (constant.backButton.x0 + constant.backButton.x1) / 2,
+    (constant.backButton.y0 + constant.backButton.y1) / 2,
+    constant.backButton.textColor,
+    constant.backButton.textAlign,
+    constant.backButton.textBaseline,
+    constant.backButton.textFont,
+    ctx);
 }
 
-wx.onMessage(data => {
-  //console.log(data);
-  if (data.type === "firstConnection"){
-    let sharedCanvas = wx.getSharedCanvas();
+wx.onMessage((data) => {
+  // console.log(data);
+  if (data.type === 'firstConnection') {
+    const sharedCanvas = wx.getSharedCanvas();
     constant = new Constant(sharedCanvas);
 
-    let keys = ['highestScore', 'longestTime'];
+    const keys = ['highestScore', 'longestTime'];
     wx.getUserCloudStorage({
       keyList: keys,
-      success: res => {
+      success: (res) => {
         // console.log(res.KVDataList);
         for (let i = 0; i < res.KVDataList.length; i += 1) {
           record[res.KVDataList[i].key] = Number(res.KVDataList[i].value);
@@ -115,81 +115,80 @@ wx.onMessage(data => {
       },
       fail() {
         console.log('Fail to get user cloud storage');
-      }
+      },
     });
   } else
   if (data.type === 'drawHighest') {
     // console.log(data);
     mode = data.mode;
-    let sharedCanvas = wx.getSharedCanvas();
+    const sharedCanvas = wx.getSharedCanvas();
     render(sharedCanvas, record, data.curscore, data.curtime);
-  }
-  else
+  } else
   if (data.type === 'newScore') {
     // console.log(data);
-    if (record.longestTime < Number(data.time)){
+    if (record.longestTime < Number(data.time)) {
       record.longestTime = Number(data.time);
       wx.setUserCloudStorage({
         KVDataList: [{ key: 'longestTime', value: `${data.time}` }],
-        success: res => {
+        success: (res) => {
           console.log(res);
         },
-        fail: res => {
+        fail: (res) => {
           console.log(res);
-        }
+        },
       });
     }
     if (record.highestScore < Number(data.score)) {
       record.highestScore = Number(data.score);
       wx.setUserCloudStorage({
         KVDataList: [{ key: 'highestScore', value: `${data.score}` }],
-        success: res => {
+        success: (res) => {
           console.log(res);
         },
-        fail: res => {
+        fail: (res) => {
           console.log(res);
-        }
+        },
       });
     }
   } else
   if (data.type === 'updateFriends') {
     wx.getFriendCloudStorage({
       keyList: ['highestScore', 'longestTime'],
-      success: res => {
+      success: (res) => {
         console.log(res.data);
         friends = new LeaderBoard(res.data, constant);
       },
-      fail: res => {
+      fail: (res) => {
       },
-      complete: res => {
-      }
+      complete: (res) => {
+      },
     });
   } else
   if (data.type === 'drawLeaderBoard') {
-    if (friends !== undefined){
-      let sharedCanvas = wx.getSharedCanvas();
+    if (friends !== undefined) {
+      const sharedCanvas = wx.getSharedCanvas();
       friends.drawtoCanvas(sharedCanvas);
     }
   } else
   if (data.type === 'nextPage') {
-    //console.log("nextPage");
-    if (friends !== undefined){
-      console.log("nextPage");
+    // console.log("nextPage");
+    if (friends !== undefined) {
+      console.log('nextPage');
       friends.pageplus();
       friends.drawtoCanvas(sharedCanvas);
     }
   } else
   if (data.type === 'prevPage') {
-    //console.log("prevPage");
-    if (friends !== undefined){
-      console.log("prevPage");
+    // console.log("prevPage");
+    if (friends !== undefined) {
+      console.log('prevPage');
       friends.pageminus();
       friends.drawtoCanvas(sharedCanvas);
     }
   } else
   if (data.type === 'changeMode') {
     if (friends !== undefined) {
-      console.log("changeMode");
+      console.log('changeMode');
       friends.changeMode();
       friends.drawtoCanvas(sharedCanvas);
     }

@@ -1,81 +1,73 @@
-import Constant from "./constant.js"
+import Constant from './constant.js';
 
-export default class LeaderBoard{
-  constructor(usergameData, constant){
+export default class LeaderBoard {
+  constructor(usergameData, constant) {
     this.usergameDataArray = usergameData;
     this.curpage = 0;
     this.constant = constant;
     this.mode = 'adventure';
 
     this.userData = [];
-    for (let i = 0; i < this.usergameDataArray.length; i+=1){
-      let tmp = {};
+    for (let i = 0; i < this.usergameDataArray.length; i += 1) {
+      const tmp = {};
       this.downloadImage(this.usergameDataArray[i], tmp);
       tmp.nickname = this.usergameDataArray[i].nickname;
       tmp.score = 0;
       tmp.time = 0;
-      let arr = this.usergameDataArray[i].KVDataList;
+      const arr = this.usergameDataArray[i].KVDataList;
       for (let i = 0; i < arr.length; i += 1) {
         if (arr[i].key === 'highestScore') {
           tmp.score = Number(arr[i].value);
-        }
-        else
-        if (arr[i].key === 'longestTime'){
+        } else
+        if (arr[i].key === 'longestTime') {
           tmp.time = Number(arr[i].value);
         }
       }
       this.userData.push(tmp);
     }
 
-    this.userData.sort(function (a, b) {
-      return b.score - a.score;
-    });
+    this.userData.sort((a, b) => b.score - a.score);
   }
 
-  downloadImage(data, obj){
+  downloadImage(data, obj) {
     obj.image = wx.createImage();
     obj.image.src = data.avatarUrl;
   }
 
-  pageplus(){
-    if (this.userData.length > (this.curpage+1)*this.constant.leaderboard.perpage){
+  pageplus() {
+    if (this.userData.length > (this.curpage + 1) * this.constant.leaderboard.perpage) {
       this.curpage += 1;
     }
   }
 
-  pageminus(){
-    if (this.curpage > 0)
-      this.curpage -= 1;
+  pageminus() {
+    if (this.curpage > 0) this.curpage -= 1;
   }
 
   changeMode() {
     this.curpage = 0;
     if (this.mode === 'adventure') {
       this.mode = 'survival';
-      this.userData.sort(function (a, b) {
-        return b.time - a.time;
-      });
+      this.userData.sort((a, b) => b.time - a.time);
     } else
-    if (this.mode === 'survival'){
+    if (this.mode === 'survival') {
       this.mode = 'adventure';
-      this.userData.sort(function (a, b) {
-        return b.score - a.score;
-      });
+      this.userData.sort((a, b) => b.score - a.score);
     }
   }
 
-  drawtoCanvas(canvas){
-    let ctx = canvas.getContext('2d');
+  drawtoCanvas(canvas) {
+    const ctx = canvas.getContext('2d');
     ctx.clearRect(0, 0, this.constant.canvas.width, this.constant.canvas.height);
     this.drawTable(ctx);
     this.drawInfo(ctx);
   }
 
-  drawTable(ctx){
-    let left = (this.constant.canvas.width - this.constant.leaderboard.width) / 2;
-    let right = (this.constant.canvas.width + this.constant.leaderboard.width) / 2;
+  drawTable(ctx) {
+    const left = (this.constant.canvas.width - this.constant.leaderboard.width) / 2;
+    const right = (this.constant.canvas.width + this.constant.leaderboard.width) / 2;
     let s = this.constant.leaderboard.blankheight;
-    let t = this.constant.canvas.height - this.constant.leaderboard.blankheight;
+    const t = this.constant.canvas.height - this.constant.leaderboard.blankheight;
     this.drawRect(left, s, right, t, ctx);
 
     s += this.constant.leaderboard.perheight;
@@ -89,82 +81,82 @@ export default class LeaderBoard{
     x += this.constant.leaderboard.nickWidth;
     this.drawLine(x, s, x, t - this.constant.leaderboard.perheight, ctx);
     this.drawLine(this.constant.canvas.width / 2 - this.constant.leaderboard.width / 6,
-                  t - this.constant.leaderboard.perheight,
-                  this.constant.canvas.width / 2 - this.constant.leaderboard.width / 6,
-                  t,
-                  ctx);
+      t - this.constant.leaderboard.perheight,
+      this.constant.canvas.width / 2 - this.constant.leaderboard.width / 6,
+      t,
+      ctx);
     this.drawLine(this.constant.canvas.width / 2 + this.constant.leaderboard.width / 6,
-                  t - this.constant.leaderboard.perheight,
-                  this.constant.canvas.width / 2 + this.constant.leaderboard.width / 6,
-                  t,
-                  ctx);
+      t - this.constant.leaderboard.perheight,
+      this.constant.canvas.width / 2 + this.constant.leaderboard.width / 6,
+      t,
+      ctx);
   }
 
-  drawInfo(ctx){
+  drawInfo(ctx) {
     let x = (this.constant.canvas.width - this.constant.leaderboard.width) / 2;
     let y = this.constant.leaderboard.blankheight;
-    this.drawText("排名",
-                  x + this.constant.leaderboard.idWidth / 2,
-                  y + this.constant.leaderboard.perheight / 2,
-                  ctx);
+    this.drawText('排名',
+      x + this.constant.leaderboard.idWidth / 2,
+      y + this.constant.leaderboard.perheight / 2,
+      ctx);
     x += this.constant.leaderboard.idWidth;
-    this.drawText("好友",
-                  x + this.constant.leaderboard.nickWidth / 2,
-                  y + this.constant.leaderboard.perheight / 2,
-                  ctx);
+    this.drawText('好友',
+      x + this.constant.leaderboard.nickWidth / 2,
+      y + this.constant.leaderboard.perheight / 2,
+      ctx);
     x += this.constant.leaderboard.nickWidth;
-    this.drawText(this.mode === 'adventure' ? "分数" : "时间",
-                  x + this.constant.leaderboard.scoreWidth / 2,
-                  y + this.constant.leaderboard.perheight / 2,
-                  ctx);
+    this.drawText(this.mode === 'adventure' ? '分数' : '时间',
+      x + this.constant.leaderboard.scoreWidth / 2,
+      y + this.constant.leaderboard.perheight / 2,
+      ctx);
 
     for (let i = 1; i <= this.constant.leaderboard.perpage; i++) {
       x = (this.constant.canvas.width - this.constant.leaderboard.width) / 2;
-      y = this.constant.leaderboard.blankheight + i*this.constant.leaderboard.perheight;
+      y = this.constant.leaderboard.blankheight + i * this.constant.leaderboard.perheight;
 
-      let index = this.curpage * this.constant.leaderboard.perpage + i-1;
+      const index = this.curpage * this.constant.leaderboard.perpage + i - 1;
       if (index >= this.userData.length) { break; }
-      this.drawText(index+1,
-                    x + this.constant.leaderboard.idWidth / 2,
-                    y + this.constant.leaderboard.perheight / 2,
-                    ctx);
+      this.drawText(index + 1,
+        x + this.constant.leaderboard.idWidth / 2,
+        y + this.constant.leaderboard.perheight / 2,
+        ctx);
       x += this.constant.leaderboard.idWidth;
       this.drawImage(this.userData[index].image,
-                     x + (this.constant.leaderboard.perheight - this.constant.leaderboard.imageWidth) / 2,
-                     y + (this.constant.leaderboard.perheight - this.constant.leaderboard.imageHeight) / 2,
-                     this.constant.leaderboard.imageWidth,
-                     this.constant.leaderboard.imageHeight,
-                     ctx);
+        x + (this.constant.leaderboard.perheight - this.constant.leaderboard.imageWidth) / 2,
+        y + (this.constant.leaderboard.perheight - this.constant.leaderboard.imageHeight) / 2,
+        this.constant.leaderboard.imageWidth,
+        this.constant.leaderboard.imageHeight,
+        ctx);
       this.drawText(this.userData[index].nickname,
-                    x + (this.constant.leaderboard.perheight+this.constant.leaderboard.nickWidth) / 2,
-                    y + this.constant.leaderboard.perheight / 2,
-                    ctx);
+        x + (this.constant.leaderboard.perheight + this.constant.leaderboard.nickWidth) / 2,
+        y + this.constant.leaderboard.perheight / 2,
+        ctx);
       x += this.constant.leaderboard.nickWidth;
       this.drawText(this.mode === 'adventure' ? this.userData[index].score : this.userData[index].time,
-                    x + this.constant.leaderboard.scoreWidth / 2,
-                    y + this.constant.leaderboard.perheight / 2,
-                    ctx);
+        x + this.constant.leaderboard.scoreWidth / 2,
+        y + this.constant.leaderboard.perheight / 2,
+        ctx);
     }
 
     x = (this.constant.canvas.width - this.constant.leaderboard.width) / 2;
     y = this.constant.canvas.height - this.constant.leaderboard.blankheight - this.constant.leaderboard.perheight;
-    this.drawText("上一页",
-                  x + this.constant.leaderboard.width / 6,
-                  y + this.constant.leaderboard.perheight / 2,
-                  ctx);
+    this.drawText('上一页',
+      x + this.constant.leaderboard.width / 6,
+      y + this.constant.leaderboard.perheight / 2,
+      ctx);
     x += this.constant.leaderboard.width / 3;
-    this.drawText(this.mode === 'adventure' ? "生存模式" : "冒险模式",
-                  x + this.constant.leaderboard.width / 6,
-                  y + this.constant.leaderboard.perheight / 2,
-                  ctx);
+    this.drawText(this.mode === 'adventure' ? '生存模式' : '冒险模式',
+      x + this.constant.leaderboard.width / 6,
+      y + this.constant.leaderboard.perheight / 2,
+      ctx);
     x += this.constant.leaderboard.width / 3;
-    this.drawText("下一页",
-                  x + this.constant.leaderboard.width / 6,
-                  y + this.constant.leaderboard.perheight / 2,
-                  ctx);
+    this.drawText('下一页',
+      x + this.constant.leaderboard.width / 6,
+      y + this.constant.leaderboard.perheight / 2,
+      ctx);
   }
 
-  drawRect(x0, y0, x1, y1, ctx){
+  drawRect(x0, y0, x1, y1, ctx) {
     ctx.strokeStyle = this.constant.leaderboard.lineColor;
     ctx.lineWidth = this.constant.leaderboard.lineSize;
     ctx.beginPath();
@@ -176,7 +168,7 @@ export default class LeaderBoard{
     ctx.stroke();
   }
 
-  drawLine(x0, y0, x1, y1, ctx){
+  drawLine(x0, y0, x1, y1, ctx) {
     ctx.strokeStyle = this.constant.leaderboard.lineColor;
     ctx.lineWidth = this.constant.leaderboard.lineSize;
     ctx.beginPath();
@@ -193,7 +185,7 @@ export default class LeaderBoard{
     ctx.fillText(data, x, y);
   }
 
-  drawImage(img, x, y, width, height, ctx){
+  drawImage(img, x, y, width, height, ctx) {
     ctx.drawImage(img, x, y, width, height);
   }
 }

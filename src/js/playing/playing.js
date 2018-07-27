@@ -1,17 +1,17 @@
-import Main from '../main.js'
-import LinkedList from '../list/linkerlist.js'
-import Player from '../player/player.js'
-import Bullet from '../bullet/bullet.js'
-import Astroid from '../astroid/astroid.js'
-import Constant from '../constant/constant.js'
-import Enemy from '../enemy/enemy.js'
-import { Point, Circle, Vector2d } from "../base/geometry"
-import Music from "../music/music"
-import gameInfo from "../gameinfo/gameinfo"
-import Life from "../life/Life"
+import Main from '../main.js';
+import LinkedList from '../list/linkerlist.js';
+import Player from '../player/player.js';
+import Bullet from '../bullet/bullet.js';
+import Astroid from '../astroid/astroid.js';
+import Constant from '../constant/constant.js';
+import Enemy from '../enemy/enemy.js';
+import { Point, Circle, Vector2d } from '../base/geometry';
+import Music from '../music/music';
+import gameInfo from '../gameinfo/gameinfo';
+import Life from '../life/Life';
 
 export default class Playing {
-  constructor(constant, main){
+  constructor(constant, main) {
     this.main = main;
     this.constant = constant;
     this.canvas = main.canvas;
@@ -28,16 +28,16 @@ export default class Playing {
     this.astroids = new LinkedList();
     this.lifes = new LinkedList();
     for (let i = 0; i < 1; ++i) {
-      let enemy = this.initEnemy();
+      const enemy = this.initEnemy();
       this.enemys.push(enemy);
     }
     for (let i = 0; i < 6; ++i) {
-      let astroid = this.initAstroid();
+      const astroid = this.initAstroid();
       this.astroids.push(astroid);
     }
     {
       for (let i = 0; i < 3; ++i) {
-        let astroid = this.initAstroid(true);
+        const astroid = this.initAstroid(true);
         this.astroids.push(astroid);
       }
     }
@@ -51,7 +51,7 @@ export default class Playing {
   }
 
   getRandompos() {
-    let ret = new Point();
+    const ret = new Point();
     ret.x = Math.random() * this.constant.gameCor.width;
     let t = Math.abs(ret.x - this.player.getX());
     while (Math.min(t, this.constant.gameCor.width - t) < this.constant.canvas.width / 2) {
@@ -71,14 +71,13 @@ export default class Playing {
     const pos = this.getRandompos();
     let ret;
     if (Math.random() < 0.33) {
-      ret = new Enemy(this.constant, pos.x, pos.y, "large");
+      ret = new Enemy(this.constant, pos.x, pos.y, 'large');
+    } else
+    if (Math.random() < 0.5) {
+      ret = new Enemy(this.constant, pos.x, pos.y, 'medium');
+    } else {
+      ret = new Enemy(this.constant, pos.x, pos.y, 'small');
     }
-    else
-      if (Math.random() < 0.5) {
-        ret = new Enemy(this.constant, pos.x, pos.y, "medium");
-      } else {
-        ret = new Enemy(this.constant, pos.x, pos.y, "small");
-      }
     return ret;
   }
 
@@ -91,12 +90,12 @@ export default class Playing {
       vel = new Vector2d(Math.random() * 2 - 1, Math.random() * 2 - 1);
     }
     vel.normalize((Math.random() + 0.5) * this.constant.canvas.height / 300);
-    let ret = new Astroid(this.constant, pos.x, pos.y, vel.x, vel.y, "large");
+    const ret = new Astroid(this.constant, pos.x, pos.y, vel.x, vel.y, 'large');
     return ret;
   }
 
   initLife(x, y) {
-    let ret = new Life(this.constant, this, x, y, this.constant.heartStyle.radius);
+    const ret = new Life(this.constant, this, x, y, this.constant.heartStyle.radius);
     return ret;
   }
 
@@ -114,7 +113,7 @@ export default class Playing {
   react() {
     this.player.turn(this.playerAngle);
     if (this.clickShoot && this.shootCount === 0) {
-      let bul = this.player.shoot();
+      const bul = this.player.shoot();
       this.bullets.push(bul);
       this.shootCount = 30;
       this.main.music.playShoot();
@@ -134,7 +133,7 @@ export default class Playing {
     let itr = list.head;
     while (itr !== null) {
       if (itr.data.life === 0) {
-        let tmp = itr;
+        const tmp = itr;
         itr = itr.next;
         list.delete(tmp);
       } else {
@@ -144,8 +143,7 @@ export default class Playing {
   }
 
   checkTimer() {
-    if (this.shootCount > 0)
-      this.shootCount -= 1;
+    if (this.shootCount > 0) this.shootCount -= 1;
     /* check bullet's life span */
     this.checkBulletLife(this.bullets);
     this.checkBulletLife(this.enemysBullet);
@@ -154,7 +152,7 @@ export default class Playing {
     this.enemyCount -= 1;
     if (this.enemyCount === 0) {
       if (this.enemys.size < 3) {
-        let enemy = this.initEnemy();
+        const enemy = this.initEnemy();
         this.enemys.push(enemy);
       }
       this.enemyCount = 1000;
@@ -165,7 +163,7 @@ export default class Playing {
     while (itr !== null) {
       // console.log(itr.data.shootTimer);
       if (itr.data.shootTimer === 0 && this.canShoot(itr.data)) {
-        let bul = itr.data.shoot(this.player.getX(), this.player.getY());
+        const bul = itr.data.shoot(this.player.getX(), this.player.getY());
         this.enemysBullet.push(bul);
       }
       itr = itr.next;
@@ -176,7 +174,7 @@ export default class Playing {
       this.astroidCount -= 1;
     }
     if (this.astroidCount === 0 && this.astroids.size < this.constant.astroidLimit) {
-      let astroid = this.initAstroid(true);
+      const astroid = this.initAstroid(true);
       this.astroids.push(astroid);
       this.astroidCount = Math.max(100, Math.floor(1000 - this.main.aniId / 10));
     }
@@ -186,29 +184,25 @@ export default class Playing {
   canShoot(enemy) {
     let dx = Math.abs(enemy.getX() - this.player.getX());
     let dy = Math.abs(enemy.getY() - this.player.getY());
-    if (dx > this.constant.gameCor.width / 2)
-      dx = this.constant.gameCor.width - dx;
-    if (dy > this.constant.gameCor.height / 2)
-      dy = this.constant.gameCor.height - dy;
-    return dx < this.constant.canvas.width / 2 &&
-      dy < this.constant.canvas.height / 2;
+    if (dx > this.constant.gameCor.width / 2) dx = this.constant.gameCor.width - dx;
+    if (dy > this.constant.gameCor.height / 2) dy = this.constant.gameCor.height - dy;
+    return dx < this.constant.canvas.width / 2
+      && dy < this.constant.canvas.height / 2;
   }
 
   inScreen(obj) {
     let dx = Math.abs(obj.getX() - this.player.getX());
     let dy = Math.abs(obj.getY() - this.player.getY());
-    if (dx > this.constant.gameCor.width / 2)
-      dx = this.constant.gameCor.width - dx;
-    if (dy > this.constant.gameCor.height / 2)
-      dy = this.constant.gameCor.height - dy;
-    return dx < this.constant.canvas.width / 2 + obj.getRadius() &&
-      dy < this.constant.canvas.height / 2 + obj.getRadius();
+    if (dx > this.constant.gameCor.width / 2) dx = this.constant.gameCor.width - dx;
+    if (dy > this.constant.gameCor.height / 2) dy = this.constant.gameCor.height - dy;
+    return dx < this.constant.canvas.width / 2 + obj.getRadius()
+      && dy < this.constant.canvas.height / 2 + obj.getRadius();
   }
 
 
   checkCollisioninLists(list1, list2, flag = false) {
     let itr1 = list1.head;
-    let newlist = [];
+    const newlist = [];
     while (itr1 !== null) {
       let itr2 = list2.head;
       let hasCollision = false;
@@ -219,14 +213,14 @@ export default class Playing {
         }
 
         if (itr1.data.checkCollision(this.constant, itr2.data)) {
-          let tmpitr = itr1.next;
+          const tmpitr = itr1.next;
           list1.delete(itr1);
           itr1 = tmpitr;
 
           if (itr2.data instanceof Astroid) {
-            let childlist = itr2.data.split();
+            const childlist = itr2.data.split();
             while (childlist.length > 0) {
-              let back = childlist.pop();
+              const back = childlist.pop();
               newlist.push(back);
             }
           }
@@ -235,8 +229,8 @@ export default class Playing {
             this.gameInfo.scorepp(itr2.data.score);
             if (itr2.data instanceof Enemy) {
               // this.gameInfo.scorepp();
-              if (Math.random() < 0.5 && this.lifes.size < 1){
-                let life = this.initLife(itr2.data.getX(), itr2.data.getY());
+              if (Math.random() < 0.5 && this.lifes.size < 1) {
+                const life = this.initLife(itr2.data.getX(), itr2.data.getY());
                 this.lifes.push(life);
               }
             }
@@ -255,16 +249,14 @@ export default class Playing {
     }
 
     while (newlist.length > 0) {
-      let back = newlist.pop();
+      const back = newlist.pop();
       list2.push(back);
     }
-
   }
 
   checkCollisionwithPlayer(list, player) {
     let itr = list.head;
-    if (player.immortalCount > 0 && (itr === null || !(itr.data instanceof Life)))
-      return;
+    if (player.immortalCount > 0 && (itr === null || !(itr.data instanceof Life))) return;
     while (itr !== null) {
       if (this.inScreen(itr.data) === false) {
         itr = itr.next;
@@ -273,9 +265,7 @@ export default class Playing {
       if (player.checkCollision(this.constant, itr.data)) {
         if (itr.data instanceof Life) {
           player.addonelife();
-        }
-        else
-        {
+        } else {
           player.loseonelife();
           if (player.life === 0) {
             setTimeout(this.main.GameOver.bind(this.main), 100);
@@ -289,23 +279,23 @@ export default class Playing {
   }
 
   checkCollision() {
-    //bullet and astroid
+    // bullet and astroid
     this.checkCollisioninLists(this.bullets, this.astroids, true);
     this.checkCollisioninLists(this.enemysBullet, this.astroids);
-    //bullet and enemy
+    // bullet and enemy
     this.checkCollisioninLists(this.bullets, this.enemys, true);
-    //bullet and player
+    // bullet and player
     this.checkCollisionwithPlayer(this.enemysBullet, this.player);
-    //enemy and player
+    // enemy and player
     this.checkCollisionwithPlayer(this.enemys, this.player);
-    //astroid and player
+    // astroid and player
     this.checkCollisionwithPlayer(this.astroids, this.player);
-    //life and player
+    // life and player
     this.checkCollisionwithPlayer(this.lifes, this.player);
   }
 
   render() {
-    //clear all contexts
+    // clear all contexts
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.ctx.fillStyle = this.constant.gameStyle.background;
     this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
@@ -320,8 +310,8 @@ export default class Playing {
   }
 
   drawBackground(ctx) {
-    let x = [];
-    let y = [];
+    const x = [];
+    const y = [];
     for (let i = 1; i < this.constant.gameCor.width; i += this.constant.gameStyle.lineWidth) {
       x.push(i);
     }
@@ -330,13 +320,13 @@ export default class Playing {
     }
     ctx.beginPath();
     for (let i = 0; i < x.length; i += 1) {
-      let arrx = [x[i], x[i] + this.constant.gameCor.width, x[i] - this.constant.gameCor.width];
+      const arrx = [x[i], x[i] + this.constant.gameCor.width, x[i] - this.constant.gameCor.width];
       for (let j = 0; j < arrx.length; j += 1) {
-        let newCorStart = this.player.corTrans(arrx[j], 1 - this.constant.gameCor.height,
+        const newCorStart = this.player.corTrans(arrx[j], 1 - this.constant.gameCor.height,
           this.player.getX(), this.player.getY(),
           this.constant.gameCor.width, this.constant.gameCor.height,
           this.constant.canvas.width, this.constant.canvas.height);
-        let newCorEnd = this.player.corTrans(arrx[j], 2 * this.constant.gameCor.height - 1,
+        const newCorEnd = this.player.corTrans(arrx[j], 2 * this.constant.gameCor.height - 1,
           this.player.getX(), this.player.getY(),
           this.constant.gameCor.width, this.constant.gameCor.height,
           this.constant.canvas.width, this.constant.canvas.height);
@@ -351,13 +341,13 @@ export default class Playing {
     ctx.stroke();
     ctx.beginPath();
     for (let i = 0; i < y.length; i += 1) {
-      let arry = [y[i], y[i] + this.constant.gameCor.height, y[i] - this.constant.gameCor.height];
+      const arry = [y[i], y[i] + this.constant.gameCor.height, y[i] - this.constant.gameCor.height];
       for (let j = 0; j < arry.length; j += 1) {
-        let newCorStart = this.player.corTrans(1 - this.constant.gameCor.width, arry[j],
+        const newCorStart = this.player.corTrans(1 - this.constant.gameCor.width, arry[j],
           this.player.getX(), this.player.getY(),
           this.constant.gameCor.width, this.constant.gameCor.height,
           this.constant.canvas.width, this.constant.canvas.height);
-        let newCorEnd = this.player.corTrans(this.constant.gameCor.width * 2 - 1, arry[j],
+        const newCorEnd = this.player.corTrans(this.constant.gameCor.width * 2 - 1, arry[j],
           this.player.getX(), this.player.getY(),
           this.constant.gameCor.width, this.constant.gameCor.height,
           this.constant.canvas.width, this.constant.canvas.height);

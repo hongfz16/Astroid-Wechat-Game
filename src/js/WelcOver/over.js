@@ -1,5 +1,5 @@
-import Constant from "../constant/constant"
-import Main from "../main"
+import Constant from '../constant/constant';
+import Main from '../main';
 
 export default class Over {
   constructor(main, score, time, mode = 'adventure') {
@@ -16,7 +16,7 @@ export default class Over {
     this.openDataContext.postMessage({
       type: 'newScore',
       score: this.score,
-      time: this.time
+      time: this.time,
     });
     this.openDataContext.postMessage({
       type: 'drawHighest',
@@ -30,17 +30,16 @@ export default class Over {
     this.currHighest = undefined;
   }
 
-  initEvent(){
-    this.main.canvas.addEventListener("touchstart", ((e) => {
+  initEvent() {
+    this.main.canvas.addEventListener('touchstart', ((e) => {
       e.preventDefault();
       if (this.hasTouched === false) {
-        let x = e.touches[0].clientX * this.main.constant.dpr;
-        let y = e.touches[0].clientY * this.main.constant.dpr;
+        const x = e.touches[0].clientX * this.main.constant.dpr;
+        const y = e.touches[0].clientY * this.main.constant.dpr;
         if (this.checkinRestart(x, y)) {
           if (this.mode === 'adventure') {
             setTimeout(this.main.start.bind(this.main), 100);
-          } else
-          {
+          } else {
             setTimeout(this.main.survivalstart.bind(this.main), 100);
           }
           this.hasTouched = true;
@@ -50,11 +49,11 @@ export default class Over {
           this.hasTouched = true;
         }
       }
-    }).bind(this));
+    }));
   }
 
-  drawtoCanvas(){
-    let ctx = this.ctx;
+  drawtoCanvas() {
+    const ctx = this.ctx;
     ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.main.sharedCanvas = this.main.openDataContext.canvas;
     ctx.drawImage(this.main.sharedCanvas, 0, 0);
@@ -81,16 +80,16 @@ export default class Over {
   }
 
   checkinRestart(x, y) {
-    return x >= this.main.constant.restartButton.x0 &&
-      x <= this.main.constant.restartButton.x1 &&
-      y >= this.main.constant.restartButton.y0 &&
-      y <= this.main.constant.restartButton.y1;
+    return x >= this.main.constant.restartButton.x0
+      && x <= this.main.constant.restartButton.x1
+      && y >= this.main.constant.restartButton.y0
+      && y <= this.main.constant.restartButton.y1;
   }
 
   checkinBack(x, y) {
-    return x >= this.main.constant.backButton.x0 &&
-      x <= this.main.constant.backButton.x1 &&
-      y >= this.main.constant.backButton.y0 &&
-      y <= this.main.constant.backButton.y1;
+    return x >= this.main.constant.backButton.x0
+      && x <= this.main.constant.backButton.x1
+      && y >= this.main.constant.backButton.y0
+      && y <= this.main.constant.backButton.y1;
   }
 }
