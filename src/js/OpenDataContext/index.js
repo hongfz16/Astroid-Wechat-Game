@@ -107,14 +107,7 @@ wx.onMessage(data => {
     wx.getUserCloudStorage({
       keyList: keys,
       success: res => {
-        console.log(res.KVDataList);
-        // if (res.KVDataList.length === 0) {
-        //   highest = 0;
-        // }
-        // else
-        // {
-        //   highest = parseInt(res.KVDataList[0].value);
-        // }
+        // console.log(res.KVDataList);
         for (let i = 0; i < res.KVDataList.length; i += 1) {
           record[res.KVDataList[i].key] = Number(res.KVDataList[i].value);
         }
@@ -126,15 +119,14 @@ wx.onMessage(data => {
     });
   } else
   if (data.type === 'drawHighest') {
-    //let keys = ['highestScore'];
-    console.log(data);
+    // console.log(data);
     mode = data.mode;
     let sharedCanvas = wx.getSharedCanvas();
     render(sharedCanvas, record, data.curscore, data.curtime);
   }
   else
   if (data.type === 'newScore') {
-    console.log(data);
+    // console.log(data);
     if (record.longestTime < Number(data.time)){
       record.longestTime = Number(data.time);
       wx.setUserCloudStorage({

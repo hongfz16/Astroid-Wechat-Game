@@ -7,12 +7,10 @@
 
 export default class Constant {
   constructor(canvas) {
-    //astroid constants
     this.canvas = canvas;
-
     this.dpr = wx.getSystemInfoSync().pixelRatio;
-    console.log('pixelRatio:', this.dpr);
 
+    //astroid constants
     this.astroidSize = {
       small: 0.04 * canvas.height,
       medium: 0.07 * canvas.height,

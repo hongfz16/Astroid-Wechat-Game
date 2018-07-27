@@ -2,7 +2,6 @@ import Constant from "./constant.js"
 
 export default class LeaderBoard{
   constructor(usergameData, constant){
-    //console.log(usergameData);
     this.usergameDataArray = usergameData;
     this.curpage = 0;
     this.constant = constant;
@@ -25,10 +24,6 @@ export default class LeaderBoard{
           tmp.time = Number(arr[i].value);
         }
       }
-      // if (this.usergameDataArray[i].KVDataList[0] === undefined)
-      //   tmp.score = 0;
-      // else
-      //   tmp.score = parseInt(this.usergameDataArray[i].KVDataList[0].value);
       this.userData.push(tmp);
     }
 
@@ -43,8 +38,6 @@ export default class LeaderBoard{
   }
 
   pageplus(){
-    //console.log((this.curpage + 1) * this.constant.leaderboard.perpage);
-    //console.log(this.userData.length);
     if (this.userData.length > (this.curpage+1)*this.constant.leaderboard.perpage){
       this.curpage += 1;
     }
@@ -108,11 +101,8 @@ export default class LeaderBoard{
   }
 
   drawInfo(ctx){
-    //console.log("in drawInfo");
-    //console.log(this.curpage);
     let x = (this.constant.canvas.width - this.constant.leaderboard.width) / 2;
     let y = this.constant.leaderboard.blankheight;
-    //console.log(x, y);
     this.drawText("排名",
                   x + this.constant.leaderboard.idWidth / 2,
                   y + this.constant.leaderboard.perheight / 2,

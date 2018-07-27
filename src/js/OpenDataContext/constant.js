@@ -1,11 +1,9 @@
 export default class Constant {
   constructor(canvas) {
-    //astroid constants
     this.canvas = canvas;
-    // console.log(canvas);
-
     this.dpr = wx.getSystemInfoSync().pixelRatio;
-    //console.log(this.dpr);
+
+    //astroid constants
     this.astroidSize = {
       small: 0.04 * canvas.height,
       medium: 0.07 * canvas.height,
@@ -50,7 +48,6 @@ export default class Constant {
     this.turnAngle = Math.PI * 3 / 180;
 
     //player constants
-    //const playerRadius = 0.15 * canvas.height;
     this.playerStyle = {
       r0: 0.02 * canvas.height,
       theta: Math.PI * 20 / 180,
@@ -211,8 +208,3 @@ export default class Constant {
     }
   }
 }
-
-// export {gameCor, gameStyle, astroidStyle, astroidSpeed, astroidSplitAngle, astroidSize, 
-//         bulletStyle, bulletLife, bulletSpeed, bulletRadius, enemySize, enemyShootFrames,
-//         enemyStyle, turnAngle, playerStyle, scorePos, leftButtonPos, rightButtonPos,
-//         accButtonPos, shootButtonPos, buttonStyle}

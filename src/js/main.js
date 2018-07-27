@@ -21,7 +21,6 @@ const fps = 60;
 export default class Main {
   constructor() {
     this.aniId = 0;
-    // wx.setPreferredFramesPerSecond(fps);
     this.gameStatus = undefined;
     let width = canvas.width;
     let height = canvas.height;
@@ -45,7 +44,7 @@ export default class Main {
     });
     this.music = new Music();
     this.welcome();
-    wx.getSystemInfo({success(res) { console.log(res.system); }});
+    //wx.getSystemInfo({success(res) { console.log(res.system); }});
   }
 
   welcome(){
@@ -56,7 +55,7 @@ export default class Main {
       delete this.leaderboard;
     }
     window.cancelAnimationFrame(this.aniId);
-    //console.log("welcome");
+    
     this.wel = new Welcome(this);
     this.gameStatus = "Welcome";
     this.bindLoop = this.loop.bind(this);
@@ -164,7 +163,6 @@ export default class Main {
       {
         mode = 'adventure';
         score = this.game.gameInfo.score;
-        // console.log(score);
       }
       delete this.game;
     }

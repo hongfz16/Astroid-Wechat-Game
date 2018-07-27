@@ -22,7 +22,6 @@ export default class survivalPlaying{
     });
 
     this.player = new Player(this.constant, this.constant.gameCor.width / 2, this.constant.gameCor.height / 2, this.constant.playerStyle.r0);
-    // this.bullets = new LinkedList();
     this.enemys = new LinkedList();
     this.enemysBullet = new LinkedList();
     this.astroids = new LinkedList();
@@ -92,7 +91,6 @@ export default class survivalPlaying{
     }
     let ret;
     if (Math.random() < 0.33){
-      //vel.normalize((Math.random() + 0.5) * this.constant.canvas.height / 300);
       vel.normalize(this.constant.astroidSpeed.large);
       ret = new Astroid(this.constant, pos.x, pos.y, vel.x, vel.y, "large");
     } else
@@ -115,12 +113,10 @@ export default class survivalPlaying{
   }
 
   update() {
-    //console.log(this.gameInfo.score);
     this.react();
     this.checkTimer();
     this.checkCollision();
     this.player.update();
-    // this.updateList(this.bullets);
     this.updateList(this.enemysBullet);
     this.updateList(this.enemys);
     this.updateList(this.astroids);
@@ -128,12 +124,6 @@ export default class survivalPlaying{
 
   react() {
     this.player.turn(this.playerAngle);
-    // if (this.clickShoot && this.shootCount === 0) {
-    //   let bul = this.player.shoot();
-    //   this.bullets.push(bul);
-    //   this.shootCount = 30;
-    //   this.main.music.playShoot();
-    // }
     if (this.clickAcc) { this.player.accelerate(); }
   }
 
@@ -162,7 +152,6 @@ export default class survivalPlaying{
     if (this.shootCount > 0)
       this.shootCount -= 1;
     /* check bullet's life span */
-    // this.checkBulletLife(this.bullets);
     this.checkBulletLife(this.enemysBullet);
     /*-------------------------*/
     /*    random add enemy    */
@@ -178,7 +167,6 @@ export default class survivalPlaying{
     /*       enemy shoot       */
     let itr = this.enemys.head;
     while (itr !== null) {
-      // console.log(itr.data.shootTimer);
       if (itr.data.shootTimer === 0 && this.canShoot(itr.data)) {
         let bul = itr.data.shoot(this.player.getX(), this.player.getY());
         this.enemysBullet.push(bul);
@@ -187,30 +175,24 @@ export default class survivalPlaying{
     }
     /*-------------------------*/
     /*    random add astroid   */
-    //console.log("random add astroid");
     if (this.astroidCount > 0) {
       this.astroidCount -= 1;
     }
-    // console.log(this.astroidCount);
     if (this.astroidCount === 0 && this.astroids.size < this.constant.astroidLimit) {
       let astroid = this.initAstroid(true);
       this.astroids.push(astroid);
       this.astroidCount = Math.max(100, Math.floor(1000 - this.main.aniId / 10));
-      // console.log(`astroidCount ${this.astroidCount}`);
     }
     /*-------------------------*/
     /*     random add life     */
-    //console.log("random add astroid");
     if (this.lifeCount > 0) {
       this.lifeCount -= 1;
     }
-    // console.log(this.astroidCount);
     if (this.lifeCount === 0 && this.lifes.size < this.constant.lifeLimit) {
       let pos = this.getRandompos();
       let life = this.initLife(pos.x, pos.y);
       this.lifes.push(life);
-      this.lifeCount = 1000;//Math.max(100, Math.floor(1000 - this.main.aniId / 10));
-      // console.log(`astroidCount ${this.astroidCount}`);
+      this.lifeCount = 1000;
     }
     /*-------------------------*/
   }
@@ -324,11 +306,7 @@ export default class survivalPlaying{
 
   checkCollision() {
     //bullet and astroid
-    // this.checkCollisioninLists(this.bullets, this.astroids, true);
     this.checkCollisioninLists(this.enemysBullet, this.astroids);
-    //bullet and enemy
-    // this.checkCollisioninLists(this.bullets, this.enemys, true);
-    //this.checkCollisioninLists(this.enemysBullet, this.enemys);
     //bullet and player
     this.checkCollisionwithPlayer(this.enemysBullet, this.player);
     //enemy and player
@@ -409,10 +387,8 @@ export default class survivalPlaying{
 
   drawList(list, ctx) {
     let itr = list.head;
-    //let cnt = 0;
     while (itr !== null) {
       itr.data.drawtoCanvas(ctx, this.player.getX(), this.player.getY());
-      //cnt += 1;
       itr = itr.next;
     }
   }

@@ -41,10 +41,6 @@ export default class Playing {
         this.astroids.push(astroid);
       }
     }
-    // {
-    //   let life = this.initLife(this.constant.gameCor.width/2, this.constant.gameCor.height/2);
-    //   this.lifes.push(life);
-    // }
     this.enemyCount = 1000;
     this.astroidCount = 1000;
     this.shootCount = 0;
@@ -105,7 +101,6 @@ export default class Playing {
   }
 
   update() {
-    //console.log(this.gameInfo.score);
     this.react();
     this.checkTimer();
     this.checkCollision();
@@ -177,16 +172,13 @@ export default class Playing {
     }
     /*-------------------------*/
     /*    random add astroid   */
-    //console.log("random add astroid");
     if (this.astroidCount > 0) {
       this.astroidCount -= 1;
     }
-    // console.log(this.astroidCount);
     if (this.astroidCount === 0 && this.astroids.size < this.constant.astroidLimit) {
       let astroid = this.initAstroid(true);
       this.astroids.push(astroid);
       this.astroidCount = Math.max(100, Math.floor(1000 - this.main.aniId / 10));
-      // console.log(`astroidCount ${this.astroidCount}`);
     }
     /*-------------------------*/
   }
@@ -302,9 +294,7 @@ export default class Playing {
     this.checkCollisioninLists(this.enemysBullet, this.astroids);
     //bullet and enemy
     this.checkCollisioninLists(this.bullets, this.enemys, true);
-    //this.checkCollisioninLists(this.enemysBullet, this.enemys);
     //bullet and player
-    //checkCollisionwithPlayer(this.bullet, this.player);
     this.checkCollisionwithPlayer(this.enemysBullet, this.player);
     //enemy and player
     this.checkCollisionwithPlayer(this.enemys, this.player);
@@ -384,10 +374,8 @@ export default class Playing {
 
   drawList(list, ctx) {
     let itr = list.head;
-    //let cnt = 0;
     while (itr !== null) {
       itr.data.drawtoCanvas(ctx, this.player.getX(), this.player.getY());
-      //cnt += 1;
       itr = itr.next;
     }
   }
